@@ -1,6 +1,7 @@
 /* eslint-disable import/no-anonymous-default-export */
-import initDB from "../../helpers/initDB";
-import Product from "../../models/Product";
+
+import initDB from '../../../helpers/initDB';
+import Product from "../../../models/Product";
 
 export default async (req, res) =>
 {
@@ -21,15 +22,17 @@ const getProducts = async (req, res) =>
     try {
         const products = await Product.find()
         res.status(200).json({
-            status: 200,
+            status: true,
             data: products,
-            message: "success"
+            message: "success",
+            total: products.length
         })
     } catch (err) {
         console.log({
-            status: 500,
+            status: false,
             data: err,
-            message: "error"
+            message: "error",
+            total: 0
         })
     }
 }
@@ -40,7 +43,14 @@ const addProduct = async (req, res) =>
     const { name, price, description, image } = req.body
     try {
         if (!name || !price || !description || !image) {
-            return res.status(422).json({ error: "Please add all the fields" })
+            return res.status(200).json(
+                {
+                    status: false,
+                    data: {},
+                    message: "Fill all fields",
+                    total: 0
+                }
+            )
         }
         const product = await new Product({
             name,
@@ -48,16 +58,18 @@ const addProduct = async (req, res) =>
             description,
             image
         }).save()
-        res.status(201).json({
-            status: 200,
+        res.status(200).json({
+            status: true,
             data: product,
-            message: "success"
+            message: "success",
+            total: 1
         })
     } catch (err) {
-        res.status(500).json({
-            status: 200,
+        res.status(false).json({
+            status: false,
             data: err,
-            message: "internal server error"
+            message: "internal server error",
+            total: 0
         })
     }
 }

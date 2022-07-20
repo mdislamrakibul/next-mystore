@@ -12,11 +12,13 @@ const Navbar = () =>
     }
     return (
         <>
-            <ul id="dropdown1" className="dropdown-content">
+            <ul id='dropdown1' className='dropdown-content'>
                 <li><a href="#!">one</a></li>
                 <li><a href="#!">two</a></li>
-                <li className="divider"></li>
+                <li className="divider" tabIndex="-1"></li>
                 <li><a href="#!">three</a></li>
+                <li><a href="#!"><i className="material-icons">view_module</i>four</a></li>
+                <li><a href="#!"><i className="material-icons">cloud</i>five</a></li>
             </ul>
             <nav>
                 <div className="nav-wrapper">
@@ -39,7 +41,15 @@ const Navbar = () =>
                                 </a>
                             </Link>
                         </li>
-
+                        <li className={activeRoute('/product/create')}>
+                            <Link href="/product/create" >
+                                <a style={{ display: 'flex' }}>
+                                    <span>Create</span>&nbsp;
+                                    {/* <i className="material-icons">lock_outline</i> */}
+                                </a>
+                            </Link>
+                        </li>
+                        {/* <li><a className='dropdown-trigger btn' href='#' data-target='dropdown1'>Dropdown<i className="material-icons right">arrow_drop_down</i></a></li> */}
                     </ul>
                 </div>
             </nav>
