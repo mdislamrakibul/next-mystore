@@ -1,5 +1,6 @@
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
+import ClientLayout from '../../components/layout/ClientLayout';
 import baseUrl from '../../helpers/baseUrl';
 const Product = ({ product }) =>
 {
@@ -14,7 +15,7 @@ const Product = ({ product }) =>
     }
 
     return (
-        <>
+        <ClientLayout>
             <div>
                 <div className='row'>
                     <div className='col s5'>
@@ -95,7 +96,8 @@ const Product = ({ product }) =>
                     </div>
                 </div>
             </div>
-        </>
+        </ClientLayout>
+
     )
 }
 

@@ -38,7 +38,7 @@ const useStyles = makeStyles({
 });
 
 
-const Sidebar = () =>
+function ClientSidebar() 
 {
     const classes = useStyles();
     const renderTree = (nodes) => (
@@ -50,6 +50,7 @@ const Sidebar = () =>
     return (
         <>
             <div>
+                Client
                 <TreeView
                     // className={classes.root}
                     defaultCollapseIcon={<ExpandMoreIcon />}
@@ -63,4 +64,4 @@ const Sidebar = () =>
     )
 }
 
-export default Sidebar
+export default ClientSidebar
