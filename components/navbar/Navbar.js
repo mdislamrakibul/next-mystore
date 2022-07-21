@@ -1,9 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import Cookies from 'js-cookie'
-import Link from 'next/link'
-import { useRouter } from 'next/router'
-import { parseCookies } from 'nookies'
-import React from 'react'
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { parseCookies } from 'nookies';
+import React from 'react';
 const Navbar = ({ }) =>
 {
     const router = useRouter()
@@ -29,7 +28,7 @@ const Navbar = ({ }) =>
                 <li><a href="#!"><i className="material-icons">view_module</i>four</a></li>
                 <li><a href="#!"><i className="material-icons">cloud</i>five</a></li>
             </ul>
-            <nav>
+            <nav className="nav-extended">
                 <div className="nav-wrapper">
                     <Link href="/"><a className="brand-logo">My Store</a></Link>
                     <ul className="right hide-on-med-and-down">
@@ -60,7 +59,7 @@ const Navbar = ({ }) =>
                                         Cookies.remove('user')
                                         router.push('/auth/login')
                                     }}>logout</button>&nbsp;
-                                    <i className="material-icons">exit_to_app</i>
+                                    {/* <i className="material-icons">exit_to_app</i> */}
                                 </li>
                             </>
                             :
@@ -84,6 +83,14 @@ const Navbar = ({ }) =>
                                 </li>
                             </>
                         }
+                    </ul>
+                </div>
+                <div className="nav-content">
+                    <ul className="tabs tabs-transparent">
+                        <li className="tab"><a href="#test1">Test 1</a></li>
+                        <li className="tab"><a href="#test2">Test 2</a></li>
+                        <li className="tab "><a href="#test3">Disabled Tab</a></li>
+                        <li className="tab"><a href="#test4">Test 4</a></li>
                     </ul>
                 </div>
             </nav>

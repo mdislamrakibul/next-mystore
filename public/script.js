@@ -9,6 +9,9 @@ var options1 = {
 var options2 = {
 
 }
+var options3 = {
+
+}
 document.addEventListener('DOMContentLoaded', function ()
 {
     var elems = document.querySelectorAll('.tooltipped');
@@ -23,4 +26,10 @@ document.addEventListener('DOMContentLoaded', function ()
 {
     var elems = document.querySelectorAll('.collapsible');
     var instances = M.Collapsible.init(elems, options2);
+});
+
+document.addEventListener('DOMContentLoaded', function ()
+{
+    var elems = document.querySelectorAll('.sidenav');
+    var instances = M.Sidenav.init(elems, options3);
 });
