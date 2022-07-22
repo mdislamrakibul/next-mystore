@@ -1,7 +1,8 @@
 
 $(document).ready(function ()
 {
-    // alert("jdfhasjkdhfs")
+    // alert("jdfhasjkdhfs"
+    $(".dropdown-trigger").dropdown();
 })
 var options1 = {
 
@@ -10,6 +11,9 @@ var options2 = {
 
 }
 var options3 = {
+
+}
+var options4 = {
 
 }
 document.addEventListener('DOMContentLoaded', function ()
@@ -32,4 +36,9 @@ document.addEventListener('DOMContentLoaded', function ()
 {
     var elems = document.querySelectorAll('.sidenav');
     var instances = M.Sidenav.init(elems, options3);
+});
+document.addEventListener('DOMContentLoaded', function ()
+{
+    var elems = document.querySelectorAll('.dropdown-trigger');
+    var instances = M.Dropdown.init(elems, options4);
 });

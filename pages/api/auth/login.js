@@ -31,7 +31,7 @@ export default async (req, res) =>
             const token = jwt.sign({ userId: user._id, role: user.role, userName: user.username }, process.env.JWT_SECRET, {
                 expiresIn: "7d"
             })
-            const { _id, username, role, email } = user
+            const { _id, username, role, email, image } = user
             res.status(200).json({
                 status: true,
                 message: "user found",
@@ -41,7 +41,8 @@ export default async (req, res) =>
                         _id,
                         username,
                         role,
-                        email
+                        email,
+                        image
                     }
                 },
                 total: 1

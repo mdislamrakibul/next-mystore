@@ -14,6 +14,11 @@ const userSchema = new Schema({
         type: String,
         required: true
     },
+    image: {
+        type: String,
+        default: "https://res.cloudinary.com/x-gwkjs-8zn7m-3/image/upload/v1658488363/user_icon_png_1449226_jbw7dr.png",
+        required: true,
+    },
     role: {
         type: String,
         required: true,

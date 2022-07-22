@@ -4,7 +4,19 @@ const account = () =>
 {
 
     return (
-        <div>account</div>
+        <>
+            <div className="row">
+
+                <div className="col s3">
+                    dddafdsaf
+                </div>
+
+                <div className="col s9">
+                    fsdf
+                </div>
+
+            </div>
+        </>
     )
 }
 
