@@ -1,6 +1,7 @@
 /* eslint-disable import/no-anonymous-default-export */
 import bcrypt from 'bcryptjs';
 import initDB from '../../../helpers/initDB';
+import CartM from '../../../models/CartM';
 import User from '../../../models/User';
 
 initDB()
@@ -33,7 +34,10 @@ export default async (req, res) =>
             password: hashedPassword
         }).save()
 
-        // await new Cart({ user: newUser._id }).save()
+        //**Create an empty cart on user signup */
+        await new CartM({
+            user: newUser._id,
+        }).save()
 
         res.status(200).json({
             status: true,

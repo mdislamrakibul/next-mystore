@@ -4,12 +4,19 @@ import Cookies from 'js-cookie';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { parseCookies } from 'nookies';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 const Navbar = ({ }) =>
 {
     const router = useRouter()
     const cookieUser = parseCookies()
-    const user = cookieUser.user ? JSON.parse(cookieUser.user) : {}
+    const [user, setUser] = useState({})
+    // const user = cookieUser.user ? JSON.parse(cookieUser.user) : {}
+
+    useEffect(() =>
+    {
+        setUser(cookieUser.user ? JSON.parse(cookieUser.user) : {})
+    }, [])
+
     function isActive(route)
     {
         if (route == router.pathname) {
@@ -69,7 +76,7 @@ const Navbar = ({ }) =>
                     Cookies.remove('token')
                     Cookies.remove('user')
                     router.push('/auth/login')
-                }}>logout</button>&nbsp;
+                }}><b>logout</b></button>&nbsp;
                 {/* <i className="material-icons">exit_to_app</i> */}
             </li>
         )
@@ -78,10 +85,10 @@ const Navbar = ({ }) =>
     const userInfo = (user) =>
     {
         return (
-            <span style={{ display: 'flex', alignItems: 'center' }}>
-                {/* <img alt={user.username} src={user.image} style={{ width: '35px', height: '35px' }} />&nbsp; */}
-                <b>Welcome, {user.username} </b>
-            </span>
+            <li style={{ display: 'flex', alignItems: 'center' }}>
+                <img alt={user.username} src={user.image} style={{ width: '35px', height: '35px' }} />&nbsp;
+                <b>Welcome, {user.username}@{user.role} </b>
+            </li>
         )
     }
     return (
@@ -90,13 +97,13 @@ const Navbar = ({ }) =>
                 <div className="nav-wrapper">
                     <Link href="/"><a className="brand-logo">My Store</a></Link>
                     <ul className="right hide-on-med-and-down">
-                        <li>{user && user.username
+                        {user && user.username
                             ?
                             userInfo(user)
                             :
                             <span></span>
                         }
-                        </li>
+
                         <li className={isActive('/cart')}>
                             <Link href="/cart">
                                 <a style={{ display: 'flex' }}>
@@ -126,5 +133,19 @@ const Navbar = ({ }) =>
     )
 }
 
+export async function getServerSideProps(context)
+{
+    const { user, token } = parseCookies(ctx)
+    if (!token && !user) {
+        const { res } = ctx
+        res.writeHead(302, { Location: "/" })
+        res.end()
+    }
+    return {
+        props: {
+            user: user ? JSON.parse(user) : {}
+        }
+    }
+}
 
 export default Navbar

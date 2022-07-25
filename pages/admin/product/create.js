@@ -1,4 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
+import { parseCookies } from 'nookies';
 import React, { useState } from 'react';
 import AdminLayout from '../../../components/layout/AdminLayout';
 import baseUrl from '../../../helpers/baseUrl';
@@ -118,6 +119,22 @@ const Create = () =>
             </AdminLayout>
         </div >
     )
+}
+
+export async function getServerSideProps(ctx)
+{
+    const { user, token } = parseCookies(ctx)
+    if (!token && !user) {
+        const { res } = ctx
+        res.writeHead(302, { Location: "/" })
+        res.end()
+    }
+    return {
+        props: {
+            user: user ? JSON.parse(user) : {}
+        }
+    }
+
 }
 
 export default Create
