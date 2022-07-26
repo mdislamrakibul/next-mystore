@@ -1,12 +1,17 @@
 import { parseCookies } from 'nookies'
-import { useEffect, useRef } from 'react'
+import { useContext, useEffect, useRef } from 'react'
 import UserRoles from '../components/UserRoles'
+import { DataContext } from '../store/GlobalState'
 const Account = ({ orders }) =>
 {
     const orderCard = useRef(null)
     const cookie = parseCookies()
     const user = cookie.user ? JSON.parse(cookie.user) : ""
 
+    const { state, dispatch } = useContext(DataContext)
+    const { auth, notify } = state
+
+    console.log(auth);
     useEffect(() =>
     {
         M.Collapsible.init(orderCard.current)
@@ -63,6 +68,9 @@ const Account = ({ orders }) =>
                         Gender : <b>Male</b><br />
                         Username : <b>{user?.username}</b><br />
                         Password : <b>**********</b><br />
+                    </div>
+                    <div>
+
                     </div>
                 </div>
             </div>

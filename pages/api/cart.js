@@ -13,11 +13,11 @@ export default async (req,res)=>{
             await fetchUserCart(req,res)
             break
         case "PUT":
-            await addProduct(req,res)  
-            break   
+            await addProduct(req,res)
+            break
         case "DELETE":
-            await removeProduct(req,res) 
-            break   
+            await removeProduct(req,res)
+            break
     }
 }
 
@@ -34,8 +34,9 @@ const addProduct = Authenticated(async(req,res)=>{
      const {quantity,productId} = req.body
 
      const cart =  await Cart.findOne({user: req.userId})
+     console.log(cart);
      const pExists =  cart.products.some(pdoc => productId === pdoc.product.toString() )
-   
+
      if(pExists){
         await Cart.findOneAndUpdate(
             {_id:cart._id,"products.product":productId},
