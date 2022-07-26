@@ -1,9 +1,10 @@
-import { model, models, Schema } from "mongoose";
+import { model, models, Schema } from 'mongoose'
 
 const userSchema = new Schema({
     username: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     email: {
         type: String,
@@ -24,11 +25,15 @@ const userSchema = new Schema({
         required: true,
         default: "user",
         enum: ["user", 'admin', 'root']
+    },
+    isActive: {
+        type: Boolean,
+        required: true,
+        default: true,
     }
 }, {
     timestamps: true
 })
 
 
-const User = models.User || model('User', userSchema);
-export default User;
+export default models.User || model('User', userSchema)

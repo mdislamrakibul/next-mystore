@@ -1,9 +1,7 @@
-/* eslint-disable @next/next/no-css-tags */
-/* eslint-disable @next/next/no-sync-scripts */
 import Head from 'next/head';
-import React from 'react';
-import Navbar from '../navbar/Navbar';
-const Layout = ({ children }) =>
+import NavBar from "./Navbar";
+
+const layout = ({ children }) =>
 {
     return (
         <>
@@ -13,8 +11,7 @@ const Layout = ({ children }) =>
                 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" />
                 <link rel="stylesheet" href="/style.css" />
             </Head>
-            <Navbar />
-            <br />
+            <NavBar />
             {children}
             <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
             <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -23,4 +20,5 @@ const Layout = ({ children }) =>
     )
 }
 
-export default Layout
+
+export default layout

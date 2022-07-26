@@ -1,7 +1,7 @@
 
 $(document).ready(function ()
 {
-    // alert("jdfhasjkdhfs"
+    // alert("test")
     $(".dropdown-trigger").dropdown();
     $('.tabs').tabs();
 })
@@ -18,13 +18,14 @@ var options4 = {
 
 }
 var options = {
-    swipeable: true
+
 }
 document.addEventListener('DOMContentLoaded', function ()
 {
     var elems = document.querySelectorAll('.tooltipped');
-    var instances = M.Tooltip.init(elems, options1);
+    var instances = M.Tooltip.init(elems, options);
 });
+
 // document.addEventListener('DOMContentLoaded', function ()
 // {
 //     var elems = document.querySelectorAll('.dropdown-trigger');

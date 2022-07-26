@@ -1,57 +1,58 @@
-import Link from 'next/link';
-import React from 'react';
-import ClientLayout from '../components/layout/ClientLayout';
-import baseUrl from '../helpers/baseUrl';
-export default function Home({ products })
-{
+import Link from 'next/link'
+import baseUrl from '../helpers/baseUrl'
 
-  return (
-    <>
-      <ClientLayout>
-        <div className="row">
-          {products.map(product => (
-            <div className="col s4" key={product._id}>
-              <div className="card">
-                <div className="card-image waves-effect waves-block waves-light">
-                  <img className="activator" src={product.image} />
+const Home = ({products})=>{
 
-                </div>
-                <div className="card-content">
-                  <span className="card-title  grey-text text-darken-4">
-                    <Link href={'/product/[id]'} as={`/product/${product._id}`}><a>{product.name}</a ></Link>
 
-                    <span className='activator'>
-                      <i className="material-icons right tooltipped" data-position="bottom" data-tooltip="Details">
-                        more_vert
-                      </i>
-                    </span>
-                  </span>
-                  <p>$&nbsp;{product.price}</p>
-                </div>
-                <div className="card-action">
-                  <a href="#">This is a link</a>
-                  <a href="#">This is a link</a>
-                </div>
-                <div className="card-reveal">
-                  <span className="card-title grey-text text-darken-4">{product.name}<i className="material-icons right">close</i></span>
-                  <p>{product.description}</p>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </ClientLayout>
-    </>
+ const productList = products.map(product=>{
+   return(
+    <div className="card pcard" key={product._id}>
+    <div className="card-image">
+      <img src={product.mediaUrl} />
+      <span className="card-title">{product.name}</span>
+    </div>
+    <div className="card-content">
+      <p> ₹  {product.price}</p>
+    </div>
+    <div className="card-action">
+      <Link href={'/product/[id]'} as={`/product/${product._id}`}><a>View Product</a></Link>
+    </div>
+  </div>
+   )
+ })
+
+  // console.log(products)
+  return(
+    <div className="rootcard">
+      {productList}
+    </div>
   )
 }
 
-export async function getStaticProps()
-{
-  const prodRes = await fetch(`${baseUrl}/api/products`)
-  const products = await prodRes.json()
-  return {
-    props: {
-      products: products.data,
-    },
-  }
+
+export async function getStaticProps(){
+ const res =  await fetch(`${baseUrl}/api/products`)
+ const data = await res.json()
+ return {
+   props:{
+     products:data
+   }
+ }
 }
+
+// export async function getServerSideProps(){
+//  const res =  await fetch(`${baseUrl}/api/products`)
+//  const data = await res.json()
+//  return {
+//    props:{
+//      products:data
+//    }
+//  }
+// }
+
+
+
+
+
+
+export default Home

@@ -1,21 +1,25 @@
-import { mongoose } from "mongoose";
+import mongoose from 'mongoose'
 
-async function initDB()
+function initDB()
 {
     if (mongoose.connections[0].readyState) {
         console.log("already connected")
         return
     }
-    mongoose.connect(process.env.MONGO_URL,
-        { useNewUrlParser: true, useUnifiedTopology: true });
-
+    mongoose.connect(process.env.MONGO_URL, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+        useCreateIndex: true
+    })
     mongoose.connection.on('connected', () =>
     {
-        console.log('Connect to mongodb');
+        console.log("connected to mongo")
     })
     mongoose.connection.on('error', (err) =>
     {
-        console.log('mongo ' + err);
+        console.log("error connecting", err)
     })
 }
+
+
 export default initDB
