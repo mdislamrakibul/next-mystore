@@ -10,7 +10,7 @@ const reducers = (state, action) =>
                 ...state,
                 notify: action.payload
             }
-        case ACTIONS.Auth:
+        case ACTIONS.AUTH:
             return {
                 ...state,
                 auth: action.payload

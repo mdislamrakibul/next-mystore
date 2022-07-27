@@ -94,7 +94,17 @@ function UserRoles()
     return (
         <>
             <hr />
-            <h5>User & roles </h5> <h6>[ Only root user can see this part. ]</h6>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                <span>
+                    <h5>User & roles </h5> <h6>[ Only root user can see this part. ]</h6>
+                </span>
+                <span >
+                    <a class="waves-effect waves-light btn #d81b60 pink darken-1" onClick={() => fetchUser()} style={{ display: 'flex', alignItems: 'center' }}>
+                        Reload&nbsp;<i class="material-icons">refresh</i>
+                    </a>
+                </span>
+            </div>
+
             <hr />
             <table className="highlight">
                 <thead>
@@ -104,7 +114,7 @@ function UserRoles()
                         <th>Email</th>
                         <th>Created</th>
                         <th>Role [Type]</th>
-                        <th>Ch. Role</th>
+                        <th>Cng. Role</th>
                         <th>Act./Deact.</th>
                     </tr>
                 </thead>

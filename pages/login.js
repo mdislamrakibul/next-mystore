@@ -1,15 +1,18 @@
-import cookie from 'js-cookie';
+import Cookies from 'js-cookie';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import React, { useState } from 'react';
+import { parseCookies } from 'nookies';
+import React, { useContext, useEffect, useState } from 'react';
 import baseUrl from '../helpers/baseUrl';
-
+import { DataContext } from '../store/GlobalState';
 const Login = () =>
 {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const router = useRouter()
-
+  const { state, dispatch } = useContext(DataContext)
+  const { auth } = state
+  const cookie = parseCookies()
   const handleClick = async (e) =>
   {
     e.preventDefault()
@@ -29,8 +32,15 @@ const Login = () =>
       M.toast({ html: res2.message, classes: "red" })
     } else {
       M.toast({ html: res2.message, classes: "green" })
-      cookie.set('token', res2.data.token)
-      cookie.set('user', JSON.stringify(res2.data.user))
+      Cookies.set('token', res2.data.token)
+      Cookies.set('user', JSON.stringify(res2.data.user))
+      dispatch({
+        type: "AUTH",
+        payload: {
+          token: res2.data.token,
+          user: res2.data.user
+        }
+      })
       setEmail("")
       setPassword("")
       router.push('/account')
@@ -43,6 +53,15 @@ const Login = () =>
     setEmail("")
     setPassword("")
   }
+
+  useEffect(() =>
+  {
+    if (cookie.token && cookie.user) {
+      router.push('/')
+      M.toast({ html: 'You already logged in', classes: "orange" })
+    }
+  }, [cookie.token, cookie.user])
+
   return (
     <>
       <div className="container card authcard center-align">

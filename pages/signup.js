@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import React, { useState } from 'react';
+import { parseCookies } from 'nookies';
+import React, { useEffect, useState } from 'react';
 import baseUrl from '../helpers/baseUrl';
 
 const SignUp = () =>
@@ -9,7 +10,7 @@ const SignUp = () =>
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const router = useRouter()
-
+  const cookie = parseCookies()
 
   const handleClick = async (e) =>
   {
@@ -45,6 +46,16 @@ const SignUp = () =>
     setEmail("")
     setPassword("")
   }
+
+  useEffect(() =>
+  {
+    if (cookie.token && cookie.user) {
+      router.push('/')
+      M.toast({ html: 'You already logged in', classes: "orange" })
+    }
+  }, [cookie.token, cookie.user])
+
+
   return (
     <>
       <div className="container card authcard center-align">
