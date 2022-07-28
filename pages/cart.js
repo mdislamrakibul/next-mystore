@@ -1,139 +1,85 @@
-import baseUrl from '../helpers/baseUrl'
-import { parseCookies} from 'nookies'
-import cookie from 'js-cookie'
-import {useRouter} from 'next/router'
-import Link from 'next/link'
-import {useState} from 'react'
+import Head from 'next/head';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { parseCookies } from 'nookies';
+import { useContext, useEffect } from 'react';
+import CartItem from '../components/CartItem';
+import { DataContext } from '../store/GlobalState';
 
-import StripeCheckout from 'react-stripe-checkout';
-
-const Cart  = ({error,products})=>{
-    const {token} =  parseCookies()
+const Cart = () =>
+{
+    const { token, user, __nextStore__cart__00 } = parseCookies()
     const router = useRouter()
-    const [cProducts,setCartProduct] = useState(products)
     let price = 0
-    if(!token){
-        return(
-            <div className="center-align">
-                <h3>please login to view your cart</h3>
-                <Link href="/login"><a><button className="btn #1565c0 blue darken-3">Login</button></a></Link>
+
+    const { state, dispatch } = useContext(DataContext)
+    const { cart } = state
+
+    useEffect(() =>
+    {
+        if (cart.length < 0 && __nextStore__cart__00.length) {
+            dispatch({ type: 'ADD_TO_CART', payload: __nextStore__cart__00 })
+        } else {
+            dispatch({ type: 'ADD_TO_CART', payload: cart })
+        }
+        console.log(cart);
+    }, [])
+
+
+    if (cart.length === 0 || __nextStore__cart__00.length === 0)
+        return (
+            <div className='container'>
+                <div className='row'>
+
+                    <div className='col s3'></div>
+                    <div className='col s6 text-center'>
+                        <img style={{ width: '600px' }} src="/empty_cart.png" alt="not empty" />
+                        <br />
+                        <h5 className='text-uppercase'>Your cart is empty</h5>
+                        <Link href='/' ><a>continue shopping</a></Link>
+                    </div>
+                    <div className='col s3'></div>
+                </div>
+
             </div>
         )
-    }
-    if(error){
-        M.toast({html:error,classes:"red"})
-        cookie.remove("user")
-        cookie.remove("token")
-        router.push('/login')
 
-    }
-    const handleRemove = async (pid)=>{
-     const res = await fetch(`${baseUrl}/api/cart`,{
-           method:"DELETE",
-           headers:{
-              "Content-Type":"application/json",
-              "Authorization":token 
-           },
-           body:JSON.stringify({
-               productId:pid
-           })
-       })
 
-       const res2 =  await res.json()
-       setCartProduct(res2)
-    }
-    const CartItems = ()=>{
-        return(
-            <>
-              {cProducts.map(item=>{
-                price = price + item.quantity * item.product.price
-                  return(
-                      <div style={{display:"flex",margin:"20px"}} key={item._id}>
-                          <img src={item.product.mediaUrl} style={{width:"30%"}}/>
-                          <div style={{marginLeft:"20px"}}>
-                              <h6>{item.product.name}</h6>
-                              <h6>{item.quantity} x  ₹ {item.product.price}</h6>
-                              <button className="btn red" onClick={()=>{handleRemove(item.product._id)}}>remove</button>
-                          </div>
-                      </div>
-                  )
-              })}
-            </>
-        )
-    }
-
-    const handleCheckout = async (paymentInfo)=>{
-        console.log(paymentInfo)
-        const res = await fetch(`${baseUrl}/api/payment`,{
-            method:"POST",
-            headers:{
-               "Content-Type":"application/json",
-              "Authorization":token 
-            },
-            body:JSON.stringify({
-                paymentInfo
-            })
-        })
-        const res2 = await res.json()
-        M.toast({html: res2.mesage,classes:"green "})
-        router.push('/')
-    }
-
-    const TotalPrice = ()=>{
-        return(
-            <div className="container" style={{display:"flex",justifyContent:"space-between"}}>
-                <h5>total ₹ {price}</h5>
-                {products.length != 0
-                &&  <StripeCheckout
-                name="My store"
-                amount={price * 100}
-                image={products.length > 0 ? products[0].product.mediaUrl:""}
-                currency="INR"
-                shippingAddress={true}
-                billingAddress={true}
-                zipCode={true}
-                stripeKey="pk_test_51H6fgDEta3rHzkPYGgIOQZSFrukEzAl71AOnyAUjyGR8uJPDaGfALQYWre4F5g0Quyh9d7PTphh56SmUlhtsQYmd00DZwB9gMj"
-                token={(paymentInfo)=>handleCheckout(paymentInfo)}
-                >
-                <button className="btn">Checkout</button>
-                </StripeCheckout>
-                }
-              
-            </div>
-        )
-    }
-    return(
+    return (
         <div className="container" >
-          <CartItems />
-          <TotalPrice />
+            <Head>
+                <title>Cart</title>
+            </Head>
+            <div className='row'>
+                <div className='col s8'>
+                    <h5 className='text-uppercase'>Your Shopping Cart</h5>
+                    <hr />
+                    <table className="table my-3 highlight">
+                        <thead>
+                            <tr>
+                                <th>Product</th>
+                                <th>Title</th>
+                                <th>Quantity</th>
+                                <th>Price</th>
+                                <th>Total Price</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {cart.map(item => (
+
+                                <CartItem key={item._id} dispatch={dispatch} item={item} cart={cart} />
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+                <div className='col s4'>
+                    <h5 className='text-uppercase'>Checkout</h5>
+                    <hr />
+                </div>
+            </div>
         </div>
 
     )
-}
-
-
-export async function getServerSideProps(ctx){
-    const {token} = parseCookies(ctx)
-    if(!token){
-        return {
-            props:{products:[]}
-        }
-    }
-    const res =  await fetch(`${baseUrl}/api/cart`,{
-        headers:{
-            "Authorization":token
-        }
-    })
-    const products =  await res.json()
-    if(products.error){
-        return{
-            props:{error:products.error}
-        }
-    }
-    console.log("products",products)
-    return {
-        props:{products}
-    }
 }
 
 

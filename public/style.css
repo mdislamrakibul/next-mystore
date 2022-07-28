@@ -22,3 +22,39 @@ input:focus{
   border-bottom: 1px solid #1565c0 !important;
   box-shadow: 0 1px 0 0 #1565c0 !important;
 }
+.img-thumbnail{
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 5px;
+  object-fit: cover;
+}
+
+.img-thumbnail:hover {
+  box-shadow: 0 0 2px 1px #ff9e80
+}
+.text-danger{
+  color: rgb(255, 0, 106);
+}
+.d-flex{
+  display: flex;
+}
+.justify-content-between{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.text-uppercase{
+  text-transform: uppercase;
+}
+.responsive_img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    /* Prevent the image from stretching. So it crops the image to prevent from awkward stretching */
+}
+.text-center{
+  text-align: center;
+}
+.px-3{
+  padding: 0px 10px;
+}

@@ -2,6 +2,7 @@ import Product from '../../../models/Product'
 
 export default async (req, res) =>
 {
+
     switch (req.method) {
         case "GET":
             await getallProducts(req, res)
@@ -17,18 +18,27 @@ export default async (req, res) =>
 const getallProducts = async (req, res) =>
 {
     try {
+        console.log("GET");
         const products = await Product.find()
-        res.status(200).json({
+        if (products.length > 0) {
+            return res.status(200).json({
+                status: true,
+                data: products,
+                message: "Product List Found",
+                total: products.length
+            })
+        }
+        return res.status(200).json({
             status: true,
             data: products,
-            message: "success",
+            message: "Product List Not Found",
             total: products.length
         })
     } catch (err) {
-        console.log({
+        return res.status(200).json({
             status: false,
             data: err,
-            message: "error",
+            message: "Something Wrong",
             total: 0
         })
     }

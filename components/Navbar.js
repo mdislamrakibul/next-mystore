@@ -2,11 +2,15 @@ import cookie from 'js-cookie'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { parseCookies } from 'nookies'
+import { useContext } from 'react'
+import { DataContext } from '../store/GlobalState'
 const NavBar = () =>
 {
   const router = useRouter()
-  const cookieuser = parseCookies()
-  const user = cookieuser.user ? JSON.parse(cookieuser.user) : ""
+  const cookieUser = parseCookies()
+  const user = cookieUser.user ? JSON.parse(cookieUser.user) : ""
+  const { state, dispatch } = useContext(DataContext)
+  const { cart } = state
 
   function isActive(route)
   {
@@ -32,8 +36,10 @@ const NavBar = () =>
             <Link href="/cart">
               <b>
                 <a style={{ display: 'flex' }}>
+                  <span style={{ color: 'white' }}><sup>{cart.length}</sup></span>&nbsp;
                   <span>Cart</span>&nbsp;
                   <i className="material-icons">shopping_cart</i>
+
                 </a>
               </b>
             </Link>
