@@ -28,7 +28,6 @@ const Product = ({ product }) =>
 
   useEffect(() =>
   {
-    M.Modal.init(modalRef.current)
   }, [])
   if (router.isFallback) {
     return (
@@ -83,12 +82,10 @@ const Product = ({ product }) =>
     })
     const res2 = await res.json()
     if (res2.error) {
-      M.toast({ html: error, classes: "red" })
       cookie2.remove("user")
       cookie2.remove("token")
       router.push('/login')
     }
-    M.toast({ html: res2.message, classes: "green" })
 
   }
 
@@ -96,13 +93,11 @@ const Product = ({ product }) =>
   {
 
     if (product.inStock === 0) {
-      M.toast({ html: 'This product is out of stock.', classes: "red" })
       return
     }
     const check = cart.length && cart.find(item => item._id === product._id)
 
     if (check) {
-      M.toast({ html: `${product.title} already exists.`, classes: "red" })
       return
     }
     dispatch(addToCart(product, cart))

@@ -1,4 +1,3 @@
-import cookie from 'js-cookie'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { parseCookies } from 'nookies'
@@ -12,117 +11,156 @@ const NavBar = () =>
   const { state, dispatch } = useContext(DataContext)
   const { cart } = state
 
-  function isActive(route)
+  const isActive = (r) =>
   {
-    if (route == router.pathname) {
-      return "active"
+    if (r === router.pathname) {
+      return " active"
+    } else {
+      return ""
     }
-    else ""
+  }
+
+  const handleLogout = () =>
+  {
+    cookie.remove('token')
+    cookie.remove('user')
+    router.push('/login')
+    localStorage.clear();
+    dispatch({ type: 'AUTH', payload: {} })
+    return router.push('/')
+  }
+
+  const adminRouter = () =>
+  {
+    return (
+      <>
+        <Link href="/users">
+          <a className="dropdown-item">Users</a>
+        </Link>
+        <Link href="/create">
+          <a className="dropdown-item">Products</a>
+        </Link>
+        <Link href="/categories">
+          <a className="dropdown-item">Categories</a>
+        </Link>
+      </>
+    )
+  }
+
+  const loggedRouter = () =>
+  {
+    return (
+      <li className="nav-item dropdown">
+        <a className="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <img src={user.image} alt={user.username}
+            style={{
+              borderRadius: '50%', width: '30px', height: '30px',
+              transform: 'translateY(-3px)', marginRight: '3px'
+            }} /> {user.username}
+        </a>
+
+        <div className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <Link href="/profile">
+            <a className="dropdown-item">Profile</a>
+          </Link>
+          {
+            user.role === 'admin' && adminRouter()
+          }
+          <div className="dropdown-divider"></div>
+          <button className="dropdown-item" onClick={handleLogout}>Logout</button>
+        </div>
+      </li>
+    )
   }
 
   return (
-    <nav className="nav-extended">
-      <div className="nav-wrapper #ff9e80 deep-orange accent-1 darken-3">
-        <Link href="/"><a className="brand-logo left">MyStore</a></Link>
-        <ul id="nav-mobile" className="right">
-          {
-            (user && user.username && user.image) &&
-            <li style={{ display: 'flex', alignItems: 'center' }}>
-              <img alt={user.username} src={user.image} style={{ width: '35px', height: '35px' }} />&nbsp;
-              <b><span>Welcome, {user.username}@{user.role}</span> </b>
-            </li>
-          }
-          <li className={isActive('/cart')}>
-            <Link href="/cart">
-              <b>
-                <a style={{ display: 'flex' }}>
-                  <span style={{ color: 'white' }}><sup>{cart.length}</sup></span>&nbsp;
-                  <span>Cart</span>&nbsp;
-                  <i className="material-icons">shopping_cart</i>
-
+    <>
+      <nav className="navbar navbar-expand-lg navbar-light bg-light">
+        <Link href="/">
+          <a className="navbar-brand">MyStore</a>
+        </Link>
+        <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+          <span className="navbar-toggler-icon"></span>
+        </button>
+        <div className="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
+          <ul className="navbar-nav p-1">
+            <li className="nav-item">
+              <Link href="/cart">
+                <a className={"nav-link" + isActive('/cart')}>
+                  <i className="fas fa-shopping-cart position-relative" aria-hidden="true">
+                    <span className="position-absolute"
+                      style={{
+                        padding: '3px 6px',
+                        background: '#ed143dc2',
+                        borderRadius: '50%',
+                        top: '-10px',
+                        right: '-10px',
+                        color: 'white',
+                        fontSize: '14px'
+                      }}>
+                      {cart.length}
+                    </span>
+                  </i> Cart
                 </a>
-              </b>
-            </Link>
-          </li>
-          {/* {
-            (user.role == 'admin' || user.role == 'root') &&
-            <li className={isActive('/create')}><Link href="/create"><a>create</a></Link></li>
-          } */}
+              </Link>
+            </li>
+            {
+              (user && user.username)
+                ?
+                <div class="dropdown">
+                  <span class=" dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <img src={user.image} alt={user.username}
+                      style={{
+                        borderRadius: '50%', width: '30px', height: '30px',
+                        transform: 'translateY(-3px)', marginRight: '3px'
+                      }} /> {user.username}
+                  </span>
+                  <ul class="dropdown-menu d-flex">
+                    <li>
+                      <Link href="/account">
+                        <a class="dropdown-item"><i class="fas fa-id-card-alt"></i>&nbsp;&nbsp;Account</a>
+                      </Link>
+                    </li>
+                    <li class="dropdown-divider"></li>
+                    <li style={{ cursor: 'pointer' }} onClick={() => handleLogout()}>
+                      <a class="dropdown-item"><i class="fas fa-sign-out-alt"></i>&nbsp;&nbsp;Logout</a>
+                    </li>
+                  </ul>
+                </div>
+                // <li className="nav-item dropdown">
+                //   <a className="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                //     <img src={user.image} alt={user.username}
+                //       style={{
+                //         borderRadius: '50%', width: '30px', height: '30px',
+                //         transform: 'translateY(-3px)', marginRight: '3px'
+                //       }} /> {user.username}
+                //   </a>
 
-          {user ?
-            <>
-              <li className={isActive('/account')}>
-                <Link href="/account">
-                  <b>
-                    <a style={{ display: 'flex' }}>
-                      <span>Account</span>&nbsp;
-                      <i className="material-icons">people_outline</i>
+                //   <div className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                //     <Link href="/profile">
+                //       <a className="dropdown-item">Profile</a>
+                //     </Link>
+                //     {
+                //       user.role === 'admin' && adminRouter()
+                //     }
+                //     <div className="dropdown-divider"></div>
+                //     <button className="dropdown-item" onClick={handleLogout}>Logout</button>
+                //   </div>
+                // </li>
+                :
+
+                <li className="nav-item">
+                  <Link href="/signup">
+                    <a className={"nav-link" + isActive('/signup')}>
+                      <i class="fas fa-user-plus"></i> Join
                     </a>
-                  </b>
-                </Link>
-              </li>
-              <li><button className="btn red" onClick={() =>
-              {
-                cookie.remove('token')
-                cookie.remove('user')
-                router.push('/login')
-                localStorage.clear();
-              }}>logout</button></li>
-            </>
-            :
-            <>
-              <li className={isActive('/login')}>
-                <Link href="/login" >
-                  <b>
-                    <a style={{ display: 'flex' }}>
-                      <span>Login</span>&nbsp;
-                      <i className="material-icons">lock_open</i>
-                    </a>
-                  </b>
-                </Link>
-              </li>
-              <li className={isActive('/signup')}>
-                <Link href="/signup">
-                  <b>
-                    <a style={{ display: 'flex' }}>
-                      <span>Signup</span>&nbsp;
-                      <i className="material-icons">lock_outline</i>
-                    </a>
-                  </b>
-                </Link>
-              </li>
-            </>
-          }
-        </ul>
-      </div>
-      {(user && (user.role === 'root' || user.role === 'admin'))
-        &&
-        <div className="nav-content">
-          <ul className="tabs tabs-transparent">
-            <li className="tab">
-              <Link href="/admin/dashboard">
-                <b>
-                  <a style={{ display: 'flex', alignItems: 'center' }}>
-                    <span>Dashboard</span>&nbsp;
-                    <i className="material-icons">dashboard</i>
-                  </a>
-                </b>
-              </Link>
-            </li>
-            <li className="tab">
-              <Link href="/admin/product/create">
-                <b>
-                  <a style={{ display: 'flex', alignItems: 'center' }}>
-                    <span>Product</span>&nbsp;
-                    <i className="material-icons">next_week</i>
-                  </a>
-                </b>
-              </Link>
-            </li>
+                  </Link>
+                </li>
+            }
           </ul>
         </div>
-      }
-    </nav>
+      </nav>
+    </>
   )
 }
 

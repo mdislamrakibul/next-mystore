@@ -4,8 +4,6 @@ import { decrease, increase } from '../store/Actions';
 
 const CartItem = ({ item, dispatch, cart }) =>
 {
-    // console.log(" In cart item ");
-    // console.log(cart);
     return (
         <tr>
             <td style={{ width: '150px', overflow: 'hidden' }}>
@@ -43,7 +41,7 @@ const CartItem = ({ item, dispatch, cart }) =>
                 <button class="btn-floating btn-sm waves-effect waves-light #f44336 red" onClick={() => dispatch({
                     type: 'ADD_MODAL',
                     payload: [{ data: cart, id: item._id, title: item.title, type: 'ADD_TO_CART' }]
-                })} data-toggle="modal" data-target="#exampleModal">
+                })} data-bs-toggle="modal" data-bs-target="#exampleModal">
                     <i className="material-icons" aria-hidden="true"
                         style={{ fontSize: '18px' }}
                     >clear</i>

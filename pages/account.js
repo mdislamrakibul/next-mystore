@@ -14,7 +14,6 @@ const Account = ({ orders }) =>
     console.log(auth);
     useEffect(() =>
     {
-        M.Collapsible.init(orderCard.current)
     }, [])
     const OrderHistory = () =>
     {

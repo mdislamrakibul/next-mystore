@@ -10,13 +10,11 @@ const ProductItem = ({ product }) =>
     {
 
         if (product.inStock === 0) {
-            M.toast({ html: 'This product is out of stock.', classes: "red" })
             return
         }
         const check = cart.length && cart.find(item => item._id === product._id)
 
         if (check) {
-            M.toast({ html: `${product.title} already exists.`, classes: "red" })
             return
         }
         dispatch(addToCart(product, cart))

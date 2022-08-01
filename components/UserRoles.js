@@ -19,9 +19,7 @@ function UserRoles()
         })
         const resp = await res.json()
         if (resp.status) {
-            M.toast({ html: resp.message, classes: "green" })
         } else {
-            M.toast({ html: resp.message, classes: "red" })
         }
         setUsers(resp?.data?.length ? resp.data : [])
 
@@ -42,9 +40,7 @@ function UserRoles()
         })
         const res2 = await res.json()
         if (!res2.status) {
-            M.toast({ html: res2.message, classes: "red" })
         } else {
-            M.toast({ html: res2.message, classes: "green" })
             const updatedUsers = users.map(user =>
             {
                 if ((user.role != res2.data.role) && (user.email == res2.data.email)) {
@@ -77,9 +73,7 @@ function UserRoles()
         })
         const res2 = await res.json()
         if (!res2.status) {
-            M.toast({ html: res2.message, classes: "red" })
         } else {
-            M.toast({ html: res2.message, classes: "green" })
         }
         const updatedUsers = users.map(user =>
         {

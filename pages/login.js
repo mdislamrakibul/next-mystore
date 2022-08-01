@@ -29,9 +29,7 @@ const Login = () =>
 
     const res2 = await res.json()
     if (!res2.status) {
-      M.toast({ html: res2.message, classes: "red" })
     } else {
-      M.toast({ html: res2.message, classes: "green" })
       Cookies.set('token', res2.data.token)
       Cookies.set('user', JSON.stringify(res2.data.user))
       dispatch({
@@ -58,7 +56,6 @@ const Login = () =>
   {
     if (cookie.token && cookie.user) {
       router.push('/')
-      M.toast({ html: 'You already logged in', classes: "orange" })
     }
   }, [cookie.token, cookie.user])
 

@@ -29,9 +29,7 @@ const SignUp = () =>
 
     const res2 = await res.json()
     if (!res2.status) {
-      M.toast({ html: res2.message, classes: "red" })
     } else {
-      M.toast({ html: res2.message, classes: "green" })
       setUsername("")
       setEmail("")
       setPassword("")
@@ -51,7 +49,6 @@ const SignUp = () =>
   {
     if (cookie.token && cookie.user) {
       router.push('/')
-      M.toast({ html: 'You already logged in', classes: "orange" })
     }
   }, [cookie.token, cookie.user])
 

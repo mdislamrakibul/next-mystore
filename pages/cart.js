@@ -1,6 +1,5 @@
 import Head from 'next/head';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 import { parseCookies } from 'nookies';
 import { useContext, useEffect, useState } from 'react';
 import CartItem from '../components/CartItem';
@@ -8,9 +7,7 @@ import { getData } from '../helpers/dataOps';
 import { DataContext } from '../store/GlobalState';
 const Cart = () =>
 {
-    const { token, user, __nextStore__cart__00 } = parseCookies()
-    const router = useRouter()
-    let price = 0
+    const { user } = parseCookies()
     let cartLocal = []
     const { state, dispatch } = useContext(DataContext)
     const { cart } = state
@@ -165,10 +162,7 @@ const Cart = () =>
                 </div>
             </div >
         </div >
-
     )
 }
-
-
 
 export default Cart

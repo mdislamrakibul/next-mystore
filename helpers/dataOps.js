@@ -1,4 +1,3 @@
-// const baseUrl = process.env.BASE_URL
 import baseUrl from './baseUrl';
 
 export const getData = async (url, token) =>
