@@ -1,5 +1,7 @@
-import Product from '../../../models/Product'
+import initDB from '../../../helpers/initDB';
+import Product from '../../../models/Product';
 
+initDB()
 export default async (req, res) =>
 {
 
@@ -18,7 +20,7 @@ export default async (req, res) =>
 const getallProducts = async (req, res) =>
 {
     try {
-        console.log("GET");
+        console.log("GET PRODUCTS");
         const products = await Product.find()
         if (products.length > 0) {
             return res.status(200).json({

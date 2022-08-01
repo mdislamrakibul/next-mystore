@@ -8,7 +8,6 @@ initDB()
 export default async (req, res) =>
 {
   const { email, password } = req.body
-  console.log("🚀 ~ file: login.js ~ line 11 ~ req.body", req.body)
   try {
     if (!email || !password) {
       return res.status(200).json({
@@ -42,7 +41,6 @@ export default async (req, res) =>
       const token = jwt.sign({ userId: user._id, role: user.role, username: user.username, email: user.email, isActive: user.isActive }, process.env.JWT_SECRET, {
         expiresIn: "7d"
       })
-      console.log("🚀 ~ file: login.js ~ line 42 ~ token", token)
       const { __v, ...info } = user._doc
       res.status(200).json({
         status: true,

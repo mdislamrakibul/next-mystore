@@ -8,7 +8,6 @@ const Home = ({ products, result }) =>
     <div>
       <div className="row">
         {products.length < 1 ? 'No Products Found' : products.map(product => <ProductItem key={product._id} product={product} />)}
-
       </div >
     </div>
   )

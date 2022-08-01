@@ -66,6 +66,7 @@ const NavBar = () =>
                 cookie.remove('token')
                 cookie.remove('user')
                 router.push('/login')
+                localStorage.clear();
               }}>logout</button></li>
             </>
             :
