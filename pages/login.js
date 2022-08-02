@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import { parseCookies } from 'nookies';
 import React, { useContext, useEffect, useState } from 'react';
 import baseUrl from '../helpers/baseUrl';
+import { errorMsg, successMsg } from '../helpers/Toastify';
 import { DataContext } from '../store/GlobalState';
 const Login = () =>
 {
@@ -63,41 +64,66 @@ const Login = () =>
 
   return (
     <>
-      <div className="container card authcard center-align">
-        <h4>LOGIN</h4>
-        <form>
-          <div className="row">
-            <div className="input-field col s12">
-              <i className="material-icons prefix">email</i>
-              <input id="email" type="email" className="validate" name='email'
-                onChange={(e) => { setEmail(e.target.value) }} value={email} />
-              <label htmlFor="email">Email</label>
+      <div className='row'>
+        <div className='col-md-4 offset-md-4'>
+          <div class="card text-center">
+            <div class="card-header">
+              <h4>LOGIN</h4>
             </div>
-          </div>
-          <div className="row">
-            <div className="input-field col s12">
-              <i className="material-icons prefix">keyboard_hide</i>
-              <input id="password" type="password" className="validate" name='password'
-                onChange={(e) => { setPassword(e.target.value) }} value={password} />
-              <label htmlFor="password">Password</label>
-            </div>
-          </div>
-          <div className="row">
-            <div className=" col s12">
-              <button className="waves-effect waves-light #1565c0 blue btn" onClick={(e) => { handleClick(e) }}>
-                <i className="material-icons right" >send</i>
-                Login
-              </button>
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              <button className="waves-effect waves-light btn #ef5350 red lighten-1" onClick={(e) => reset(e)}>
-                <i className="material-icons right">refresh</i>
-                Reset
-              </button>
-            </div>
-          </div>
-          <Link href="/auth/signup"><a><h6>Dont have a account ?</h6></a></Link>
-        </form>
+            <div class="card-body">
+              <form>
 
+                <div className="row">
+                  <div class="mb-3 row">
+                    <label for="email" class="col-sm-1 col-form-label">
+                      <i class="fas fa-at"></i>
+                    </label>
+                    <div class="col-sm-11">
+                      <input type="email" class="form-control" id="email" name="email"
+                        onChange={(e) => { setEmail(e.target.value) }} value={email} placeholder="Email" />
+                    </div>
+                  </div>
+                </div>
+
+                <div className="row">
+                  <div class="mb-3 row">
+                    <label for="password" class="col-sm-1 col-form-label">
+                      <i class="fas fa-key"></i>
+                    </label>
+                    <div class="col-sm-11">
+                      <input type="email" class="form-control" id="password" name="password"
+                        onChange={(e) => { setPassword(e.target.value) }} value={password} placeholder="Password" />
+                    </div>
+                  </div>
+                </div>
+
+                <div className="row">
+                  <div className="col-6 text-end">
+                    <button className="btn btn-sm btn-success" onClick={(e) => { handleClick(e) }}>
+                      <i class="fas fa-sign-in-alt"></i>&nbsp;
+                      Login
+                    </button>
+                  </div>
+                  <div className="col-6 text-start">
+                    <button className="btn btn-sm btn-danger" onClick={(e) => reset(e)}>
+                      <i class="fas fa-sync"></i>&nbsp;
+                      Reset
+                    </button>
+                  </div>
+                </div>
+                <br />
+
+              </form>
+            </div>
+            <div class="card-footer text-muted">
+              <Link href="/signup" >
+                <a className="text-center" style={{ textDecoration: 'none', color: 'cornflowerblue' }}>
+                  <h6>Don't have an account ?</h6>
+                </a>
+              </Link>
+            </div>
+          </div>
+        </div>
       </div>
     </>
   )

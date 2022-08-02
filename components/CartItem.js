@@ -11,7 +11,7 @@ const CartItem = ({ item, dispatch, cart }) =>
                     className="img-thumbnail w-100"
                     style={{ minWidth: '80px', height: '80px' }} />
             </td>
-            <td style={{ minWidth: '150px' }} className="w-50 align-middle" >
+            <td style={{ width: '150px' }} className="align-middle" >
                 <h6 className="text-capitalize text-secondary">
                     <Link href={`/product/${item._id}`}>
                         <a>{item.title}</a>
@@ -25,20 +25,20 @@ const CartItem = ({ item, dispatch, cart }) =>
             </td>
 
             <td className="align-middle" style={{ minWidth: '120px' }}>
-                <button className="btn-floating btn-sm waves-effect waves-light"
+                <button className="btn btn-sm btn-danger"
                     onClick={() => dispatch(decrease(cart, item._id))}
                     disabled={item.quantity === 1 ? true : false} > - </button>
 
                 <span className="px-3">{item.quantity}</span>
 
-                <button className="btn-floating btn-sm waves-effect waves-light"
+                <button className="btn btn-sm btn-success"
                     onClick={() => dispatch(increase(cart, item._id))}
                     disabled={item.quantity === item.inStock ? true : false} > + </button>
             </td>
-            <td>${item.price}</td>
-            <td>${item.quantity * item.price}</td>
+            <td className="align-middle">${item.price}</td>
+            <td className="align-middle">${item.quantity * item.price}</td>
             <td className="align-middle" style={{ minWidth: '50px', cursor: 'pointer' }}>
-                <button class="btn-floating btn-sm waves-effect waves-light #f44336 red" onClick={() => dispatch({
+                <button class="btn btn-sm btn-danger" onClick={() => dispatch({
                     type: 'ADD_MODAL',
                     payload: [{ data: cart, id: item._id, title: item.title, type: 'ADD_TO_CART' }]
                 })} data-bs-toggle="modal" data-bs-target="#exampleModal">

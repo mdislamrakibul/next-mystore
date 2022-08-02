@@ -3,6 +3,7 @@ import { useRouter } from 'next/router'
 import { parseCookies } from 'nookies'
 import { useContext, useRef, useState } from 'react'
 import baseUrl from '../../helpers/baseUrl'
+import { errorMsg } from '../../helpers/Toastify'
 import { addToCart } from '../../store/Actions'
 import { DataContext } from '../../store/GlobalState'
 const Product = ({ product }) =>
@@ -33,11 +34,13 @@ const Product = ({ product }) =>
   {
 
     if (product.inStock === 0) {
+      errorMsg(`${product.title} is out of stock`)
       return
     }
     const check = cart.length && cart.find(item => item._id === product._id)
 
     if (check) {
+      errorMsg(`${product.title} is already in your cart`)
       return
     }
     dispatch(addToCart(product, cart))
@@ -67,7 +70,11 @@ const Product = ({ product }) =>
             </div>
           </div>
           <div className='col-md-7'>
-            <h2 className="text-uppercase">{product.title}</h2>
+            <div className='d-flex'>
+              <img className='img-thumbnail' src={product.image} alt={product.title} style={{ height: '80px', width: '20%', marginRight: '10px' }} />
+              <h2 className="text-uppercase">{product.title}</h2>
+            </div>
+            <br />
             <h5 className="text-danger">Price : ${product.price}</h5>
 
             <div className="d-flex justify-content-between">
@@ -99,15 +106,7 @@ const Product = ({ product }) =>
           </div>
         </div>
       </div>
-
-      {/* <button className="btn waves-effect waves-light #1565c0 blue darken-3"
-        onClick={() => AddToCart()}
-      >Add
-        <i className="material-icons right">add</i>
-      </button>
-      {getModal()} */}
     </>
-
   )
 }
 

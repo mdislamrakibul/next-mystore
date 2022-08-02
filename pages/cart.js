@@ -88,10 +88,10 @@ const Cart = () =>
                 <title>Cart</title>
             </Head>
             <div className='row'>
-                <div className='col s8'>
+                <div className='col-md-8'>
                     <h5 className='text-uppercase'>Your Shopping Cart</h5>
                     <hr />
-                    <table className="table my-3 highlight">
+                    <table className="table table-hover table-bordered">
                         <thead>
                             <tr>
                                 <th>Product</th>
@@ -110,7 +110,7 @@ const Cart = () =>
                         </tbody>
                     </table>
                 </div>
-                <div className='col s4'>
+                <div className='col-md-4'>
                     <h5 className='text-uppercase'>Checkout</h5>
                     <hr />
                     <div style={{
@@ -145,11 +145,12 @@ const Cart = () =>
                                 {
                                     user
                                         ?
-                                        <a className="btn btn-dark my-2 #2196f3 blue justify-content-between" onClick={(e) => handlePayment(e)}>
-                                            <i className='material-icons'>payment</i>&nbsp;Checkout</a>
+                                        <a className="btn btn-sm btn-info justify-content-between" onClick={(e) => handlePayment(e)}>
+                                            <i className='material-icons'>payment</i>&nbsp;Checkout
+                                        </a>
                                         :
                                         <Link href='/login' >
-                                            <a className="btn btn-dark my-2 #2196f3 blue justify-content-between" >
+                                            <a className="btn btn-sm btn-primary" >
                                                 Login</a>
                                         </Link>
                                 }
