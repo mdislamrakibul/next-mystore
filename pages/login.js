@@ -31,7 +31,7 @@ const Login = () =>
     if (!res2.status) {
     } else {
       Cookies.set('token', res2.data.token)
-      Cookies.set('user', JSON.stringify(res2.data.user))
+      Cookies.set('user', res2.data.user)
       dispatch({
         type: "AUTH",
         payload: {

@@ -1,15 +1,16 @@
+import Cookie from 'js-cookie'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { parseCookies } from 'nookies'
-import { useContext } from 'react'
+import React, { useContext } from 'react'
 import { DataContext } from '../store/GlobalState'
-const NavBar = () =>
+
+function NavBar()
 {
   const router = useRouter()
-  const cookieUser = parseCookies()
-  const user = cookieUser.user ? JSON.parse(cookieUser.user) : ""
   const { state, dispatch } = useContext(DataContext)
   const { cart } = state
+  // const { user, token } = parseCookies()
+  const user = Cookie.get('user') && JSON.parse(Cookie.get('user'))
 
   const isActive = (r) =>
   {
@@ -22,147 +23,72 @@ const NavBar = () =>
 
   const handleLogout = () =>
   {
-    cookie.remove('token')
-    cookie.remove('user')
-    router.push('/login')
-    localStorage.clear();
+    localStorage.clear()
     dispatch({ type: 'AUTH', payload: {} })
+    Cookie.remove('user')
+    Cookie.remove('token')
     return router.push('/')
-  }
 
-  const adminRouter = () =>
-  {
-    return (
-      <>
-        <Link href="/users">
-          <a className="dropdown-item">Users</a>
-        </Link>
-        <Link href="/create">
-          <a className="dropdown-item">Products</a>
-        </Link>
-        <Link href="/categories">
-          <a className="dropdown-item">Categories</a>
-        </Link>
-      </>
-    )
-  }
-
-  const loggedRouter = () =>
-  {
-    return (
-      <li className="nav-item dropdown">
-        <a className="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <img src={user.image} alt={user.username}
-            style={{
-              borderRadius: '50%', width: '30px', height: '30px',
-              transform: 'translateY(-3px)', marginRight: '3px'
-            }} /> {user.username}
-        </a>
-
-        <div className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-          <Link href="/profile">
-            <a className="dropdown-item">Profile</a>
-          </Link>
-          {
-            user.role === 'admin' && adminRouter()
-          }
-          <div className="dropdown-divider"></div>
-          <button className="dropdown-item" onClick={handleLogout}>Logout</button>
-        </div>
-      </li>
-    )
   }
 
   return (
-    <>
-      <nav className="navbar navbar-expand-lg navbar-light bg-light">
-        <Link href="/">
-          <a className="navbar-brand">MyStore</a>
-        </Link>
-        <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-          <span className="navbar-toggler-icon"></span>
+    <nav class="navbar navbar-expand-lg " aria-label="Offcanvas navbar large">
+      <div class="container-fluid">
+        <Link href="/"><a class="navbar-brand">MY STORE</a></Link>
+        <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar2" aria-controls="offcanvasNavbar2">
+          <span class="navbar-toggler-icon"></span>
         </button>
-        <div className="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
-          <ul className="navbar-nav p-1">
-            <li className="nav-item">
-              <Link href="/cart">
-                <a className={"nav-link" + isActive('/cart')}>
-                  <i className="fas fa-shopping-cart position-relative" aria-hidden="true">
-                    <span className="position-absolute"
-                      style={{
-                        padding: '3px 6px',
-                        background: '#ed143dc2',
-                        borderRadius: '50%',
-                        top: '-10px',
-                        right: '-10px',
-                        color: 'white',
-                        fontSize: '14px'
-                      }}>
-                      {cart.length}
-                    </span>
-                  </i> Cart
-                </a>
-              </Link>
-            </li>
-            {
-              (user && user.username)
-                ?
-                <div class="dropdown">
-                  <span class=" dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    <img src={user.image} alt={user.username}
-                      style={{
-                        borderRadius: '50%', width: '30px', height: '30px',
-                        transform: 'translateY(-3px)', marginRight: '3px'
-                      }} /> {user.username}
-                  </span>
-                  <ul class="dropdown-menu d-flex">
+        <div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="offcanvasNavbar2" aria-labelledby="offcanvasNavbar2Label">
+          <div class="offcanvas-header">
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body" style={{ backgroundColor: 'white !important' }}>
+            <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+              <li class="nav-item">
+                <Link href="/cart">
+                  <a className={"nav-link" + isActive('/cart')}>
+                    <i class="fas fa-cart-arrow-down"></i>&nbsp;Cart
+                  </a>
+                </Link>
+              </li>
+              {user ?
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <img src={user.image} alt={user.username} style={{
+                      borderRadius: '50%', width: '30px', height: '30px',
+                      transform: 'translateY(-3px)', marginRight: '3px'
+                    }} />&nbsp;{user.username}
+                  </a>
+                  <ul class="dropdown-menu" >
                     <li>
                       <Link href="/account">
-                        <a class="dropdown-item"><i class="fas fa-id-card-alt"></i>&nbsp;&nbsp;Account</a>
+                        <a className={"dropdown-item" + isActive('/cart')}>
+                          <i class="fas fa-id-badge"></i>&nbsp;Account</a>
                       </Link>
                     </li>
                     <li class="dropdown-divider"></li>
-                    <li style={{ cursor: 'pointer' }} onClick={() => handleLogout()}>
-                      <a class="dropdown-item"><i class="fas fa-sign-out-alt"></i>&nbsp;&nbsp;Logout</a>
+                    <li onClick={() => handleLogout()} style={{ cursor: 'pointer' }}>
+                      <a class="dropdown-item">
+                        <i class="fas fa-sign-out-alt"></i>&nbsp;Logout
+                      </a>
                     </li>
                   </ul>
-                </div>
-                // <li className="nav-item dropdown">
-                //   <a className="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                //     <img src={user.image} alt={user.username}
-                //       style={{
-                //         borderRadius: '50%', width: '30px', height: '30px',
-                //         transform: 'translateY(-3px)', marginRight: '3px'
-                //       }} /> {user.username}
-                //   </a>
-
-                //   <div className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                //     <Link href="/profile">
-                //       <a className="dropdown-item">Profile</a>
-                //     </Link>
-                //     {
-                //       user.role === 'admin' && adminRouter()
-                //     }
-                //     <div className="dropdown-divider"></div>
-                //     <button className="dropdown-item" onClick={handleLogout}>Logout</button>
-                //   </div>
-                // </li>
+                </li>
                 :
-
-                <li className="nav-item">
-                  <Link href="/signup">
-                    <a className={"nav-link" + isActive('/signup')}>
-                      <i class="fas fa-user-plus"></i> Join
+                <li>
+                  <Link href="/login">
+                    <a className={"nav-link" + isActive('/login')}>
+                      <i class="fas fa-sign-in-alt"></i>&nbsp;Login
                     </a>
                   </Link>
                 </li>
-            }
-          </ul>
+              }
+            </ul>
+          </div>
         </div>
-      </nav>
-    </>
+      </div>
+    </nav>
   )
 }
-
 
 export default NavBar
