@@ -91,24 +91,26 @@ const Cart = () =>
                 <div className='col-md-8'>
                     <h5 className='text-uppercase'>Your Shopping Cart</h5>
                     <hr />
-                    <table className="table table-hover table-bordered">
-                        <thead>
-                            <tr>
-                                <th>Product</th>
-                                <th>Title</th>
-                                <th>Quantity</th>
-                                <th>Price</th>
-                                <th>Total Price</th>
-                                <th>Remove</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {cart.map(item => (
+                    <div className='table-responsive'>
+                        <table className="table table-hover table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Product</th>
+                                    <th>Title</th>
+                                    <th>Quantity</th>
+                                    <th>Price</th>
+                                    <th>Total Price</th>
+                                    <th>Remove</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {cart.map(item => (
 
-                                <CartItem key={item._id} dispatch={dispatch} item={item} cart={cart} />
-                            ))}
-                        </tbody>
-                    </table>
+                                    <CartItem key={item._id} dispatch={dispatch} item={item} cart={cart} />
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
                 <div className='col-md-4'>
                     <h5 className='text-uppercase'>Checkout</h5>
@@ -121,22 +123,36 @@ const Cart = () =>
                         <h6 style={{ fontWeight: 'bold' }}>Shipping</h6>
                         <hr />
                         <form>
+
                             <div className="row">
-                                <div className="input-field col s12">
-                                    <i className="material-icons prefix">bookmark</i>
-                                    <input type="text" name="address" id="address"
-                                        className="form-control mb-2" value={address}
-                                        onChange={e => setAddress(e.target.value)} />
-                                    <label htmlFor="address">Address</label>
+                                <div class="mb-3 row">
+                                    <label for="address" class="col-sm-1 col-form-label">
+                                        <i class="fas fa-map-marked-alt"></i>
+                                    </label>
+                                    <div class="col-sm-11">
+                                        <div class="form-floating">
+                                            <input type="text" class="form-control" id="address" name="address"
+                                                onChange={e => setAddress(e.target.value)} value={address} placeholder="Address" />
+                                            <label for="address" class="form-label">Address</label>
+                                        </div>
+
+                                    </div>
                                 </div>
                             </div>
+
                             <div className="row">
-                                <div className="input-field col s12">
-                                    <i className="material-icons prefix">local_phone</i>
-                                    <input type="text" name="mobile" id="mobile"
-                                        className="form-control mb-2" value={mobile}
-                                        onChange={e => setMobile(e.target.value)} />
-                                    <label htmlFor="mobile">Mobile</label>
+                                <div class="mb-3 row">
+                                    <label for="mobile" class="col-sm-1 col-form-label">
+                                        <i class="fas fa-mobile-alt"></i>
+                                    </label>
+                                    <div class="col-sm-11">
+                                        <div class="form-floating">
+                                            <input type="text" class="form-control" id="mobile" name="mobile"
+                                                onChange={e => setMobile(e.target.value)} value={mobile} placeholder="Mobile" />
+                                            <label for="mobile" class="form-label">Mobile</label>
+                                        </div>
+
+                                    </div>
                                 </div>
                             </div>
 
@@ -151,7 +167,9 @@ const Cart = () =>
                                         :
                                         <Link href='/login' >
                                             <a className="btn btn-sm btn-primary" >
-                                                Login</a>
+                                                <i class="fas fa-sign-in-alt">&nbsp;</i>
+                                                Proceed to Checkout
+                                            </a>
                                         </Link>
                                 }
 

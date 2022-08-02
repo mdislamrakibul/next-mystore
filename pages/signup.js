@@ -60,7 +60,7 @@ const SignUp = () =>
     <>
       <div className='row'>
         <div className='col-md-4 offset-md-4'>
-          <div class="card text-center">
+          <div class="card">
             <div class="card-header">
               <h4>JOIN</h4>
             </div>
@@ -70,8 +70,12 @@ const SignUp = () =>
                   <div class="mb-3 row">
                     <label for="username" class="col-sm-1 col-form-label"><i class="fas fa-user-circle"></i></label>
                     <div class="col-sm-11">
-                      <input type="text" class="form-control" id="username" name="username"
-                        onChange={(e) => { setUsername(e.target.value) }} value={username} placeholder="Username" />
+                      <div class="form-floating">
+                        <input type="text" class="form-control" id="username" name="username"
+                          onChange={(e) => { setUsername(e.target.value) }} value={username} placeholder="Username" />
+                        <label for="username" class="form-label">Username</label>
+                      </div>
+
                     </div>
                   </div>
                 </div>
@@ -83,8 +87,12 @@ const SignUp = () =>
                       <i class="fas fa-at"></i>
                     </label>
                     <div class="col-sm-11">
-                      <input type="email" class="form-control" id="email" name="email"
-                        onChange={(e) => { setEmail(e.target.value) }} value={email} placeholder="Email" />
+                      <div class="form-floating">
+                        <input type="email" class="form-control" id="email" name="email"
+                          onChange={(e) => { setEmail(e.target.value) }} value={email} placeholder="Email" />
+                        <label>Email</label>
+                      </div>
+
                     </div>
                   </div>
                 </div>
@@ -97,8 +105,12 @@ const SignUp = () =>
                       <i class="fas fa-key"></i>
                     </label>
                     <div class="col-sm-11">
-                      <input type="email" class="form-control" id="password" name="password"
-                        onChange={(e) => { setPassword(e.target.value) }} value={password} placeholder="Password" />
+                      <div class="form-floating">
+                        <input type="email" class="form-control" id="password" name="password"
+                          onChange={(e) => { setPassword(e.target.value) }} value={password} placeholder="Password" />
+                        <label>Password</label>
+                      </div>
+
                     </div>
                   </div>
                 </div>

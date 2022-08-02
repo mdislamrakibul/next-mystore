@@ -9,7 +9,8 @@ export const DataProvider = ({ children }) =>
     const initialState = {
         notify: {},
         auth: {},
-        cart: []
+        cart: [],
+        modal: {},
     }
     const { token, user } = parseCookies()
     const [state, dispatch] = useReducer(reducers, initialState);
@@ -44,4 +45,3 @@ export const DataProvider = ({ children }) =>
         </DataContext.Provider>
     )
 }
-

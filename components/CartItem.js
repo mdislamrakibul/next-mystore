@@ -40,7 +40,7 @@ const CartItem = ({ item, dispatch, cart }) =>
             <td className="align-middle" style={{ minWidth: '50px', cursor: 'pointer' }}>
                 <button class="btn btn-sm btn-danger" onClick={() => dispatch({
                     type: 'ADD_MODAL',
-                    payload: [{ data: cart, id: item._id, title: item.title, type: 'ADD_TO_CART' }]
+                    payload: { data: cart, _id: item._id, title: item.title, type: 'ADD_TO_CART' }
                 })} data-bs-toggle="modal" data-bs-target="#exampleModal">
                     <i className="material-icons" aria-hidden="true"
                         style={{ fontSize: '18px' }}

@@ -3,6 +3,8 @@ export const ACTIONS = {
     NOTIFY: 'NOTIFY',
     AUTH: 'AUTH',
     ADD_TO_CART: 'ADD_TO_CART',
+    ADD_MODAL: 'ADD_MODAL',
+    REMOVE_FROM_CART: 'REMOVE_FROM_CART',
 }
 
 
@@ -43,4 +45,15 @@ export const increase = (data, id) =>
     })
 
     return ({ type: 'ADD_TO_CART', payload: newData })
+}
+
+
+export const removeFromCart = (data, _id, title, type) =>
+{
+    // console.log("🚀 ~ file: Actions.js ~ line 42 ~ data", data)
+    // console.log("🚀 ~ file: Actions.js ~ line 42 ~ _id", _id)
+    // console.log("🚀 ~ file: Actions.js ~ line 42 ~ type", type)
+    const newData = data.filter((x) => x._id !== _id)
+    successMsg(`${title} is removed from cart`)
+    return ({ type, payload: newData })
 }
