@@ -48,8 +48,8 @@ const Account = ({ orders }) =>
     return (
         <div className='container'>
             <br />
-            <div className="row" style={{ backgroundColor: '#ffebee', borderRadius: '10px', padding: '10px' }} >
-                <div className="col s3">
+            <div className="row" style={{ backgroundColor: 'lightgray', borderRadius: '10px', padding: '10px' }} >
+                <div className="col-md-4">
                     <div>
                         {user?.image && <img src={user?.image} alt={user?.username} width={'150px'} height={'auto'} />}
 
@@ -59,7 +59,7 @@ const Account = ({ orders }) =>
                     </div>
                 </div>
 
-                <div className="col s9">
+                <div className="col-md-8">
                     <div>
                         Phone : <b>01234567890</b><br />
                         Address : <b>Commercial Cove, 52, Gulshan -1, Dhaka</b><br />
@@ -74,7 +74,7 @@ const Account = ({ orders }) =>
                 </div>
             </div>
             <div className='row'>
-                <div className='col s12'>
+                <div className='col-md-12'>
                     {user?.role === 'root'
                         && <UserRoles />
                     }

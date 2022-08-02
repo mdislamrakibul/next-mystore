@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import React, { useContext } from 'react';
+import { errorMsg } from '../../helpers/Toastify';
 import { addToCart } from '../../store/Actions';
 import { DataContext } from '../../store/GlobalState';
 const ProductItem = ({ product }) =>
@@ -10,47 +11,46 @@ const ProductItem = ({ product }) =>
     {
 
         if (product.inStock === 0) {
+            errorMsg(`${product.title} is out of stock`)
             return
         }
         const check = cart.length && cart.find(item => item._id === product._id)
 
         if (check) {
+            errorMsg(`${product.title} is already in your cart`)
             return
         }
         dispatch(addToCart(product, cart))
     }
     return (
-        <div className="col s2" key={product?._id} >
-            <div class="card">
-                <div class="card-image waves-effect waves-block waves-light">
-                    <img src={product?.image} style={{ width: '300px' }} />
-                </div>
-                <div class="card-content">
-                    <span class="card-title activator grey-text text-darken-4">
-                        <Link href={'/product/[id]'} as={`/product/${product?._id}`}><a>{product?.title}</a></Link>
-                        <i class="material-icons right">more_vert</i>
-                    </span>
-                    <p> $ {product?.price}</p>
+        <div className="col-md-2" key={product?._id} >
+            <div class="card" style={{ width: '18rem' }}>
+                <img src={product.image} class="card-img-top" alt={product.title} />
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <Link href={'/product/[id]'} as={`/product/${product?._id}`}>
+                            <a style={{ textDecoration: 'none', color: 'lightseagreen' }}>{product?.title}</a>
+                        </Link>
+                    </h5>
+                    <p class="card-text">
+                        {product.description.length > 90 ? product.description.substring(0, 90) + ' ...' : product.description}
+                    </p>
+                    <span> Price: ${product?.price}</span>
                     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                         <p>{product.inStock > 0 ? 'In Stock: ' + product?.inStock : 'Out Stock'}</p>
                         <p>Sold: {product?.sold}</p>
                     </div>
                 </div>
-                <div className="card-action" style={{ display: 'flex', alignContent: 'center', justifyContent: 'space-between' }}>
+                <div class="card-footer text-muted justify-content-between">
                     <Link href={'/product/[id]'} as={`/product/${product?._id}`}>
-                        <a class="btn-floating btn-sm waves-effect waves-light blue pulse">
-                            <i class="material-icons">remove_red_eye</i>
+                        <a class="btn btn-sm btn-primary">
+                            <i class="far fa-eye"></i>
                         </a>
                     </Link>
-                    <button class="btn-floating btn-sm waves-effect waves-light pulse green" onClick={() => addToCartHandleClick(product, cart)} disabled={product.inStock ? false : true}>
-                        <a class="btn-floating btn-sm waves-effect waves-light pulse green">
-                            <i class="material-icons">add_shopping_cart</i>
-                        </a>
+                    <button class="btn btn-sm btn-success"
+                        onClick={() => addToCartHandleClick(product, cart)} disabled={product.inStock ? false : true}>
+                        <i class="fas fa-cart-plus"></i>
                     </button>
-                </div>
-                <div class="card-reveal">
-                    <span class="card-title grey-text text-darken-4">{product?.title}<i class="material-icons right">close</i></span>
-                    <p>{product?.description}</p>
                 </div>
             </div>
         </div >

@@ -93,14 +93,14 @@ function UserRoles()
                     <h5>User & roles </h5> <h6>[ Only root user can see this part. ]</h6>
                 </span>
                 <span >
-                    <a class="waves-effect waves-light btn #d81b60 pink darken-1" onClick={() => fetchUser()} style={{ display: 'flex', alignItems: 'center' }}>
-                        Reload&nbsp;<i class="material-icons">refresh</i>
+                    <a className="btn btn-sm btn-warning" onClick={() => fetchUser()} style={{ display: 'flex', alignItems: 'center' }}>
+                        Reload&nbsp;<i class="fas fa-sync"></i>
                     </a>
                 </span>
             </div>
 
             <hr />
-            <table className="highlight">
+            <table className="table table-bordered table-hover">
                 <thead>
                     <tr>
                         <th></th>
@@ -108,8 +108,7 @@ function UserRoles()
                         <th>Email</th>
                         <th>Created</th>
                         <th>Role [Type]</th>
-                        <th>Cng. Role</th>
-                        <th>Act./Deact.</th>
+                        <th>Actions <br />(Role | Active/deactivate)</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -124,35 +123,34 @@ function UserRoles()
                                 <td>{item.email}</td>
                                 <td>{moment(item.createdAt).format('MMMM Do YYYY, h:mm:ss')}</td>
                                 <td>
-                                    {item.role === 'root' && <span class="badge red" style={{ color: 'white' }}><b>{item.role} [{item.isActive ? 'A' : 'D'}]</b></span>}
-                                    {item.role === 'admin' && <span class="badge green" style={{ color: 'white' }}><b>{item.role} [{item.isActive ? 'A' : 'D'}]</b></span>}
-                                    {item.role === 'user' && <span class="badge  blue" style={{ color: 'white' }}><b>{item.role} [{item.isActive ? 'A' : 'D'}]</b></span>}
+                                    {item.role === 'root' && <span class="badge text-bg-primary" style={{ color: 'white' }}><b>{item.role} [{item.isActive ? 'A' : 'D'}]</b></span>}
+                                    {item.role === 'admin' && <span class="badge text-bg-success" style={{ color: 'white' }}><b>{item.role} [{item.isActive ? 'A' : 'D'}]</b></span>}
+                                    {item.role === 'user' && <span class="badge  text-bg-secondary" style={{ color: 'white' }}><b>{item.role} [{item.isActive ? 'A' : 'D'}]</b></span>}
 
 
                                 </td>
                                 <td>
-                                    {item.role !== 'root' &&
-                                        <button className="btn-floating btn-large waves-effect waves-light #8e24aa btn-small tooltipped" data-position="bottom" data-tooltip="I am a tooltip"
-                                            onClick={() => handleRole(item._id, item.role)}>
-                                            <i class="material-icons">accessibility</i>
-                                        </button>
-                                    }
+                                    <div class="btn-group" role="group" aria-label="Basic example">
+                                        {item.role !== 'root' &&
+                                            <button type="button" class="btn btn-info btn-sm" onClick={() => handleRole(item._id, item.role)}
+                                                data-bs-toggle="tooltip" data-bs-placement="top"
+                                                data-bs-custom-class="custom-tooltip"
+                                                data-bs-title="This top tooltip is themed via CSS variables.">
+                                                <i class="material-icons">accessibility</i>
+                                            </button>
+                                        }
+                                        {(item?.role !== 'root' && item?.isActive) &&
+                                            <button className='btn btn-sm btn-danger' onClick={() => handleActivity(item._id, item.isActive)}>
+                                                <i class="material-icons">close</i>
+                                            </button>
+                                        }
+                                        {(item?.role !== 'root' && !item?.isActive) &&
+                                            <button className='btn btn-sm btn-success' onClick={() => handleActivity(item._id, item.isActive)}>
+                                                <i class="material-icons">check</i>
+                                            </button>
+                                        }
 
-                                </td>
-                                <td>
-                                    {(item?.role !== 'root' && item?.isActive) &&
-                                        <button className="btn-floating btn-large waves-effect waves-light red btn-small tooltipped" data-position="bottom" data-tooltip="I am a tooltip"
-                                            onClick={() => handleActivity(item._id, item.isActive)}>
-                                            <i class="material-icons">close</i>
-                                        </button>
-                                    }
-                                    {(item?.role !== 'root' && !item?.isActive) &&
-                                        <button className="btn-floating btn-large waves-effect waves-light green btn-small tooltipped" data-position="bottom" data-tooltip="I am a tooltip"
-                                            onClick={() => handleActivity(item._id, item.isActive)}>
-                                            <i class="material-icons">check</i>
-                                        </button>
-                                    }
-
+                                    </div>
                                 </td>
                             </tr>
                         )

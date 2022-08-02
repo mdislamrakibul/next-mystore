@@ -44,10 +44,23 @@ function NavBar()
           </div>
           <div class="offcanvas-body" style={{ backgroundColor: 'white !important' }}>
             <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-              <li class="nav-item">
+              <li className="nav-item">
                 <Link href="/cart">
                   <a className={"nav-link" + isActive('/cart')}>
-                    <i class="fas fa-cart-arrow-down"></i>&nbsp;Cart
+                    <i className="fas fa-shopping-cart position-relative" aria-hidden="true">
+                      <span className="position-absolute"
+                        style={{
+                          padding: '3px 6px',
+                          background: '#ed143dc2',
+                          borderRadius: '50%',
+                          top: '-10px',
+                          right: '-10px',
+                          color: 'white',
+                          fontSize: '14px'
+                        }}>
+                        {cart.length}
+                      </span>
+                    </i> Cart
                   </a>
                 </Link>
               </li>
@@ -62,7 +75,7 @@ function NavBar()
                   <ul class="dropdown-menu" >
                     <li>
                       <Link href="/account">
-                        <a className={"dropdown-item" + isActive('/cart')}>
+                        <a className={"dropdown-item" + isActive('/account')}>
                           <i class="fas fa-id-badge"></i>&nbsp;Account</a>
                       </Link>
                     </li>

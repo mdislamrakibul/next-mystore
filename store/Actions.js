@@ -1,3 +1,4 @@
+import { successMsg } from '../helpers/Toastify';
 export const ACTIONS = {
     NOTIFY: 'NOTIFY',
     AUTH: 'AUTH',
@@ -7,7 +8,7 @@ export const ACTIONS = {
 
 export const addToCart = (product, cart) =>
 {
-
+    successMsg(`${product.title} is added to cart`)
     return ({
         type: 'ADD_TO_CART',
         payload: [...cart, { ...product, quantity: 1 }]

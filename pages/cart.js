@@ -68,14 +68,12 @@ const Cart = () =>
             <div className='container'>
                 <div className='row'>
 
-                    <div className='col s3'></div>
-                    <div className='col s6 text-center'>
-                        <img style={{ width: '600px' }} src="/empty_cart.png" alt="not empty" />
+                    <div className='col-md-6 offset-md-3 text-center'>
+                        <img className='img-fluid' style={{ width: '600px' }} src="/empty_cart.png" alt="not empty" />
                         <br />
                         <h5 className='text-uppercase'>Your cart is empty</h5>
                         <Link href='/' ><a>continue shopping</a></Link>
                     </div>
-                    <div className='col s3'></div>
                 </div>
 
             </div>
