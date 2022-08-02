@@ -29,7 +29,9 @@ const Login = () =>
 
     const res2 = await res.json()
     if (!res2.status) {
+      errorMsg(res2.message)
     } else {
+      successMsg(res2.message)
       Cookies.set('token', res2.data.token)
       Cookies.set('user', res2.data.user)
       dispatch({

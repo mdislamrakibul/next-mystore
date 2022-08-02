@@ -1,7 +1,8 @@
-import moment from 'moment'
-import { parseCookies } from 'nookies'
-import { useEffect, useState } from 'react'
-import baseUrl from '../helpers/baseUrl'
+import moment from 'moment';
+import { parseCookies } from 'nookies';
+import { useEffect, useState } from 'react';
+import baseUrl from '../helpers/baseUrl';
+import { errorMsg, successMsg } from '../helpers/Toastify';
 function UserRoles()
 {
     const [users, setUsers] = useState([])
@@ -19,7 +20,9 @@ function UserRoles()
         })
         const resp = await res.json()
         if (resp.status) {
+            successMsg(resp.message)
         } else {
+            errorMsg(resp.message)
         }
         setUsers(resp?.data?.length ? resp.data : [])
 
@@ -40,6 +43,7 @@ function UserRoles()
         })
         const res2 = await res.json()
         if (!res2.status) {
+            errorMsg(res2.message)
         } else {
             const updatedUsers = users.map(user =>
             {
@@ -73,7 +77,9 @@ function UserRoles()
         })
         const res2 = await res.json()
         if (!res2.status) {
+            errorMsg(res2.message)
         } else {
+            successMsg(res2.message)
         }
         const updatedUsers = users.map(user =>
         {

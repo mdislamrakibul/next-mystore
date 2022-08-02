@@ -29,7 +29,9 @@ const SignUp = () =>
 
     const res2 = await res.json()
     if (!res2.status) {
+      errorMsg(res2.message)
     } else {
+      successMsg(res2.message)
       setUsername("")
       setEmail("")
       setPassword("")
