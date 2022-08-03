@@ -66,20 +66,20 @@ const Login = () =>
     <>
       <div className='row'>
         <div className='col-md-4 offset-md-4'>
-          <div class="card">
-            <div class="card-header">
+          <div className="card">
+            <div className="card-header">
               <h4>LOGIN</h4>
             </div>
-            <div class="card-body">
+            <div className="card-body">
               <form>
                 <div className="row">
-                  <div class="mb-3 row">
-                    <label for="email" class="col-sm-1 col-form-label">
-                      <i class="fas fa-at"></i>
+                  <div className="mb-3 row">
+                    <label for="email" className="col-sm-1 col-form-label">
+                      <i className="fas fa-at"></i>
                     </label>
-                    <div class="col-sm-11">
-                      <div class="form-floating">
-                        <input type="email" class="form-control" id="email" name="email"
+                    <div className="col-sm-11">
+                      <div className="form-floating">
+                        <input type="email" className="form-control" id="email" name="email"
                           onChange={(e) => { setEmail(e.target.value) }} value={email} placeholder="Email" />
                         <label>Email</label>
                       </div>
@@ -89,13 +89,13 @@ const Login = () =>
                 </div>
 
                 <div className="row">
-                  <div class="mb-3 row">
-                    <label for="password" class="col-sm-1 col-form-label">
-                      <i class="fas fa-key"></i>
+                  <div className="mb-3 row">
+                    <label for="password" className="col-sm-1 col-form-label">
+                      <i className="fas fa-key"></i>
                     </label>
-                    <div class="col-sm-11">
-                      <div class="form-floating">
-                        <input type="email" class="form-control" id="password" name="password"
+                    <div className="col-sm-11">
+                      <div className="form-floating">
+                        <input type="email" className="form-control" id="password" name="password"
                           onChange={(e) => { setPassword(e.target.value) }} value={password} placeholder="Password" />
                         <label>Password</label>
                       </div>
@@ -107,13 +107,13 @@ const Login = () =>
                 <div className="row">
                   <div className="col-6 text-end">
                     <button className="btn btn-sm btn-success" onClick={(e) => { handleClick(e) }}>
-                      <i class="fas fa-sign-in-alt"></i>&nbsp;
+                      <i className="fas fa-sign-in-alt"></i>&nbsp;
                       Login
                     </button>
                   </div>
                   <div className="col-6 text-start">
                     <button className="btn btn-sm btn-danger" onClick={(e) => reset(e)}>
-                      <i class="fas fa-sync"></i>&nbsp;
+                      <i className="fas fa-sync"></i>&nbsp;
                       Reset
                     </button>
                   </div>
@@ -122,7 +122,7 @@ const Login = () =>
 
               </form>
             </div>
-            <div class="card-footer text-muted">
+            <div className="card-footer text-muted">
               <Link href="/signup" >
                 <a className="text-center" style={{ textDecoration: 'none', color: 'cornflowerblue' }}>
                   <h6>Don't have an account ?</h6>

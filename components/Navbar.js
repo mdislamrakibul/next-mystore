@@ -32,18 +32,18 @@ function NavBar()
   }
 
   return (
-    <nav class="navbar navbar-expand-lg " aria-label="Offcanvas navbar large">
-      <div class="container-fluid">
-        <Link href="/"><a class="navbar-brand">MY STORE</a></Link>
-        <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar2" aria-controls="offcanvasNavbar2">
-          <span class="navbar-toggler-icon"></span>
+    <nav className="navbar navbar-expand-lg " aria-label="Offcanvas navbar large">
+      <div className="container-fluid">
+        <Link href="/"><a className="navbar-brand">MY STORE</a></Link>
+        <button className="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar2" aria-controls="offcanvasNavbar2">
+          <span className="navbar-toggler-icon"></span>
         </button>
-        <div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="offcanvasNavbar2" aria-labelledby="offcanvasNavbar2Label">
-          <div class="offcanvas-header">
-            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        <div className="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="offcanvasNavbar2" aria-labelledby="offcanvasNavbar2Label">
+          <div className="offcanvas-header">
+            <button type="button" className="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
           </div>
-          <div class="offcanvas-body" style={{ backgroundColor: 'white !important' }}>
-            <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+          <div className="offcanvas-body" style={{ backgroundColor: 'white !important' }}>
+            <ul className="navbar-nav justify-content-end flex-grow-1 pe-3">
               <li className="nav-item">
                 <Link href="/cart">
                   <a className={"nav-link" + isActive('/cart')}>
@@ -65,24 +65,24 @@ function NavBar()
                 </Link>
               </li>
               {user ?
-                <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <li className="nav-item dropdown">
+                  <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                     <img src={user.image} alt={user.username} style={{
                       borderRadius: '50%', width: '30px', height: '30px',
                       transform: 'translateY(-3px)', marginRight: '3px'
                     }} />&nbsp;{user.username}
                   </a>
-                  <ul class="dropdown-menu" >
+                  <ul className="dropdown-menu" >
                     <li>
                       <Link href="/account">
                         <a className={"dropdown-item" + isActive('/account')}>
-                          <i class="fas fa-id-badge"></i>&nbsp;Account</a>
+                          <i className="fas fa-id-badge"></i>&nbsp;Account</a>
                       </Link>
                     </li>
-                    <li class="dropdown-divider"></li>
+                    <li className="dropdown-divider"></li>
                     <li onClick={() => handleLogout()} style={{ cursor: 'pointer' }}>
-                      <a class="dropdown-item">
-                        <i class="fas fa-sign-out-alt"></i>&nbsp;Logout
+                      <a className="dropdown-item">
+                        <i className="fas fa-sign-out-alt"></i>&nbsp;Logout
                       </a>
                     </li>
                   </ul>
@@ -91,7 +91,7 @@ function NavBar()
                 <li>
                   <Link href="/login">
                     <a className={"nav-link" + isActive('/login')}>
-                      <i class="fas fa-sign-in-alt"></i>&nbsp;Login
+                      <i className="fas fa-sign-in-alt"></i>&nbsp;Login
                     </a>
                   </Link>
                 </li>

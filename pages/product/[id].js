@@ -101,7 +101,7 @@ const Product = ({ product }) =>
             <br />
             <button className="btn btn-sm btn-success my-3 px-5 justify-content-between"
               onClick={() => addToCartHandleClick(product, cart)} disabled={product.inStock ? false : true}>
-              Buy &nbsp;<i class="material-icons">add_shopping_cart</i>
+              Buy &nbsp;<i className="material-icons">add_shopping_cart</i>
             </button>
           </div>
         </div>

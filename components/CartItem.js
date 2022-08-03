@@ -25,12 +25,12 @@ const CartItem = ({ item, dispatch, cart }) =>
             </td>
 
             <td className="align-middle" style={{ minWidth: '120px' }}>
-                {item.quantity > 1 && <i class="fas fa-minus" style={{ color: 'red', cursor: 'pointer' }} onClick={() => dispatch(decrease(cart, item._id))}
+                {item.quantity > 1 && <i className="fas fa-minus" style={{ color: 'red', cursor: 'pointer' }} onClick={() => dispatch(decrease(cart, item._id))}
                 ></i>}
 
                 <span className="px-3">{item.quantity}</span>
 
-                {item.quantity < item.inStock && <i class="fas fa-plus" style={{ color: 'green', cursor: 'pointer' }} onClick={() => dispatch(increase(cart, item._id))}></i>}
+                {item.quantity < item.inStock && <i className="fas fa-plus" style={{ color: 'green', cursor: 'pointer' }} onClick={() => dispatch(increase(cart, item._id))}></i>}
 
             </td>
             <td className="align-middle">${item.price}</td>

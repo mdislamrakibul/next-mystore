@@ -100,7 +100,7 @@ function UserRoles()
                 </span>
                 <span >
                     <a className="btn btn-sm btn-warning" onClick={() => fetchUser()} style={{ display: 'flex', alignItems: 'center' }}>
-                        Reload&nbsp;<i class="fas fa-sync"></i>
+                        Reload&nbsp;<i className="fas fa-sync"></i>
                     </a>
                 </span>
             </div>
@@ -129,30 +129,30 @@ function UserRoles()
                                 <td>{item.email}</td>
                                 <td>{moment(item.createdAt).format('MMMM Do YYYY, h:mm:ss')}</td>
                                 <td>
-                                    {item.role === 'root' && <span class="badge text-bg-primary" style={{ color: 'white' }}><b>{item.role} [{item.isActive ? 'A' : 'D'}]</b></span>}
-                                    {item.role === 'admin' && <span class="badge text-bg-success" style={{ color: 'white' }}><b>{item.role} [{item.isActive ? 'A' : 'D'}]</b></span>}
-                                    {item.role === 'user' && <span class="badge  text-bg-secondary" style={{ color: 'white' }}><b>{item.role} [{item.isActive ? 'A' : 'D'}]</b></span>}
+                                    {item.role === 'root' && <span className="badge text-bg-primary" style={{ color: 'white' }}><b>{item.role} [{item.isActive ? 'A' : 'D'}]</b></span>}
+                                    {item.role === 'admin' && <span className="badge text-bg-success" style={{ color: 'white' }}><b>{item.role} [{item.isActive ? 'A' : 'D'}]</b></span>}
+                                    {item.role === 'user' && <span className="badge  text-bg-secondary" style={{ color: 'white' }}><b>{item.role} [{item.isActive ? 'A' : 'D'}]</b></span>}
 
 
                                 </td>
                                 <td>
-                                    <div class="btn-group" role="group" aria-label="Basic example">
+                                    <div className="btn-group" role="group" aria-label="Basic example">
                                         {item.role !== 'root' &&
-                                            <button type="button" class="btn btn-info btn-sm" onClick={() => handleRole(item._id, item.role)}
+                                            <button type="button" className="btn btn-info btn-sm" onClick={() => handleRole(item._id, item.role)}
                                                 data-bs-toggle="tooltip" data-bs-placement="top"
-                                                data-bs-custom-class="custom-tooltip"
+                                                data-bs-custom-className="custom-tooltip"
                                                 data-bs-title="This top tooltip is themed via CSS variables.">
-                                                <i class="material-icons">accessibility</i>
+                                                <i className="material-icons">accessibility</i>
                                             </button>
                                         }
                                         {(item?.role !== 'root' && item?.isActive) &&
                                             <button className='btn btn-sm btn-danger' onClick={() => handleActivity(item._id, item.isActive)}>
-                                                <i class="material-icons">close</i>
+                                                <i className="material-icons">close</i>
                                             </button>
                                         }
                                         {(item?.role !== 'root' && !item?.isActive) &&
                                             <button className='btn btn-sm btn-success' onClick={() => handleActivity(item._id, item.isActive)}>
-                                                <i class="material-icons">check</i>
+                                                <i className="material-icons">check</i>
                                             </button>
                                         }
 

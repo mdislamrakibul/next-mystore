@@ -24,15 +24,15 @@ const ProductItem = ({ product }) =>
     }
     return (
         <div className="col-md-2" key={product?._id} >
-            <div class="card" style={{ width: '18rem' }}>
-                <img src={product.image} class="card-img-top" alt={product.title} />
-                <div class="card-body">
-                    <h5 class="card-title">
+            <div className="card" style={{ width: '18rem' }}>
+                <img src={product.image} className="card-img-top" alt={product.title} />
+                <div className="card-body">
+                    <h5 className="card-title">
                         <Link href={'/product/[id]'} as={`/product/${product?._id}`}>
                             <a style={{ textDecoration: 'none', color: 'lightseagreen' }}>{product?.title}</a>
                         </Link>
                     </h5>
-                    <p class="card-text">
+                    <p className="card-text">
                         {product.description.length > 90 ? product.description.substring(0, 90) + ' ...' : product.description}
                     </p>
                     <span> Price: ${product?.price}</span>
@@ -41,15 +41,15 @@ const ProductItem = ({ product }) =>
                         <p>Sold: {product?.sold}</p>
                     </div>
                 </div>
-                <div class="card-footer text-muted justify-content-between">
+                <div className="card-footer text-muted justify-content-between">
                     <Link href={'/product/[id]'} as={`/product/${product?._id}`}>
-                        <a class="btn btn-sm btn-primary">
-                            <i class="far fa-eye"></i>
+                        <a className="btn btn-sm btn-primary">
+                            <i className="far fa-eye"></i>
                         </a>
                     </Link>
-                    <button class="btn btn-sm btn-success"
+                    <button className="btn btn-sm btn-success"
                         onClick={() => addToCartHandleClick(product, cart)} disabled={product.inStock ? false : true}>
-                        <i class="fas fa-cart-plus"></i>
+                        <i className="fas fa-cart-plus"></i>
                     </button>
                 </div>
             </div>

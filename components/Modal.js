@@ -27,9 +27,9 @@ const Modal = () =>
                         </div>
                         <div className="modal-footer">
                             <button type="button" className="btn btn-success" data-bs-dismiss="modal" onClick={() => handleClick()}>
-                                <i class="fas fa-check-circle"></i>&nbsp;Yes</button>
+                                <i className="fas fa-check-circle"></i>&nbsp;Yes</button>
                             <button type="button" className="btn btn-danger" data-bs-dismiss="modal">
-                                <i class="fas fa-times"></i>&nbsp;
+                                <i className="fas fa-times"></i>&nbsp;
                                 Close</button>
                         </div>
                     </div>
