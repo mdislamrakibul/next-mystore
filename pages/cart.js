@@ -72,7 +72,7 @@ const Cart = () =>
                         <img className='img-fluid' style={{ width: '600px' }} src="/empty_cart.png" alt="not empty" />
                         <br />
                         <h5 className='text-uppercase'>Your cart is empty</h5>
-                        <Link href='/' ><a>continue shopping</a></Link>
+                        <Link href='/' ><a style={{ textDecoration: 'none', color: 'cadetblue' }}>continue shopping</a></Link>
                     </div>
                 </div>
 
@@ -88,11 +88,22 @@ const Cart = () =>
                 <title>Cart</title>
             </Head>
             <div className='row'>
-                <div className='col-md-8'>
-                    <h5 className='text-uppercase'>Your Shopping Cart</h5>
+                <div className='col-md-12'>
+                    <div className='justify-content-between'>
+                        <h5 className='text-uppercase'>Your Cart</h5>
+                        {/* <div className='justify-content-between'>
+                            <button className='btn btn-sm btn-info'>
+                                <Link href="/"><a style={{ textDecoration: 'none', color: 'white' }}><i className="fas fa-arrow-alt-circle-left"></i>&nbsp;Continue Shopping</a></Link>
+                            </button>&nbsp;
+                            <button className='btn btn-sm btn-primary'>
+                                <Link href="/checkout"><a style={{ textDecoration: 'none', color: 'white' }}><i className="fas fa-shopping-bag"></i>&nbsp;Checkout</a></Link>
+
+                            </button>
+                        </div> */}
+                    </div>
                     <hr />
                     <div className='table-responsive'>
-                        <table className="table table-hover table-bordered">
+                        <table className="table table-hover">
                             <thead>
                                 <tr>
                                     <th>Product</th>
@@ -111,8 +122,30 @@ const Cart = () =>
                             </tbody>
                         </table>
                     </div>
+                    <div style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'space-between'
+                    }}>
+                        <div className="btn-group" role="group" aria-label="Basic example">
+                            <button className='btn btn-sm btn-info'>
+                                <Link href="/"><a style={{ textDecoration: 'none', color: 'white' }}><i className="fas fa-arrow-alt-circle-left"></i>&nbsp;Continue Shopping</a></Link>
+                            </button>
+                            <button className='btn btn-sm btn-primary'>
+                                <Link href="/checkout"><a style={{ textDecoration: 'none', color: 'white' }}><i className="fas fa-shopping-bag"></i>&nbsp;Checkout</a></Link>
+
+                            </button>
+                        </div>
+                        <div className='text-end'>
+                            <span>Subtotal&nbsp;&nbsp;: <b style={{ paddingLeft: '50px' }}>$ {total}</b></span><br />
+                            <span>Shipping&nbsp; &nbsp;: <b style={{ paddingLeft: '50px' }}>Free</b></span><br />
+                            <span>Total&nbsp; &nbsp;: <b style={{ paddingLeft: '50px' }}>$ {total}</b></span><br />
+                        </div>
+                    </div>
+
+                    <hr />
                 </div>
-                <div className='col-md-4'>
+                {/* <div className='col-md-4'>
                     <h5 className='text-uppercase'>Checkout</h5>
                     <hr />
                     <div style={{
@@ -125,15 +158,15 @@ const Cart = () =>
                         <form>
 
                             <div className="row">
-                                <div class="mb-3 row">
-                                    <label for="address" class="col-sm-1 col-form-label">
-                                        <i class="fas fa-map-marked-alt"></i>
+                                <div className="mb-3 row">
+                                    <label for="address" className="col-sm-1 col-form-label">
+                                        <i className="fas fa-map-marked-alt"></i>
                                     </label>
-                                    <div class="col-sm-11">
-                                        <div class="form-floating">
-                                            <input type="text" class="form-control" id="address" name="address"
+                                    <div className="col-sm-11">
+                                        <div className="form-floating">
+                                            <input type="text" className="form-control" id="address" name="address"
                                                 onChange={e => setAddress(e.target.value)} value={address} placeholder="Address" />
-                                            <label for="address" class="form-label">Address</label>
+                                            <label for="address" className="form-label">Address</label>
                                         </div>
 
                                     </div>
@@ -141,15 +174,15 @@ const Cart = () =>
                             </div>
 
                             <div className="row">
-                                <div class="mb-3 row">
-                                    <label for="mobile" class="col-sm-1 col-form-label">
-                                        <i class="fas fa-mobile-alt"></i>
+                                <div className="mb-3 row">
+                                    <label for="mobile" className="col-sm-1 col-form-label">
+                                        <i className="fas fa-mobile-alt"></i>
                                     </label>
-                                    <div class="col-sm-11">
-                                        <div class="form-floating">
-                                            <input type="text" class="form-control" id="mobile" name="mobile"
+                                    <div className="col-sm-11">
+                                        <div className="form-floating">
+                                            <input type="text" className="form-control" id="mobile" name="mobile"
                                                 onChange={e => setMobile(e.target.value)} value={mobile} placeholder="Mobile" />
-                                            <label for="mobile" class="form-label">Mobile</label>
+                                            <label for="mobile" className="form-label">Mobile</label>
                                         </div>
 
                                     </div>
@@ -167,7 +200,7 @@ const Cart = () =>
                                         :
                                         <Link href='/login' >
                                             <a className="btn btn-sm btn-primary" >
-                                                <i class="fas fa-sign-in-alt">&nbsp;</i>
+                                                <i className="fas fa-sign-in-alt">&nbsp;</i>
                                                 Proceed to Checkout
                                             </a>
                                         </Link>
@@ -176,7 +209,7 @@ const Cart = () =>
                             </div>
                         </form>
                     </div>
-                </div>
+                </div> */}
             </div >
         </div >
     )

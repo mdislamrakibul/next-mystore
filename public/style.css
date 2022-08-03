@@ -23,12 +23,12 @@ input:focus {
   box-shadow: 0 1px 0 0 #1565c0 !important;
 }
 
-.img-thumbnail {
+/* .img-thumbnail {
   border: 1px solid #ddd;
   border-radius: 4px;
   padding: 5px;
   object-fit: cover;
-}
+} */
 
 .img-thumbnail:hover {
   box-shadow: 0 0 2px 1px #ff9e80

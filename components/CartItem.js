@@ -11,10 +11,10 @@ const CartItem = ({ item, dispatch, cart }) =>
                     className="img-thumbnail w-100"
                     style={{ minWidth: '80px', height: '80px' }} />
             </td>
-            <td style={{ width: '150px' }} className="align-middle" >
+            <td style={{ width: '300px' }} className="align-middle" >
                 <h6 className="text-capitalize text-secondary">
                     <Link href={`/product/${item._id}`}>
-                        <a>{item.title}</a>
+                        <a style={{ textDecoration: 'none', color: 'cadetblue' }}>{item.title}</a>
                     </Link>
                 </h6>
                 {
@@ -25,27 +25,23 @@ const CartItem = ({ item, dispatch, cart }) =>
             </td>
 
             <td className="align-middle" style={{ minWidth: '120px' }}>
-                <button className="btn btn-sm btn-danger"
-                    onClick={() => dispatch(decrease(cart, item._id))}
-                    disabled={item.quantity === 1 ? true : false} > - </button>
+                {item.quantity > 1 && <i class="fas fa-minus" style={{ color: 'red', cursor: 'pointer' }} onClick={() => dispatch(decrease(cart, item._id))}
+                ></i>}
 
                 <span className="px-3">{item.quantity}</span>
 
-                <button className="btn btn-sm btn-success"
-                    onClick={() => dispatch(increase(cart, item._id))}
-                    disabled={item.quantity === item.inStock ? true : false} > + </button>
+                {item.quantity < item.inStock && <i class="fas fa-plus" style={{ color: 'green', cursor: 'pointer' }} onClick={() => dispatch(increase(cart, item._id))}></i>}
+
             </td>
             <td className="align-middle">${item.price}</td>
             <td className="align-middle">${item.quantity * item.price}</td>
             <td className="align-middle" style={{ minWidth: '50px', cursor: 'pointer' }}>
-                <button class="btn btn-sm btn-danger" onClick={() => dispatch({
-                    type: 'ADD_MODAL',
-                    payload: { data: cart, _id: item._id, title: item.title, type: 'ADD_TO_CART' }
-                })} data-bs-toggle="modal" data-bs-target="#exampleModal">
-                    <i className="material-icons" aria-hidden="true"
-                        style={{ fontSize: '18px' }}
-                    >clear</i>
-                </button>
+                <i className="material-icons" aria-hidden="true"
+                    style={{ fontSize: '25px', color: 'red' }} onClick={() => dispatch({
+                        type: 'ADD_MODAL',
+                        payload: { data: cart, _id: item._id, title: item.title, type: 'ADD_TO_CART' }
+                    })} data-bs-toggle="modal" data-bs-target="#exampleModal"
+                >clear</i>
             </td>
         </tr>
     )

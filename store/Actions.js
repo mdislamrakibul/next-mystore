@@ -55,5 +55,6 @@ export const removeFromCart = (data, _id, title, type) =>
     // console.log("🚀 ~ file: Actions.js ~ line 42 ~ type", type)
     const newData = data.filter((x) => x._id !== _id)
     successMsg(`${title} is removed from cart`)
+    localStorage.setItem('__nextStore__cart__00_L', JSON.stringify(newData))
     return ({ type, payload: newData })
 }
