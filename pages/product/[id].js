@@ -55,8 +55,8 @@ const Product = ({ product }) =>
         <div className='row'>
           <div className='col-md-5'>
             <img src={product.images[tab].url} alt={product.title}
-              className="d-block img-thumbnail"
-              style={{ height: '300px', display: 'block', marginTop: '10px', }} />
+              className="d-block img-thumbnail rounded mt-4 w-100"
+              style={{ height: '300px', marginTop: '10px', }} />
             <br />
 
             <div style={{ cursor: 'pointer' }} >

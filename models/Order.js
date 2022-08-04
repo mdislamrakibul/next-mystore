@@ -13,11 +13,12 @@ const orderSchema = new mongoose.Schema({
 
     cart: { type: Array, required: true },
     promoCodeRedeem: { type: Boolean, required: true },
+    amountRedeem: { type: Number, required: true },
     paymentId: { type: String, required: true },
     method: { type: String, required: true },
     delivered: { type: Boolean, default: false },
     paid: { type: Boolean, default: false },
-    dateOfPayment: Date
+    dateOfPayment: Date,
 }, {
     timestamps: true
 })
