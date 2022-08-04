@@ -43,8 +43,7 @@ const auth = async (req, res) =>
             data: {}
         })
     }
-
-    res.json({
+    return {
         message: "User Found",
         status: true,
         data: {
@@ -54,7 +53,7 @@ const auth = async (req, res) =>
             email: user.email,
             isActive: user.isActive,
         }
-    })
+    }
 }
 
 
