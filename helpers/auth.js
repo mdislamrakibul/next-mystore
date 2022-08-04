@@ -9,7 +9,7 @@ const auth = async (req, res) =>
     if (!token) {
         return res.status(200).json({
             status: false,
-            message: 'Invalid Authentication.',
+            message: 'No Authorization Token',
             data: {}
         })
     }

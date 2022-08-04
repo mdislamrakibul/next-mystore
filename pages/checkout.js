@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router';
 import { parseCookies } from 'nookies';
 import React, { useContext, useEffect, useState } from 'react';
+import { postData } from '../helpers/dataOps';
 import { errorMsg } from '../helpers/Toastify';
 import { DataContext } from '../store/GlobalState';
 
@@ -13,7 +14,7 @@ function Checkout()
     let cartLocal = []
     const [promoCode, setPromoCode] = useState('')
     const [countPromoCode, setCountPromoCode] = useState(0)
-    const { user } = parseCookies()
+    const { user, token } = parseCookies()
 
     const [firstName, setFirstName] = useState('')
     const [lastName, setLastName] = useState('')
@@ -88,7 +89,7 @@ function Checkout()
         setPhone('')
         setAddress('')
     }
-    const handleProceed = (e) =>
+    const handleProceed = async (e) =>
     {
         e.preventDefault();
 
@@ -117,8 +118,21 @@ function Checkout()
             setAddressError(true)
             return
         }
-
-        console.log("proceed");
+        const params = {
+            firstName,
+            lastName,
+            email,
+            phone,
+            address,
+            total,
+            cart: cart,
+            promoCodeRedeem: promoCode === 'X7e9D43' ? true : false,
+            amountRedeem: promoCode === 'X7e9D43' ? 10 : 0,
+            method: chkValue,
+        }
+        console.log("🚀 ~ file: checkout.js ~ line 122 ~ params", params)
+        const response = await postData('order', params, token)
+        console.log(response);
     }
     return (
         <div >
@@ -224,7 +238,7 @@ function Checkout()
                                             </div>
                                             <div className="col-sm-6">
                                                 <label for="phone" className="form-label">Phone No. <span className="text-muted"></span></label>
-                                                <input type="number" className="form-control" id="phone" placeholder="88018000000" required
+                                                <input type="text" className="form-control" id="phone" placeholder="88018000000" required
                                                     value={phone} onChange={(e) => setPhone(e.target.value)} />
                                                 <div style={{ color: 'red' }} className={phoneError ? 'd-block' : 'd-none'}>
                                                     <i className="fas fa-exclamation-triangle"></i>&nbsp; Please enter a valid Phone No.
