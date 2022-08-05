@@ -1,27 +1,34 @@
 import Head from 'next/head';
 import { parseCookies } from 'nookies';
-import { useContext, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
+import Loading from '../components/Loading';
 import { errorMsg } from '../helpers/Toastify';
+import valid from '../helpers/valid';
 import { DataContext } from '../store/GlobalState';
 const Account = ({ orders }) =>
 {
     const orderCard = useRef(null)
     const cookie = parseCookies()
     const user = cookie.user ? JSON.parse(cookie.user) : ""
-    console.log("🚀 ~ file: profile.js ~ line 10 ~ user", user)
+    useEffect(() =>
+    {
+        if (user) {
+            setData({ ...data, username: user.username, email: user.email })
+        }
+    }, [])
 
     const { state, dispatch } = useContext(DataContext)
     const { auth, notify } = state
 
     const initialSate = {
         avatar: '',
-        name: '',
+        username: '',
         password: '',
         cf_password: ''
     }
     const [data, setData] = useState(initialSate)
     const [isLoading, setIsLoading] = useState(false)
-    const { avatar, name, password, cf_password } = data
+    const { avatar, username, password, cf_password } = data
     const OrderHistory = () =>
     {
         return (
@@ -72,18 +79,39 @@ const Account = ({ orders }) =>
         }
 
         setData({ ...data, avatar: file })
+        console.log(data);
     }
     const handleChange = (e) =>
     {
-
+        const { name, value } = e.target
+        setData({ ...data, [name]: value })
     }
     const handleUpdateProfile = (e) =>
     {
+        e.preventDefault()
+        if (password) {
+            const errMsg = valid(username, user.email, password, cf_password)
+            if (errMsg) {
+                errorMsg(errMsg)
+                setIsLoading(false)
+                return
+            }
+            updatePassword()
+        }
+    }
+    const updatePassword = async () =>
+    {
+        console.log("kshda");
         setIsLoading(true)
+        // patchData('user/resetPassword', { password }, cookie.token)
+        //     .then(res =>
+        //     {
+        //         console.log(res)
+        //     })
     }
     return (
         <div className='container profile_page'>
-            {/* <Loading /> */}
+            {isLoading && <Loading />}
             <Head>
                 <title>Profile</title>
             </Head>
@@ -99,13 +127,13 @@ const Account = ({ orders }) =>
                                 <i className="fas fa-camera"></i>
                                 <p>Change</p>
                                 <input type="file" name="file" id="file_up"
-                                    accept="image/*" onChange={changeAvatar} />
+                                    accept="image/*" onChange={(e) => changeAvatar(e)} />
                             </span>
                         </div>
                         <div className="mb-3">
-                            <label htmlFor="name">Name</label>
-                            <input type="text" name="name" value={name} className="form-control"
-                                placeholder="Your name" onChange={handleChange} id="name" />
+                            <label htmlFor="username">Username</label>
+                            <input type="text" name="username" value={username} className="form-control"
+                                placeholder="Your username" onChange={handleChange} id="username" />
                         </div>
 
                         <div className="mb-3">
@@ -128,7 +156,7 @@ const Account = ({ orders }) =>
 
                         <button className="btn btn-info btn-sm" disabled={isLoading}
                             onClick={handleUpdateProfile}>
-                            <i class="far fa-check-circle"></i>&nbsp;Update
+                            <i className="far fa-check-circle"></i>&nbsp;Update
                         </button>
                         {/* {user?.image && <img src={user?.image} alt={user?.username} width={'150px'} height={'auto'} />} */}
                     </div>

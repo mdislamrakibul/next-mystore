@@ -38,7 +38,7 @@ function NavBar()
         <button className="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar2" aria-controls="offcanvasNavbar2">
           <span className="navbar-toggler-icon"></span>
         </button>
-        <div className="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="offcanvasNavbar2" aria-labelledby="offcanvasNavbar2Label">
+        <div className="offcanvas offcanvas-end text-bg-dark" tabIndex="-1" id="offcanvasNavbar2" aria-labelledby="offcanvasNavbar2Label">
           <div className="offcanvas-header">
             <button type="button" className="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
           </div>
@@ -66,13 +66,13 @@ function NavBar()
               </li>
               {user ?
                 <li className="nav-item dropdown">
-                  <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  <span className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                     <img src={user.image} alt={user.username} style={{
                       borderRadius: '50%', width: '30px', height: '30px',
                       transform: 'translateY(-3px)', marginRight: '3px'
                     }} />&nbsp;{user.username}
-                  </a>
-                  <ul className="dropdown-menu" >
+                  </span>
+                  <ul className="dropdown-menu">
                     <li>
                       <Link href="/profile">
                         <a className={"dropdown-item" + isActive('/profile')}>

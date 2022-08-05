@@ -2,6 +2,7 @@ import { ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 import Layout from '../components/Layout';
 import { DataProvider } from '../store/GlobalState';
+// import '../styles/globals.css';
 function MyApp({ Component, pageProps })
 {
   return (
