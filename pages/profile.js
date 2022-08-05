@@ -2,6 +2,7 @@ import Head from 'next/head';
 import { parseCookies } from 'nookies';
 import { useContext, useEffect, useRef, useState } from 'react';
 import Loading from '../components/Loading';
+import { patchData } from '../helpers/dataOps';
 import { errorMsg } from '../helpers/Toastify';
 import valid from '../helpers/valid';
 import { DataContext } from '../store/GlobalState';
@@ -101,13 +102,13 @@ const Account = ({ orders }) =>
     }
     const updatePassword = async () =>
     {
-        console.log("kshda");
-        setIsLoading(true)
-        // patchData('user/resetPassword', { password }, cookie.token)
-        //     .then(res =>
-        //     {
-        //         console.log(res)
-        //     })
+        //   console.log("kshda");
+        // setIsLoading(true)
+        patchData('user/resetPassword', { password, username }, cookie.token)
+            .then(res =>
+            {
+                console.log(res)
+            })
     }
     return (
         <div className='container profile_page'>
