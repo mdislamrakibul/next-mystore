@@ -2,7 +2,7 @@ import { useRouter } from 'next/router';
 import { parseCookies } from 'nookies';
 import React, { useContext, useEffect, useState } from 'react';
 import { postData } from '../helpers/dataOps';
-import { errorMsg } from '../helpers/Toastify';
+import { errorMsg, successMsg } from '../helpers/Toastify';
 import { DataContext } from '../store/GlobalState';
 
 function Checkout()
@@ -132,7 +132,21 @@ function Checkout()
         }
         console.log("🚀 ~ file: checkout.js ~ line 122 ~ params", params)
         const response = await postData('order', params, token)
-        console.log(response);
+        if (!response.status) {
+            errorMsg(response?.message)
+            return
+        }
+        successMsg(response.message)
+        localStorage.removeItem('__nextStore__cart__00_L')
+        dispatch({ type: 'ADD_TO_CART', payload: [] })
+        setFirstName('')
+        setLastName('')
+        setEmail('')
+        setPhone('')
+        setAddress('')
+        setTotal(0)
+        setCountPromoCode(0)
+        router.push('/')
     }
     return (
         <div >

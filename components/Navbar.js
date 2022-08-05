@@ -74,9 +74,9 @@ function NavBar()
                   </a>
                   <ul className="dropdown-menu" >
                     <li>
-                      <Link href="/account">
-                        <a className={"dropdown-item" + isActive('/account')}>
-                          <i className="fas fa-id-badge"></i>&nbsp;Account</a>
+                      <Link href="/profile">
+                        <a className={"dropdown-item" + isActive('/profile')}>
+                          <i className="fas fa-id-badge"></i>&nbsp;Profile</a>
                       </Link>
                     </li>
                     <li className="dropdown-divider"></li>
