@@ -1,16 +1,21 @@
+import Cookies from 'js-cookie';
 import Head from 'next/head';
+import { useRouter } from 'next/router';
 import { parseCookies } from 'nookies';
 import { useContext, useEffect, useRef, useState } from 'react';
 import Loading from '../components/Loading';
 import { patchData } from '../helpers/dataOps';
-import { errorMsg } from '../helpers/Toastify';
+import { imageUpload } from '../helpers/imageUpload';
+import { errorMsg, successMsg } from '../helpers/Toastify';
 import valid from '../helpers/valid';
 import { DataContext } from '../store/GlobalState';
 const Account = ({ orders }) =>
 {
+    const router = useRouter()
     const orderCard = useRef(null)
     const cookie = parseCookies()
     const user = cookie.user ? JSON.parse(cookie.user) : ""
+    console.log("🚀 ~ file: profile.js ~ line 18 ~ user", user)
     useEffect(() =>
     {
         if (user) {
@@ -80,7 +85,6 @@ const Account = ({ orders }) =>
         }
 
         setData({ ...data, avatar: file })
-        console.log(data);
     }
     const handleChange = (e) =>
     {
@@ -99,16 +103,44 @@ const Account = ({ orders }) =>
             }
             updatePassword()
         }
+
+        if (avatar) updateUserInfo()
     }
     const updatePassword = async () =>
     {
-        //   console.log("kshda");
-        // setIsLoading(true)
+        setIsLoading(true)
         patchData('user/resetPassword', { password, username }, cookie.token)
             .then(res =>
             {
-                console.log(res)
+                if (!res.status) {
+                    setIsLoading(false)
+                    errorMsg(res.message)
+                    return
+                }
+                setIsLoading(false)
+                successMsg(res.message)
+                Cookies.set('user', res.data)
             })
+    }
+
+    const updateUserInfo = async () =>
+    {
+        let media;
+        setIsLoading(true)
+        if (avatar) media = await imageUpload([avatar])
+        patchData('user',
+            { avatar: avatar ? media[0].url : user.image }, cookie.token
+        ).then(res =>
+        {
+            setIsLoading(false)
+            if (!res.status) {
+                errorMsg(res.message)
+                return
+            }
+            successMsg(res.message)
+            Cookies.set('user', res.data)
+            router.push('/profile')
+        })
     }
     return (
         <div className='container profile_page'>
@@ -120,10 +152,13 @@ const Account = ({ orders }) =>
             <section className="row text-secondary my-3">
                 <div className='row'>
                     <div className='col-md-4'>
+                        {/*avatar ? URL.createObjectURL(avatar) :  */}
                         <div className="avatar mb-3">
-                            {(user && user.image)
-                                ? <img src={user?.image} alt={user?.username} />
-                                : <img src="https://res.cloudinary.com/x-gwkjs-8zn7m-3/image/upload/v1658488363/user_icon_png_1449226_jbw7dr.png" alt="Avatar" />}
+                            {
+                                user
+                                && <img src={avatar ? URL.createObjectURL(avatar) : user?.image} alt={user?.username} />
+                                // : <img src="https://res.cloudinary.com/x-gwkjs-8zn7m-3/image/upload/v1658488363/user_icon_png_1449226_jbw7dr.png" alt="Avatar" />
+                            }
                             <span>
                                 <i className="fas fa-camera"></i>
                                 <p>Change</p>

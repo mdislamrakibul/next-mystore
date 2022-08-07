@@ -41,7 +41,7 @@ export default async (req, res) =>
       const token = jwt.sign({ userId: user._id, role: user.role, username: user.username, email: user.email, isActive: user.isActive }, process.env.JWT_SECRET, {
         expiresIn: "7d"
       })
-      const { __v, ...info } = user._doc
+      const { __v, password, ...info } = user._doc
       res.status(200).json({
         status: true,
         message: "user found",

@@ -41,7 +41,7 @@ const Create = () =>
     data.append('file', media)
     data.append('upload_preset', "mystore")
     data.append('cloud_name', "cnq")
-    const res = await fetch("	https://api.cloudinary.com/v1_1/cnq/image/upload", {
+    const res = await fetch("https://api.cloudinary.com/v1_1/cnq/image/upload", {
       method: "POST",
       body: data
     })

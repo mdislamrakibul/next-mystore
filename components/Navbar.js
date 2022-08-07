@@ -67,7 +67,7 @@ function NavBar()
               {user ?
                 <li className="nav-item dropdown">
                   <span className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    <img src={user.image} alt={user.username} style={{
+                    <img src={user.image} alt="avatar" style={{
                       borderRadius: '50%', width: '30px', height: '30px',
                       transform: 'translateY(-3px)', marginRight: '3px'
                     }} />&nbsp;{user.username}

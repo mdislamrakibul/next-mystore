@@ -20,15 +20,27 @@ const resetPassword = async (req, res) =>
 {
     try {
         const result = await auth(req, res)
-        console.log("🚀 ~ file: resetPassword.js ~ line 23 ~ result", result)
         const { password, username } = req.body
         const passwordHash = await bcrypt.hash(password, 12)
 
-        await User.findOneAndUpdate({ _id: result.data._id }, { password: passwordHash, username: username })
+        await User.findOneAndUpdate({ _id: result.data._id },
+            {
+                password: passwordHash,
+                username: username
+            }, { new: true }
+        )
 
-        res.json({ msg: "Update Success!" })
+        res.json({
+            message: "Password Successfully Updated!",
+            status: true,
+            data: {}
+        })
 
     } catch (err) {
-        return res.status(500).json({ err: err.message })
+        return res.status(500).json({
+            message: err.message,
+            status: false,
+            data: {}
+        })
     }
 }

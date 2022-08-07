@@ -299,7 +299,7 @@ function Checkout()
                                                 </button>
                                             </div>
                                             :
-                                            <button className="btn btn-info btn-sm w-100" onClick={() =>
+                                            <button className="btn btn-info btn-smp" onClick={() =>
                                             {
                                                 router.push("/login")
                                             }}>

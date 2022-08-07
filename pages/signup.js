@@ -106,7 +106,7 @@ const SignUp = () =>
                     </label>
                     <div className="col-sm-11">
                       <div className="form-floating">
-                        <input type="email" className="form-control" id="password" name="password"
+                        <input type="password" className="form-control" id="password" name="password"
                           onChange={(e) => { setPassword(e.target.value) }} value={password} placeholder="Password" />
                         <label>Password</label>
                       </div>
