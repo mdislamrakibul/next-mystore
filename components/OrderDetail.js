@@ -1,4 +1,3 @@
-import Link from 'next/link';
 import { parseCookies } from 'nookies';
 import { patchData } from '../helpers/dataOps';
 import { updateItem } from '../store/Actions';
@@ -30,92 +29,182 @@ const OrderDetail = ({ orderDetail, state, dispatch }) =>
     if (!user) return null;
     return (
         <>
-            {
-                orderDetail.map(order => (
-                    <div key={order._id} style={{ margin: '20px auto' }} className="row justify-content-around">
+            {orderDetail.map(order => (
+                <div key={order._id} style={{ margin: '20px auto' }} className="row justify-content-around">
 
-                        <div className="text-uppercase my-3" style={{ maxWidth: '600px' }}>
-                            <h2 className="text-break">Order {order._id}</h2>
-
-                            <div className="mt-4 text-secondary">
-                                <h3>Shipping</h3>
-                                <p>Name: {order.user.name}</p>
-                                <p>Email: {order.user.email}</p>
-                                <p>Address: {order.address}</p>
-                                <p>Mobile: {order.mobile}</p>
-
-                                <div className={`alert ${order.delivered ? 'alert-success' : 'alert-danger'}
-                        d-flex justify-content-between align-items-center`} role="alert">
-                                    {
-                                        order.delivered ? `Deliverd on ${order.updatedAt}` : 'Not Delivered'
-                                    }
-                                    {
-                                        user.role === 'admin' && !order.delivered &&
-                                        <button className="btn btn-dark text-uppercase"
-                                            onClick={() => handleDelivered(order)}>
-                                            Mark as delivered
-                                        </button>
-                                    }
-
+                    <div className="my-3">
+                        <h4 className="text-break">Order Details</h4>
+                        <div className='row mb-3'>
+                            <div className='col-md-12'>
+                                <div class="alert alert-secondary" >
+                                    <h6 className="text-break">Order##{order._id}</h6>
                                 </div>
+                                <div className='container'>
 
-                                <h3>Payment</h3>
-                                {
-                                    order.method && <h6>Method: <em>{order.method}</em></h6>
-                                }
+                                    <div className='row'>
+                                        <div className='col-md-6'>
+                                            <table>
+                                                <tbody>
+                                                    <tr>
+                                                        <td style={{ width: '170px', textAlign: 'right' }}>Method</td>
+                                                        <td>&nbsp; &nbsp;: &nbsp; &nbsp; {order.method}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style={{ width: '170px', textAlign: 'right' }}>Payment Id</td>
+                                                        <td>&nbsp; &nbsp;: &nbsp; &nbsp; {order.paymentId}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style={{ width: '170px', textAlign: 'right' }}>PromoCode Redeem</td>
+                                                        <td>&nbsp; &nbsp;: &nbsp; &nbsp; {order.promoCodeRedeem ? <i class="fas fa-check-circle text-success"></i>
+                                                            : <i class="fas fa-times-circle text-danger"></i>}</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
 
-                                {
-                                    order.paymentId && <p>PaymentId: <em>{order.paymentId}</em></p>
-                                }
 
-                                <div className={`alert ${order.paid ? 'alert-success' : 'alert-danger'}
-                        d-flex justify-content-between align-items-center`} role="alert">
-                                    {
-                                        order.paid ? `Paid on ${order.dateOfPayment}` : 'Not Paid'
-                                    }
+                                        <div className='col-md-6'>
+                                            <table>
+                                                <tbody>
+                                                    <tr>
+                                                        <td style={{ width: '170px', textAlign: 'right' }}>Amount Redeem</td>
+                                                        <td>&nbsp; &nbsp;: &nbsp; &nbsp; $ {order.amountRedeem}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style={{ width: '170px', textAlign: 'right' }}>Paid</td>
+                                                        <td>&nbsp; &nbsp;: &nbsp; &nbsp; {order.paid ? <i class="fas fa-check-circle text-success"></i>
+                                                            : <i class="fas fa-times-circle text-danger"></i>}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style={{ width: '170px', textAlign: 'right' }}>Delivered</td>
+                                                        <td>&nbsp; &nbsp;: &nbsp; &nbsp; {order.delivered
+                                                            ? <i class="fas fa-check-circle text-success"></i>
+                                                            : <i class="fas fa-times-circle text-danger"></i>}</td>
+                                                    </tr>
 
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
                                 </div>
-
-                                <div>
-                                    <h3>Order Items</h3>
-                                    {
-                                        order.cart.map(item => (
-                                            <div className="row border-bottom mx-0 p-2 justify-content-between
-                                    align-items-center" key={item._id} style={{ maxWidth: '550px' }}>
-                                                <img src={item.images[0].url} alt={item.images[0].url}
-                                                    style={{ width: '50px', height: '45px', objectFit: 'cover' }} />
-
-                                                <h5 className="flex-fill text-secondary px-3 m-0">
-                                                    <Link href={`/product/${item._id}`}>
-                                                        <a>{item.title}</a>
-                                                    </Link>
-                                                </h5>
-
-                                                <span className="text-info m-0">
-                                                    {item.quantity} x ${item.price} = ${item.price * item.quantity}
-                                                </span>
-
-                                            </div>
-                                        ))
-                                    }
-                                </div>
-
                             </div>
-
                         </div>
+                        <div className='row mb-3'>
+                            <div className='col-md-6'>
+                                <div class="alert alert-secondary" >
+                                    <h6 className="text-break">User Information</h6>
+                                </div>
+                                <div className='container'>
+                                    <table>
+                                        <tbody>
+                                            <tr >
+                                                <td style={{ width: '120px', textAlign: 'right' }}>FirstName</td>
+                                                <td>&nbsp; &nbsp;: &nbsp;&nbsp;{order.user.firstName}</td>
+                                            </tr>
+                                            <tr>
+                                                <td style={{ width: '120px', textAlign: 'right' }}>LastName</td>
+                                                <td>&nbsp; &nbsp;: &nbsp; &nbsp;{order.user.lastName}</td>
+                                            </tr>
+                                            <tr>
+                                                <td style={{ width: '120px', textAlign: 'right' }}>Username</td>
+                                                <td>&nbsp; &nbsp;: &nbsp; &nbsp;{order.user.username}</td>
+                                            </tr>
+                                            <tr>
+                                                <td style={{ width: '120px', textAlign: 'right' }}>Email</td>
+                                                <td>&nbsp; &nbsp;: &nbsp; &nbsp;{order.user.email}</td>
+                                            </tr>
+                                            <tr>
+                                                <td style={{ width: '120px', textAlign: 'right' }}>Phone</td>
+                                                <td>&nbsp; &nbsp;: &nbsp; &nbsp;{order.user.phone}</td>
+                                            </tr>
+                                            <tr>
+                                                <td style={{ width: '120px', textAlign: 'right' }}>Address</td>
+                                                <td>&nbsp; &nbsp;: &nbsp; &nbsp;{order.user.address}</td>
+                                            </tr>
 
-                        {
-                            !order.paid && user.role !== 'admin' &&
-                            <div className="p-4">
-                                <h2 className="mb-4 text-uppercase">Total: ${order.total}</h2>
-                                {/* <PaypalBtn order={order} /> */}
-                                PayPal Button
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
-                        }
+                            <div className='col-md-6'>
+                                <div class="alert alert-secondary" >
+                                    <h6 className="text-break">Buyer Information</h6>
+                                </div>
+                                <div className='container'>
+                                    <table>
+                                        <tbody>
+                                            <tr >
+                                                <td style={{ width: '120px', textAlign: 'right' }}>FirstName</td>
+                                                <td>&nbsp; &nbsp;: &nbsp;&nbsp;{order.firstName}</td>
+                                            </tr>
+                                            <tr>
+                                                <td style={{ width: '120px', textAlign: 'right' }}>LastName</td>
+                                                <td>&nbsp; &nbsp;: &nbsp; &nbsp;{order.lastName}</td>
+                                            </tr>
+                                            <tr>
+                                                <td style={{ width: '120px', textAlign: 'right' }}>Email</td>
+                                                <td>&nbsp; &nbsp;: &nbsp; &nbsp;{order.email}</td>
+                                            </tr>
+                                            <tr>
+                                                <td style={{ width: '120px', textAlign: 'right' }}>Phone</td>
+                                                <td>&nbsp; &nbsp;: &nbsp; &nbsp;{order.phone}</td>
+                                            </tr>
+                                            <tr>
+                                                <td style={{ width: '120px', textAlign: 'right' }}>Address</td>
+                                                <td>&nbsp; &nbsp;: &nbsp; &nbsp;{order.address}</td>
+                                            </tr>
 
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div className='row mb-3'>
+                            <div class="alert alert-secondary" >
+                                <h6 className="text-break">Products</h6>
+                            </div>
+                            <div className='col-md-12 table-responsive'>
+                                <table class="table-bordered table table-hover w-100">
+                                    <thead>
+                                        <tr>
+                                            <td>#</td>
+                                            <td>image</td>
+                                            <td>Title</td>
+                                            <td>Price</td>
+                                            <td>Quantity</td>
+                                            <td>Subtotal</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {order?.cart?.map((product, index) =>
+                                        (
+                                            <tr key={product._id}>
+                                                <td> {index + 1}</td>
+                                                <td> <img src={product.image} alt={product.image}
+                                                    style={{ width: '50px', height: '45px', objectFit: 'cover' }} /></td>
+                                                <td>{product.title}</td>
+                                                <td>{product.price}</td>
+                                                <td>{product.quantity}</td>
+                                                <td>{product.price * product.quantity}</td>
+                                            </tr>
+                                        ))}
+                                        <tr >
+                                            <td className='text-end' colspan={6}>
+                                                <span>Subtotal&nbsp;&nbsp;: <b style={{ paddingLeft: '50px' }}>$ {order.total}</b></span><br />
+                                                <span>Shipping&nbsp; &nbsp;: <b style={{ paddingLeft: '50px' }}>Free</b></span><br />
+                                                <span>PromoCode Redeem&nbsp; &nbsp;: <b style={{ paddingLeft: '50px' }}>{order.promoCodeRedeem ? order.amountRedeem : 0}</b></span><br />
+                                                <span>Total&nbsp; &nbsp;: <b style={{ paddingLeft: '50px' }}>$ {order.total}</b></span><br />
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
-                ))
+                </div>
+            ))
             }
+
         </>
     )
 }

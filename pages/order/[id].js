@@ -24,19 +24,20 @@ const DetailOrder = () =>
 
     if (!user) return null;
     return (
+
         <div className="my-3">
             <Head>
                 <title>Detail Orders</title>
             </Head>
 
-            <div>
-                <button className="btn btn-dark" onClick={() => router.back()}>
-                    <i className="fas fa-long-arrow-alt-left" aria-hidden="true"></i> Go Back
-                </button>
+            <div className='container'>
+                <div>
+                    <button className="btn btn-sm btn-danger" onClick={() => router.back()}>
+                        <i className="fas fa-long-arrow-alt-left" aria-hidden="true"></i> Go Back
+                    </button>
+                </div>
+                <OrderDetail orderDetail={orderDetail} state={state} dispatch={dispatch} />
             </div>
-
-            <OrderDetail orderDetail={orderDetail} state={state} dispatch={dispatch} />
-
         </div>
     )
 }

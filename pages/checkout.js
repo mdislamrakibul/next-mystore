@@ -130,7 +130,6 @@ function Checkout()
             amountRedeem: promoCode === 'X7e9D43' ? 10 : 0,
             method: chkValue,
         }
-        console.log("🚀 ~ file: checkout.js ~ line 122 ~ params", params)
         const response = await postData('order', params, token)
         if (!response.status) {
             errorMsg(response?.message)
