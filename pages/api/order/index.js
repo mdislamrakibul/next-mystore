@@ -11,6 +11,9 @@ export default async (req, res) =>
         case 'POST':
             await createOrder(req, res);
             break
+        case 'GET':
+            await getOrders(req, res);
+            break
     }
 }
 
@@ -78,4 +81,32 @@ const sold = async (id, quantity, oldInStock, oldSold) =>
     //     },
     //     { new: true }
     // )
+}
+
+const getOrders = async (req, res) =>
+{
+    try {
+        const authResp = await auth(req, res)
+        let orders;
+        if (authResp.data.role === 'user') {
+            orders = await Order.find({ user: authResp.data._id }).populate("user", "-password")
+        } else {
+            orders = await Order.find().populate("user", "-password")
+        }
+
+        res.json(
+            {
+                message: 'Order List Fouud',
+                status: true,
+                data: orders,
+                total: orders.length
+            }
+        )
+    } catch (error) {
+        return res.status(200).json({
+            message: error?.message || 'Something went wrong',
+            status: false,
+            data: error
+        })
+    }
 }

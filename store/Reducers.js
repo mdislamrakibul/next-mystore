@@ -30,6 +30,11 @@ const reducers = (state, action) =>
                 ...state,
                 modal: action.payload
             }
+        case ACTIONS.GET_ORDER:
+            return {
+                ...state,
+                orders: action.payload
+            }
         default:
             return state
     }

@@ -2,6 +2,7 @@ import { createContext, useEffect, useReducer } from 'react';
 import reducers from './Reducers';
 
 import { parseCookies } from 'nookies';
+import { getData } from '../helpers/dataOps';
 export const DataContext = createContext();
 
 export const DataProvider = ({ children }) =>
@@ -11,6 +12,7 @@ export const DataProvider = ({ children }) =>
         auth: {},
         cart: [],
         modal: {},
+        orders: []
     }
     const { token, user } = parseCookies()
     const [state, dispatch] = useReducer(reducers, initialState);
@@ -35,7 +37,17 @@ export const DataProvider = ({ children }) =>
     }, [])
 
 
-
+    useEffect(() =>
+    {
+        if (token) {
+            getData('order', token)
+                .then(res =>
+                {
+                    // console.log(res);
+                    dispatch({ type: 'GET_ORDER', payload: res.data })
+                })
+        }
+    }, [])
 
 
 

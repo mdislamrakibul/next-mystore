@@ -5,6 +5,7 @@ export const ACTIONS = {
     ADD_TO_CART: 'ADD_TO_CART',
     ADD_MODAL: 'ADD_MODAL',
     REMOVE_FROM_CART: 'REMOVE_FROM_CART',
+    GET_ORDER: 'GET_ORDER',
 }
 
 
@@ -56,5 +57,17 @@ export const removeFromCart = (data, _id, title, type) =>
     const newData = data.filter((x) => x._id !== _id)
     successMsg(`${title} is removed from cart`)
     localStorage.setItem('__nextStore__cart__00_L', JSON.stringify(newData))
+    return ({ type, payload: newData })
+}
+
+export const deleteItem = (data, id, type) =>
+{
+    const newData = data.filter(item => item._id !== id)
+    return ({ type, payload: newData })
+}
+
+export const updateItem = (data, id, post, type) =>
+{
+    const newData = data.map(item => (item._id === id ? post : item))
     return ({ type, payload: newData })
 }

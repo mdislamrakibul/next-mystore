@@ -1,5 +1,6 @@
 import Cookies from 'js-cookie';
 import Head from 'next/head';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { parseCookies } from 'nookies';
 import { useContext, useEffect, useRef, useState } from 'react';
@@ -9,13 +10,13 @@ import { imageUpload } from '../helpers/imageUpload';
 import { errorMsg, successMsg } from '../helpers/Toastify';
 import valid from '../helpers/valid';
 import { DataContext } from '../store/GlobalState';
-const Account = ({ orders }) =>
+
+const Profile = () =>
 {
     const router = useRouter()
     const orderCard = useRef(null)
     const cookie = parseCookies()
     const user = cookie.user ? JSON.parse(cookie.user) : ""
-    console.log("🚀 ~ file: profile.js ~ line 18 ~ user", user)
     useEffect(() =>
     {
         if (user) {
@@ -24,7 +25,8 @@ const Account = ({ orders }) =>
     }, [])
 
     const { state, dispatch } = useContext(DataContext)
-    const { auth, notify } = state
+    const { auth, notify, orders } = state
+    console.log("🚀 ~ file: profile.js ~ line 28 ~ orders", orders)
 
     const initialSate = {
         avatar: '',
@@ -197,7 +199,56 @@ const Account = ({ orders }) =>
                         {/* {user?.image && <img src={user?.image} alt={user?.username} width={'150px'} height={'auto'} />} */}
                     </div>
                     <div className='col-md-8'>
-                        ss
+                        <h3 className="text-uppercase">Orders</h3>
+
+                        <div className="my-3 table-responsive">
+                            <table className="table-bordered table-hover w-100 text-uppercase"
+                                style={{ minWidth: '600px', cursor: 'pointer' }}>
+                                <thead className="bg-light font-weight-bold">
+                                    <tr>
+                                        <td className="p-2">id</td>
+                                        <td className="p-2">date</td>
+                                        <td className="p-2">total</td>
+                                        <td className="p-2">delivered</td>
+                                        <td className="p-2">paid</td>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    {
+                                        orders.map(order => (
+                                            <tr key={order._id}>
+                                                <td className="p-2">
+                                                    <Link href={`/order/${order._id}`}>
+                                                        <a>{order._id}</a>
+                                                    </Link>
+
+                                                </td>
+                                                <td className="p-2">
+                                                    {new Date(order.createdAt).toLocaleDateString()}
+                                                </td>
+                                                <td className="p-2">${order.total}</td>
+                                                <td className="p-2">
+                                                    {
+                                                        order.delivered
+                                                            ? <i className="fas fa-check text-success"></i>
+                                                            : <i className="fas fa-times text-danger"></i>
+                                                    }
+                                                </td>
+                                                <td className="p-2">
+                                                    {
+                                                        order.paid
+                                                            ? <i className="fas fa-check text-success"></i>
+                                                            : <i className="fas fa-times text-danger"></i>
+                                                    }
+                                                </td>
+                                            </tr>
+                                        ))
+                                    }
+                                </tbody>
+
+                            </table>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -263,4 +314,4 @@ export async function getServerSideProps(ctx)
 
 
 
-export default Account
+export default Profile
