@@ -33,10 +33,26 @@ const OrderDetail = ({ orderDetail, state, dispatch }) =>
                 <div key={order._id} style={{ margin: '20px auto' }} className="row justify-content-around">
 
                     <div className="my-3">
-                        <h4 className="text-break">Order Details</h4>
+                        <div className='justify-content-between'>
+                            <h4 className="text-break">Order Details</h4>
+                            <div className={`alert ${order.delivered ? 'alert-success' : 'alert-danger'}
+                        d-flex justify-content-between align-items-center`} role="alert">
+                                {
+                                    order.delivered ? `Deliverd on ${order.updatedAt}` : 'Not Delivered'
+                                }
+                                {
+                                    user.role !== 'user' && !order.delivered &&
+                                    <button className="btn btn-dark text-uppercase"
+                                        onClick={() => handleDelivered(order)}>
+                                        Mark as delivered
+                                    </button>
+                                }
+
+                            </div>
+                        </div>
                         <div className='row mb-3'>
                             <div className='col-md-12'>
-                                <div class="alert alert-secondary" >
+                                <div className="alert alert-secondary" >
                                     <h6 className="text-break">Order##{order._id}</h6>
                                 </div>
                                 <div className='container'>
@@ -55,8 +71,8 @@ const OrderDetail = ({ orderDetail, state, dispatch }) =>
                                                     </tr>
                                                     <tr>
                                                         <td style={{ width: '170px', textAlign: 'right' }}>PromoCode Redeem</td>
-                                                        <td>&nbsp; &nbsp;: &nbsp; &nbsp; {order.promoCodeRedeem ? <i class="fas fa-check-circle text-success"></i>
-                                                            : <i class="fas fa-times-circle text-danger"></i>}</td>
+                                                        <td>&nbsp; &nbsp;: &nbsp; &nbsp; {order.promoCodeRedeem ? <i className="fas fa-check-circle text-success"></i>
+                                                            : <i className="fas fa-times-circle text-danger"></i>}</td>
                                                     </tr>
                                                 </tbody>
                                             </table>
@@ -72,14 +88,14 @@ const OrderDetail = ({ orderDetail, state, dispatch }) =>
                                                     </tr>
                                                     <tr>
                                                         <td style={{ width: '170px', textAlign: 'right' }}>Paid</td>
-                                                        <td>&nbsp; &nbsp;: &nbsp; &nbsp; {order.paid ? <i class="fas fa-check-circle text-success"></i>
-                                                            : <i class="fas fa-times-circle text-danger"></i>}</td>
+                                                        <td>&nbsp; &nbsp;: &nbsp; &nbsp; {order.paid ? <i className="fas fa-check-circle text-success"></i>
+                                                            : <i className="fas fa-times-circle text-danger"></i>}</td>
                                                     </tr>
                                                     <tr>
                                                         <td style={{ width: '170px', textAlign: 'right' }}>Delivered</td>
                                                         <td>&nbsp; &nbsp;: &nbsp; &nbsp; {order.delivered
-                                                            ? <i class="fas fa-check-circle text-success"></i>
-                                                            : <i class="fas fa-times-circle text-danger"></i>}</td>
+                                                            ? <i className="fas fa-check-circle text-success"></i>
+                                                            : <i className="fas fa-times-circle text-danger"></i>}</td>
                                                     </tr>
 
                                                 </tbody>
@@ -91,7 +107,7 @@ const OrderDetail = ({ orderDetail, state, dispatch }) =>
                         </div>
                         <div className='row mb-3'>
                             <div className='col-md-6'>
-                                <div class="alert alert-secondary" >
+                                <div className="alert alert-secondary" >
                                     <h6 className="text-break">User Information</h6>
                                 </div>
                                 <div className='container'>
@@ -127,7 +143,7 @@ const OrderDetail = ({ orderDetail, state, dispatch }) =>
                                 </div>
                             </div>
                             <div className='col-md-6'>
-                                <div class="alert alert-secondary" >
+                                <div className="alert alert-secondary" >
                                     <h6 className="text-break">Buyer Information</h6>
                                 </div>
                                 <div className='container'>
@@ -160,11 +176,11 @@ const OrderDetail = ({ orderDetail, state, dispatch }) =>
                             </div>
                         </div>
                         <div className='row mb-3'>
-                            <div class="alert alert-secondary" >
+                            <div className="alert alert-secondary" >
                                 <h6 className="text-break">Products</h6>
                             </div>
                             <div className='col-md-12 table-responsive'>
-                                <table class="table-bordered table table-hover w-100">
+                                <table className="table-bordered table table-hover w-100">
                                     <thead>
                                         <tr>
                                             <td>#</td>
@@ -189,7 +205,7 @@ const OrderDetail = ({ orderDetail, state, dispatch }) =>
                                             </tr>
                                         ))}
                                         <tr >
-                                            <td className='text-end' colspan={6}>
+                                            <td className='text-end' colSpan={6}>
                                                 <span>Subtotal&nbsp;&nbsp;: <b style={{ paddingLeft: '50px' }}>$ {order.total}</b></span><br />
                                                 <span>Shipping&nbsp; &nbsp;: <b style={{ paddingLeft: '50px' }}>Free</b></span><br />
                                                 <span>PromoCode Redeem&nbsp; &nbsp;: <b style={{ paddingLeft: '50px' }}>{order.promoCodeRedeem ? order.amountRedeem : 0}</b></span><br />

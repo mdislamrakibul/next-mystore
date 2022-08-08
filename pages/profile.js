@@ -220,7 +220,7 @@ const Profile = () =>
                                             <tr key={order._id}>
                                                 <td className="p-2">
                                                     <Link href={`/order/${order._id}`}>
-                                                        <a>{order._id}</a>
+                                                        <a style={{ textDecoration: 'none', color: 'slateblue' }}>{order._id}</a>
                                                     </Link>
 
                                                 </td>
@@ -231,15 +231,15 @@ const Profile = () =>
                                                 <td className="p-2">
                                                     {
                                                         order.delivered
-                                                            ? <i className="fas fa-check text-success"></i>
-                                                            : <i className="fas fa-times text-danger"></i>
+                                                            ? <i className="fas fa-check-circle text-success"></i>
+                                                            : <i className="fas fa-times-circle text-danger"></i>
                                                     }
                                                 </td>
                                                 <td className="p-2">
                                                     {
                                                         order.paid
-                                                            ? <i className="fas fa-check text-success"></i>
-                                                            : <i className="fas fa-times text-danger"></i>
+                                                            ? <i className="fas fa-check-circle text-success"></i>
+                                                            : <i className="fas fa-times-circle text-danger"></i>
                                                     }
                                                 </td>
                                             </tr>
