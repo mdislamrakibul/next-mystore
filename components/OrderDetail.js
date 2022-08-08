@@ -2,49 +2,55 @@ import { parseCookies } from 'nookies';
 import { patchData } from '../helpers/dataOps';
 import { updateItem } from '../store/Actions';
 // import PaypalBtn from './paypalBtn';
+import { useState } from 'react';
+import { errorMsg, successMsg } from '../helpers/Toastify';
+import Loading from './Loading';
 
 const OrderDetail = ({ orderDetail, state, dispatch }) =>
 {
     const { auth, orders } = state
     const { token, user } = parseCookies()
+    const [isLoading, setIsLoading] = useState(false)
     const handleDelivered = (order) =>
     {
-        dispatch({ type: 'NOTIFY', payload: { loading: true } })
-
-        patchData(`order/delivered/${order._id}`, null, auth.token)
+        setIsLoading(true)
+        patchData(`order/delivered/${order._id}`, {}, token)
             .then(res =>
             {
-                if (res.err) return dispatch({ type: 'NOTIFY', payload: { error: res.err } })
-
-                const { paid, dateOfPayment, method, delivered } = res.result
+                setIsLoading(false)
+                if (!res.status) {
+                    errorMsg(res.message)
+                    return
+                }
+                const { paid, dateOfPayment, method, delivered } = res.data
 
                 dispatch(updateItem(orders, order._id, {
                     ...order, paid, dateOfPayment, method, delivered
-                }, 'ADD_ORDERS'))
+                }, 'GET_ORDERS'))
 
-                return dispatch({ type: 'NOTIFY', payload: { success: res.msg } })
+                successMsg(res.message)
             })
     }
 
     if (!user) return null;
     return (
         <>
+            {isLoading && <Loading />}
             {orderDetail.map(order => (
                 <div key={order._id} style={{ margin: '20px auto' }} className="row justify-content-around">
 
                     <div className="my-3">
                         <div className='justify-content-between'>
                             <h4 className="text-break">Order Details</h4>
-                            <div className={`alert ${order.delivered ? 'alert-success' : 'alert-danger'}
-                        d-flex justify-content-between align-items-center`} role="alert">
-                                {
+                            <div className="justify-content-between">
+                                {/* {
                                     order.delivered ? `Deliverd on ${order.updatedAt}` : 'Not Delivered'
-                                }
+                                } */}
                                 {
                                     user.role !== 'user' && !order.delivered &&
-                                    <button className="btn btn-dark text-uppercase"
+                                    <button className="btn btn-sm btn-success text-uppercase"
                                         onClick={() => handleDelivered(order)}>
-                                        Mark as delivered
+                                        <i className="fas fa-truck"></i>&nbsp; &nbsp; Mark as delivered
                                     </button>
                                 }
 
