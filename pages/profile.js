@@ -203,12 +203,13 @@ const Profile = () =>
 
                         <div className="my-3 table-responsive">
                             <table className="table-bordered table-hover w-100 text-uppercase"
-                                style={{ minWidth: '600px', cursor: 'pointer' }}>
+                                style={{ minWidth: '600px' }}>
                                 <thead className="bg-light font-weight-bold">
                                     <tr>
                                         <td className="p-2">id</td>
                                         <td className="p-2">date</td>
                                         <td className="p-2">total</td>
+                                        <td className="p-2">Method</td>
                                         <td className="p-2">delivered</td>
                                         <td className="p-2">paid</td>
                                     </tr>
@@ -228,6 +229,7 @@ const Profile = () =>
                                                     {new Date(order.createdAt).toLocaleDateString()}
                                                 </td>
                                                 <td className="p-2">${order.total}</td>
+                                                <td className="p-2">{order.method}</td>
                                                 <td className="p-2">
                                                     {
                                                         order.delivered

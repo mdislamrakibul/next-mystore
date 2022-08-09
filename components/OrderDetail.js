@@ -2,10 +2,10 @@ import { parseCookies } from 'nookies';
 import { patchData } from '../helpers/dataOps';
 import { updateItem } from '../store/Actions';
 // import PaypalBtn from './paypalBtn';
+import moment from 'moment';
 import { useState } from 'react';
 import { errorMsg, successMsg } from '../helpers/Toastify';
 import Loading from './Loading';
-
 const OrderDetail = ({ orderDetail, state, dispatch }) =>
 {
     const { auth, orders } = state
@@ -43,9 +43,9 @@ const OrderDetail = ({ orderDetail, state, dispatch }) =>
                         <div className='justify-content-between'>
                             <h4 className="text-break">Order Details</h4>
                             <div className="justify-content-between">
-                                {/* {
-                                    order.delivered ? `Deliverd on ${order.updatedAt}` : 'Not Delivered'
-                                } */}
+                                {
+                                    order.delivered && `(Delivered on ${moment(order.updatedAt).format('MMMM Do YYYY, h:mm:ss')})`
+                                }
                                 {
                                     user.role !== 'user' && !order.delivered &&
                                     <button className="btn btn-sm btn-success text-uppercase"

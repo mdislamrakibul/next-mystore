@@ -2,13 +2,19 @@ import { ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 import Layout from '../components/Layout';
 import { DataProvider } from '../store/GlobalState';
-// import '../styles/globals.css';
-function MyApp({ Component, pageProps })
+import AdminLayout from './../components/admin/AdminLayout';
+function MyApp({ Component, pageProps, router })
 {
+  const adminPanel = router.route.startsWith('/admin') ? true : false
+  console.log("🚀 ~ file: _app.js ~ line 9 ~ const", adminPanel)
+  const getLayout =
+    adminPanel ? ((page) => <AdminLayout children={page} />)
+      : ((page) => <Layout children={page} />);
+
   return (
-    <DataProvider>
-      <Layout>
-        <Component {...pageProps} />
+    <>
+      <DataProvider>
+        {getLayout(<Component {...pageProps} />, pageProps)}
         <ToastContainer
           position="top-right"
           autoClose={4000}
@@ -19,9 +25,8 @@ function MyApp({ Component, pageProps })
           closeOnClick
           pauseOnHover
         />
-      </Layout>
-    </DataProvider >
-
+      </DataProvider>
+    </>
   )
 }
 

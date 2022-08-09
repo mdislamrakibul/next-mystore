@@ -17,19 +17,21 @@ const deliveredOrder = async (req, res) =>
 {
     try {
         const result = await auth(req, res)
-        // console.log("🚀 ~ file: [id].js ~ line 20 ~ result", result)
-        if (result.data.role === user)
+        console.log("🚀 ~ file: [id].js ~ line 20 ~ result", result.data.role)
+
+        if (result?.data?.role === 'user') {
             return res.status(200).json({
                 message: 'You are not authorized to perform this action.',
                 status: false,
                 data: {}
             })
+        }
+
         const { id } = req.query
-        console.log("🚀 ~ file: [id].js ~ line 28 ~ id", id)
+        console.log("🚀 ~ file: [id].js ~ line 27 ~ id", id)
 
 
         const order = await Order.findOne({ _id: id })
-        console.log("🚀 ~ file: [id].js ~ line 30 ~ order", order)
 
         if (order.paid) {
             await Order.findOneAndUpdate({ _id: id }, { delivered: true }, { new: true })
@@ -65,6 +67,7 @@ const deliveredOrder = async (req, res) =>
         }
 
     } catch (err) {
+        console.log("0000000000000000000000");
         return res.status(200).json({
             message: err.message || 'Something went wrong',
             status: false,

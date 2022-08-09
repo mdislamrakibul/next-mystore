@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken';
-import Users from '../models/User';
+import User from '../models/User';
 
 
 const auth = async (req, res) =>
@@ -33,8 +33,7 @@ const auth = async (req, res) =>
         })
     }
 
-    const user = await Users.findOne({ _id: decoded.userId })
-    // console.log("🚀 ~ file: auth.js ~ line 37 ~ user", user)
+    const user = await User.findOne({ _id: decoded.userId })
 
     if (!user) {
         return res.status(200).json({
