@@ -18,12 +18,14 @@ function AdminLayout({ children })
             </Head>
             <NavBar />
             <Modal />
-            <div className='row'>
-                <div className='col-md-4'>
-                    <Sidebar />
-                </div>
-                <div className='col-md-8'>
-                    {children}
+            <div className='container' >
+                <div className='row'>
+                    <div className='col-md-3'>
+                        <Sidebar />
+                    </div>
+                    <div className='col-md-9'>
+                        {children}
+                    </div>
                 </div>
             </div>
             {/* <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script> */}

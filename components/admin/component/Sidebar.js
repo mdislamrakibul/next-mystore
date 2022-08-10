@@ -16,7 +16,13 @@ function Sidebar()
                         </button>
                         <div className="collapse show" id="home-collapse" style={{ marginLeft: '50px' }}>
                             <ul className="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                                <li><a href="#" className="link-dark d-inline-flex text-decoration-none rounded">Overview</a></li>
+                                <li>
+                                    <Link href='/admin/user'>
+                                        <a className="link-dark d-inline-flex text-decoration-none rounded">
+                                            <i class="fas fa-user-ninja"></i>&nbsp;User management
+                                        </a>
+                                    </Link>
+                                </li>
                                 <li><a href="#" className="link-dark d-inline-flex text-decoration-none rounded">Updates</a></li>
                                 <li><a href="#" className="link-dark d-inline-flex text-decoration-none rounded">Reports</a></li>
                             </ul>

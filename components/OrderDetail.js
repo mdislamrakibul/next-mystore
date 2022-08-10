@@ -44,7 +44,10 @@ const OrderDetail = ({ orderDetail, state, dispatch }) =>
                             <h4 className="text-break">Order Details</h4>
                             <div className="justify-content-between">
                                 {
-                                    order.delivered && `(Delivered on ${moment(order.updatedAt).format('MMMM Do YYYY, h:mm:ss')})`
+                                    order.delivered
+                                        ?
+                                        <span style={{ color: 'green' }}>[Delivered on {moment(order.updatedAt).format('MMMM Do YYYY, h:mm:ss')}]&nbsp;</span>
+                                        : <span style={{ color: 'red' }}>[Not Delivered]&nbsp;</span>
                                 }
                                 {
                                     user.role !== 'user' && !order.delivered &&

@@ -93,10 +93,9 @@ function UserRoles()
     }
     return (
         <>
-            <hr />
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                 <span>
-                    <h5>User & roles </h5> <h6>[ Only root user can see this part. ]</h6>
+                    <h5>User & roles </h5><h6 style={{ color: 'red' }}>[ Actions are restricted for user management ]</h6>
                 </span>
                 <span >
                     <a className="btn btn-sm btn-warning" onClick={() => fetchUser()} style={{ display: 'flex', alignItems: 'center' }}>
@@ -136,27 +135,30 @@ function UserRoles()
 
                                 </td>
                                 <td>
-                                    <div className="btn-group" role="group" aria-label="Basic example">
-                                        {item.role !== 'root' &&
-                                            <button type="button" className="btn btn-info btn-sm" onClick={() => handleRole(item._id, item.role)}
-                                                data-bs-toggle="tooltip" data-bs-placement="top"
-                                                data-bs-custom-className="custom-tooltip"
-                                                data-bs-title="This top tooltip is themed via CSS variables.">
-                                                <i className="material-icons">accessibility</i>
-                                            </button>
-                                        }
-                                        {(item?.role !== 'root' && item?.isActive) &&
-                                            <button className='btn btn-sm btn-danger' onClick={() => handleActivity(item._id, item.isActive)}>
-                                                <i className="material-icons">close</i>
-                                            </button>
-                                        }
-                                        {(item?.role !== 'root' && !item?.isActive) &&
-                                            <button className='btn btn-sm btn-success' onClick={() => handleActivity(item._id, item.isActive)}>
-                                                <i className="material-icons">check</i>
-                                            </button>
-                                        }
+                                    {item?.role === 'root' &&
+                                        (
+                                            <div className="btn-group" role="group" aria-label="Basic example">
+                                                {item?.role !== 'root' &&
+                                                    <button type="button" className="btn btn-info btn-sm" onClick={() => handleRole(item._id, item.role)}
+                                                        data-bs-toggle="tooltip" data-bs-placement="top"
+                                                        data-bs-custom-className="custom-tooltip"
+                                                        data-bs-title="This top tooltip is themed via CSS variables.">
+                                                        <i className="material-icons">accessibility</i>
+                                                    </button>
+                                                }
+                                                {(item?.role !== 'root' && item?.isActive) &&
+                                                    <button className='btn btn-sm btn-danger' onClick={() => handleActivity(item._id, item.isActive)}>
+                                                        <i className="material-icons">close</i>
+                                                    </button>
+                                                }
+                                                {(item?.role !== 'root' && !item?.isActive) &&
+                                                    <button className='btn btn-sm btn-success' onClick={() => handleActivity(item._id, item.isActive)}>
+                                                        <i className="material-icons">check</i>
+                                                    </button>
+                                                }
 
-                                    </div>
+                                            </div>
+                                        )}
                                 </td>
                             </tr>
                         )

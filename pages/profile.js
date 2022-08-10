@@ -26,7 +26,6 @@ const Profile = () =>
 
     const { state, dispatch } = useContext(DataContext)
     const { auth, notify, orders } = state
-    console.log("🚀 ~ file: profile.js ~ line 28 ~ orders", orders)
 
     const initialSate = {
         avatar: '',
