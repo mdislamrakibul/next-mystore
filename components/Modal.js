@@ -1,5 +1,8 @@
+import { parseCookies } from 'nookies';
 import React, { useContext } from 'react';
-import { removeFromCart } from '../store/Actions';
+import { deleteData } from '../helpers/dataOps';
+import { successMsg } from '../helpers/Toastify';
+import { deleteItem, removeFromCart } from '../store/Actions';
 import { DataContext } from '../store/GlobalState';
 
 const Modal = () =>
@@ -7,11 +10,35 @@ const Modal = () =>
 
     const { state, dispatch } = useContext(DataContext)
     const { modal, cart } = state
-
+    const { token } = parseCookies()
     const handleClick = () =>
     {
-        dispatch(removeFromCart(modal.data, modal._id, modal.title, modal.type))
-        dispatch({ type: 'ADD_MODAL', payload: {} })
+
+        if (Object.entries(modal).length > 0) {
+            if (modal.type === 'ADD_TO_CART') {
+                dispatch(removeFromCart(modal.data, modal._id, modal.title, modal.type))
+            }
+
+            if (modal.type === 'GET_CATEGORY') deleteCategories(modal)
+
+            if (modal.type === 'DELETE_PRODUCT') deleteProduct(modal)
+
+            dispatch({ type: 'ADD_MODAL', payload: {} })
+        }
+    }
+    const deleteCategories = (modal) =>
+    {
+        deleteData(`category/${modal._id}`, token)
+            .then(res =>
+            {
+                if (!res.status) {
+                    errorMsg(res.message)
+                    return
+                }
+
+                dispatch(deleteItem(modal.data, modal._id, modal.type))
+                successMsg(res.message)
+            })
     }
     return (
         <>

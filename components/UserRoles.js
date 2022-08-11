@@ -1,3 +1,4 @@
+import Cookies from 'js-cookie';
 import moment from 'moment';
 import { parseCookies } from 'nookies';
 import { useEffect, useState } from 'react';
@@ -6,7 +7,9 @@ import { errorMsg, successMsg } from '../helpers/Toastify';
 function UserRoles()
 {
     const [users, setUsers] = useState([])
-    const { token } = parseCookies()
+    const { token, user } = parseCookies()
+    const authUser = Cookies.get('user') && JSON.parse(Cookies.get('user'))
+
     useEffect(() =>
     {
         fetchUser()
@@ -135,25 +138,22 @@ function UserRoles()
 
                                 </td>
                                 <td>
-                                    {item?.role === 'root' &&
+
+                                    {authUser?.role === 'root' &&
                                         (
                                             <div className="btn-group" role="group" aria-label="Basic example">
-                                                {item?.role !== 'root' &&
-                                                    <button type="button" className="btn btn-info btn-sm" onClick={() => handleRole(item._id, item.role)}
-                                                        data-bs-toggle="tooltip" data-bs-placement="top"
-                                                        data-bs-custom-className="custom-tooltip"
-                                                        data-bs-title="This top tooltip is themed via CSS variables.">
-                                                        <i className="material-icons">accessibility</i>
-                                                    </button>
-                                                }
-                                                {(item?.role !== 'root' && item?.isActive) &&
+                                                <button type="button" className="btn btn-info btn-sm" onClick={() => handleRole(item._id, item.role)}
+                                                >
+                                                    <i className="fas fa-universal-access"></i>
+                                                </button>
+                                                {item?.isActive &&
                                                     <button className='btn btn-sm btn-danger' onClick={() => handleActivity(item._id, item.isActive)}>
-                                                        <i className="material-icons">close</i>
+                                                        <i className="far fa-times-circle"></i>
                                                     </button>
                                                 }
-                                                {(item?.role !== 'root' && !item?.isActive) &&
+                                                {!item?.isActive &&
                                                     <button className='btn btn-sm btn-success' onClick={() => handleActivity(item._id, item.isActive)}>
-                                                        <i className="material-icons">check</i>
+                                                        <i className="far fa-check-circle"></i>
                                                     </button>
                                                 }
 

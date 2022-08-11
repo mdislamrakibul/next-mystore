@@ -12,25 +12,31 @@ function Sidebar()
                 <ul className="list-unstyled ps-0">
                     <li className="mb-1">
                         <button className="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="true">
-                            <i class="fas fa-home"></i>&nbsp;Home
+                            <i className="fas fa-home"></i>&nbsp;Home
                         </button>
                         <div className="collapse show" id="home-collapse" style={{ marginLeft: '50px' }}>
                             <ul className="btn-toggle-nav list-unstyled fw-normal pb-1 small">
                                 <li>
                                     <Link href='/admin/user'>
                                         <a className="link-dark d-inline-flex text-decoration-none rounded">
-                                            <i class="fas fa-user-ninja"></i>&nbsp;User management
+                                            <i className="fas fa-user-ninja"></i>&nbsp;User management
                                         </a>
                                     </Link>
                                 </li>
-                                <li><a href="#" className="link-dark d-inline-flex text-decoration-none rounded">Updates</a></li>
+                                <li>
+                                    <Link href='/admin/category'>
+                                        <a className="link-dark d-inline-flex text-decoration-none rounded">
+                                            <i className="fas fa-tags"></i>&nbsp;Category management
+                                        </a>
+                                    </Link>
+                                </li>
                                 <li><a href="#" className="link-dark d-inline-flex text-decoration-none rounded">Reports</a></li>
                             </ul>
                         </div>
                     </li>
                     <li className="mb-1">
                         <button className="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#dashboard-collapse" aria-expanded="false">
-                            <i class="fas fa-tachometer-alt"></i>&nbsp;Dashboard
+                            <i className="fas fa-tachometer-alt"></i>&nbsp;Dashboard
                         </button>
                         <div className="collapse" id="dashboard-collapse" style={{ marginLeft: '50px' }}>
                             <ul className="btn-toggle-nav list-unstyled fw-normal pb-1 small">
@@ -43,7 +49,7 @@ function Sidebar()
                     </li>
                     <li className="mb-1">
                         <button className="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#orders-collapse" aria-expanded="false">
-                            <i class="far fa-file-archive"></i>&nbsp;Orders
+                            <i className="far fa-file-archive"></i>&nbsp;Orders
                         </button>
                         <div className="collapse" id="orders-collapse" style={{ marginLeft: '50px' }}>
                             <ul className="btn-toggle-nav list-unstyled fw-normal pb-1 small">

@@ -66,12 +66,12 @@ function NavBar()
                   </Link>
                 </li>
               }
-              {user && user.role !== 'user' &&
+              {user && user.role === 'root' &&
 
                 <li>
                   <Link href="/admin/dashboard">
                     <a className={"nav-link" + isActive('/admin/dashboard')}>
-                      <i class="fab fa-cpanel"></i>&nbsp;Dashboard
+                      <i className="fab fa-cpanel"></i>&nbsp;Dashboard
                     </a>
                   </Link>
                 </li>

@@ -288,7 +288,7 @@ function Checkout()
                                                     <i className="far fa-check-circle"></i>&nbsp; Proceed
                                                 </button>
                                                 <button className="btn btn-primary btn-sm" onClick={(e) => handleRefresh(e)}>
-                                                    <i class="fas fa-redo"></i>&nbsp; Refresh
+                                                    <i className="fas fa-redo"></i>&nbsp; Refresh
                                                 </button>
                                                 <button className="btn btn-danger btn-sm" onClick={() =>
                                                 {
