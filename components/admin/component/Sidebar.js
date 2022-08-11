@@ -1,7 +1,17 @@
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 import React from 'react'
 function Sidebar()
 {
+    const router = useRouter()
+    const isActive = (r) =>
+    {
+        if (r === router.pathname) {
+            return " active"
+        } else {
+            return ""
+        }
+    }
     return (
         <>
             <div className="flex-shrink-0 p-3 bg-white" style={{ width: '280px' }}>
@@ -18,19 +28,26 @@ function Sidebar()
                             <ul className="btn-toggle-nav list-unstyled fw-normal pb-1 small">
                                 <li>
                                     <Link href='/admin/user'>
-                                        <a className="link-dark d-inline-flex text-decoration-none rounded">
+                                        <a className={"link-dark d-inline-flex text-decoration-none rounded" + isActive('/admin/user')}>
                                             <i className="fas fa-user-ninja"></i>&nbsp;User management
                                         </a>
                                     </Link>
                                 </li>
                                 <li>
                                     <Link href='/admin/category'>
-                                        <a className="link-dark d-inline-flex text-decoration-none rounded">
+                                        <a className={"link-dark d-inline-flex text-decoration-none rounded" + isActive('/admin/category')}>
                                             <i className="fas fa-tags"></i>&nbsp;Category management
                                         </a>
                                     </Link>
                                 </li>
-                                <li><a href="#" className="link-dark d-inline-flex text-decoration-none rounded">Reports</a></li>
+                                <li>
+                                    <Link href='/admin/product'>
+                                        <a className={"link-dark d-inline-flex text-decoration-none rounded" + isActive('/admin/product')}>
+                                            <i class="fas fa-box"></i>&nbsp;Product management
+                                        </a>
+                                    </Link>
+
+                                </li>
                             </ul>
                         </div>
                     </li>

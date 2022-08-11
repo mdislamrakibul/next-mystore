@@ -21,7 +21,8 @@ const ProductsSchema = new Schema({
     },
     image: {
         type: String,
-        required: true
+        required: true,
+        default: 'https://res.cloudinary.com/x-gwkjs-8zn7m-3/image/upload/v1660200423/no-image-available_bitpsk.png'
     },
     images: {
         type: Array,
