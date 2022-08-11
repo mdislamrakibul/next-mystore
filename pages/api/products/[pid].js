@@ -9,6 +9,9 @@ export default async (req, res) =>
     case "GET":
       await getProduct(req, res)
       break;
+    case "PUT":
+      await updateProduct(req, res)
+      break;
     case "DELETE":
       await deleteProduct(req, res)
       break;
@@ -49,4 +52,45 @@ const deleteProduct = async (req, res) =>
   const { pid } = req.query
   await Product.findByIdAndDelete({ _id: pid })
   res.status(200).json({})
+}
+
+const updateProduct = async (req, res) =>
+{
+  try {
+    const result = await auth(req, res)
+    if (result.data.role !== 'root') {
+      return res.status(200).json({
+        message: "You are not authorized to update product",
+        status: false,
+        data: {}
+      })
+    }
+
+    const { id } = req.query
+    const { title, price, inStock, description, content, category, images, image } = req.body
+
+    if (!title || !price || !inStock || !description || !content || category === 'all' || images.length === 0 || !image) {
+      return res.status(200).json({
+        message: "Please fill all fields",
+        status: false,
+        data: {}
+      })
+    }
+    const newProd = await Product.findOneAndUpdate({ _id: id }, {
+      title: title.toLowerCase(), price, inStock, description, content, category, images
+    }, { new: true })
+
+    return res.status(200).json({
+      message: "Product Updated",
+      status: true,
+      data: newProd
+    })
+
+  } catch (err) {
+    return res.status(200).json({
+      status: false,
+      message: err.message || "Something Wrong",
+      data: {}
+    })
+  }
 }

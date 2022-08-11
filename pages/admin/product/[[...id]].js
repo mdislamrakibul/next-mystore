@@ -1,6 +1,7 @@
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import React, { useContext, useState } from 'react';
+import { imageUpload } from '../../../helpers/imageUpload';
 import { errorMsg } from '../../../helpers/Toastify';
 import { DataContext } from '../../../store/GlobalState';
 
@@ -102,9 +103,33 @@ const ProductIndex = () =>
     }
 
 
-    const handleSubmit = e =>
+    const handleSubmit = async (e) =>
     {
+        e.preventDefault()
+        if (user.role !== 'root')
+            return dispatch({ type: 'NOTIFY', payload: { error: 'Authentication is not valid.' } })
 
+        if (!title || !price || !inStock || !description || !content || category === 'all' || images.length === 0)
+            return dispatch({ type: 'NOTIFY', payload: { error: 'Please add all the fields.' } })
+
+
+        dispatch({ type: 'NOTIFY', payload: { loading: true } })
+        let media = []
+        const imgNewURL = images.filter(img => !img.url)
+        const imgOldURL = images.filter(img => img.url)
+
+        if (imgNewURL.length > 0) media = await imageUpload(imgNewURL)
+
+        let res;
+        if (onEdit) {
+            res = await putData(`product/${id}`, { ...product, images: [...imgOldURL, ...media] }, auth.token)
+            if (res.err) return dispatch({ type: 'NOTIFY', payload: { error: res.err } })
+        } else {
+            res = await postData('product', { ...product, images: [...imgOldURL, ...media] }, auth.token)
+            if (res.err) return dispatch({ type: 'NOTIFY', payload: { error: res.err } })
+        }
+
+        return dispatch({ type: 'NOTIFY', payload: { success: res.msg } })
     }
     return (
 
@@ -120,7 +145,7 @@ const ProductIndex = () =>
                 <div className='col-md-6 my-4'>
 
                     <div class="mb-3 row">
-                        <label for="title" class="col-sm-2 col-form-label">Title</label>
+                        <label htmlFor="title" class="col-sm-2 col-form-label">Title</label>
                         <div class="col-sm-10">
                             <input type="text" name="title" id="title"
                                 value={title} class="form-control" onChange={handleChangeInput}
@@ -129,7 +154,7 @@ const ProductIndex = () =>
                     </div>
 
                     <div class="mb-3 row">
-                        <label for="price" class="col-sm-2 col-form-label">Price</label>
+                        <label htmlFor="price" class="col-sm-2 col-form-label">Price</label>
                         <div class="col-sm-10">
                             <input type="number" name="price" id="price"
                                 value={price} class="form-control" onChange={handleChangeInput}
@@ -137,7 +162,7 @@ const ProductIndex = () =>
                         </div>
                     </div>
                     <div class="mb-3 row">
-                        <label for="description" class="col-sm-2 col-form-label">Description</label>
+                        <label htmlFor="description" class="col-sm-2 col-form-label">Description</label>
                         <div class="col-sm-10">
                             <textarea name="description" id="description" cols="30" rows="5"
                                 placeholder="Description" onChange={handleChangeInput}
@@ -147,7 +172,7 @@ const ProductIndex = () =>
                 </div>
                 <div className='col-md-6 my-4'>
                     <div class="mb-3 row">
-                        <label for="inStock" class="col-sm-2 col-form-label">In Stock</label>
+                        <label htmlFor="inStock" class="col-sm-2 col-form-label">In Stock</label>
                         <div class="col-sm-10">
                             <input type="number" name="inStock" id="inStock" value={inStock}
                                 placeholder="In Stock" className="form-control"
@@ -155,7 +180,7 @@ const ProductIndex = () =>
                         </div>
                     </div>
                     <div class="mb-3 row">
-                        <label for="category" class="col-sm-2 col-form-label">Category</label>
+                        <label htmlFor="category" class="col-sm-2 col-form-label">Category</label>
                         <div class="col-sm-10">
                             <select class="form-select" name="category" id="category" value={category}
                                 onChange={handleChangeInput} className="form-control">
@@ -173,7 +198,7 @@ const ProductIndex = () =>
 
 
                     <div class="mb-3 row">
-                        <label for="content" class="col-sm-2 col-form-label">Content</label>
+                        <label htmlFor="content" class="col-sm-2 col-form-label">Content</label>
                         <div class="col-sm-10">
                             <textarea name="content" id="content" cols="30" rows="5"
                                 placeholder="Content" onChange={handleChangeInput}
@@ -190,7 +215,7 @@ const ProductIndex = () =>
                 <hr />
                 <div className="col-md-6 my-4">
                     <div class="mb-3">
-                        <label for="images" class="form-label">Multiple Upload</label>
+                        <label htmlFor="images" class="form-label">Multiple Upload</label>
                         <input class="form-control" type="file" id="images"
                             onChange={handleMultipleUploadInput}
                             multiple
@@ -212,7 +237,7 @@ const ProductIndex = () =>
                 </div>
                 <div className="col-md-6 my-4">
                     <div class="mb-3">
-                        <label for="image" class="form-label">Single Upload</label>
+                        <label htmlFor="image" class="form-label">Single Upload</label>
                         <input class="form-control" type="file" id="image"
                             onChange={handleSingleUploadInput}
                             multiple

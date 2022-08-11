@@ -44,8 +44,18 @@ export const DataProvider = ({ children }) =>
             getData('order', token)
                 .then(res =>
                 {
-                    // console.log(res);
                     dispatch({ type: 'GET_ORDER', payload: res.data })
+                })
+        }
+    }, [])
+
+    useEffect(() =>
+    {
+        if (token) {
+            getData('category', token)
+                .then(res =>
+                {
+                    dispatch({ type: "GET_CATEGORY", payload: res.data })
                 })
         }
     }, [])

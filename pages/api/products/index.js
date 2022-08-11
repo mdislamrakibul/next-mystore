@@ -51,20 +51,46 @@ const getallProducts = async (req, res) =>
 const saveProduct = async (req, res) =>
 {
 
-    const { name, price, description, mediaUrl } = req.body
     try {
-        if (!name || !price || !description || !mediaUrl) {
-            return res.status(422).json({ error: "Please add all the fields" })
+        const result = await auth(req, res)
+        if (result.data.role !== 'root') {
+            return res.status(200).json({
+                status: false,
+                message: "You are not authorized to perform this action",
+                data: {}
+            })
         }
-        const product = await new Product({
-            name,
-            price,
-            description,
-            mediaUrl
-        }).save()
-        res.status(201).json(product)
+
+        const { title, price, inStock, description, content, category, images, image } = req.body
+
+        if (!title || !price || !inStock || !description || !content || category === 'all' || images.length === 0 || !image) {
+            {
+                return res.status(200).json({
+                    status: false,
+                    message: "Please fill all the fields",
+                    data: {}
+                })
+
+            }
+        }
+        const newProduct = new Product({
+            title: title.toLowerCase(), price, inStock, description, content, category, images, image
+        })
+
+        await newProduct.save()
+
+        return res.status(200).json({
+            status: true,
+            message: "Product Saved",
+            data: newProduct
+        })
+
     } catch (err) {
-        res.status(500).json({ error: "internal server error" })
-        console.log(err)
+        return res.status(200).json(
+            {
+                status: false,
+                message: err.message || "Something Wrong",
+                data: {}
+            })
     }
 }
