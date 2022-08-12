@@ -50,47 +50,48 @@ const getallProducts = async (req, res) =>
 
 const saveProduct = async (req, res) =>
 {
+    console.log(req.body);
 
-    try {
-        const result = await auth(req, res)
-        if (result.data.role !== 'root') {
-            return res.status(200).json({
-                status: false,
-                message: "You are not authorized to perform this action",
-                data: {}
-            })
-        }
+    // try {
+    //     const result = await auth(req, res)
+    //     if (result.data.role !== 'root') {
+    //         return res.status(200).json({
+    //             status: false,
+    //             message: "You are not authorized to perform this action",
+    //             data: {}
+    //         })
+    //     }
 
-        const { title, price, inStock, description, content, category, images, image } = req.body
+    //     const { title, price, inStock, description, content, category, images, image } = req.body
 
-        if (!title || !price || !inStock || !description || !content || category === 'all' || images.length === 0 || !image) {
-            {
-                return res.status(200).json({
-                    status: false,
-                    message: "Please fill all the fields",
-                    data: {}
-                })
+    //     if (!title || !price || !inStock || !description || !content || category === 'all' || images.length === 0 || !image) {
+    //         {
+    //             return res.status(200).json({
+    //                 status: false,
+    //                 message: "Please fill all the fields",
+    //                 data: {}
+    //             })
 
-            }
-        }
-        const newProduct = new Product({
-            title: title.toLowerCase(), price, inStock, description, content, category, images, image
-        })
+    //         }
+    //     }
+    //     const newProduct = new Product({
+    //         title: title.toLowerCase(), price, inStock, description, content, category, images, image
+    //     })
 
-        await newProduct.save()
+    //     await newProduct.save()
 
-        return res.status(200).json({
-            status: true,
-            message: "Product Saved",
-            data: newProduct
-        })
+    //     return res.status(200).json({
+    //         status: true,
+    //         message: "Product Saved",
+    //         data: newProduct
+    //     })
 
-    } catch (err) {
-        return res.status(200).json(
-            {
-                status: false,
-                message: err.message || "Something Wrong",
-                data: {}
-            })
-    }
+    // } catch (err) {
+    //     return res.status(200).json(
+    //         {
+    //             status: false,
+    //             message: err.message || "Something Wrong",
+    //             data: {}
+    //         })
+    // }
 }

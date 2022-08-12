@@ -1,11 +1,14 @@
+import Cookies from 'js-cookie';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
+import { parseCookies } from 'nookies';
 import React, { useContext, useState } from 'react';
+import Loading from '../../../components/Loading';
 import { imageUpload } from '../../../helpers/imageUpload';
 import { errorMsg } from '../../../helpers/Toastify';
 import { DataContext } from '../../../store/GlobalState';
 
-const ProductIndex = () =>
+const ProductCreate = () =>
 {
     const initialState = {
         title: '',
@@ -27,7 +30,8 @@ const ProductIndex = () =>
     const { id } = router.query
     const [onEdit, setOnEdit] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
-
+    const user = Cookies.get('user') && JSON.parse(Cookies.get('user'))
+    const { token } = parseCookies()
     const handleChangeInput = e =>
     {
         const { name, value } = e.target
@@ -105,35 +109,54 @@ const ProductIndex = () =>
 
     const handleSubmit = async (e) =>
     {
+        console.log('images = ' + images);
+        console.log('image = ' + image);
         e.preventDefault()
-        if (user.role !== 'root')
-            return dispatch({ type: 'NOTIFY', payload: { error: 'Authentication is not valid.' } })
+        if (user.role !== 'root') {
+            errorMsg('You are not authorized to perform this action')
+            return
+        }
 
-        if (!title || !price || !inStock || !description || !content || category === 'all' || images.length === 0)
-            return dispatch({ type: 'NOTIFY', payload: { error: 'Please add all the fields.' } })
+        if (!title || !price || !inStock || !description || !content || category === 'all' || images.length === 0 || !image) {
+
+            errorMsg('Please fill all the fields')
+            return
+        }
+
+        // setIsLoading(true)
 
 
-        dispatch({ type: 'NOTIFY', payload: { loading: true } })
         let media = []
-        const imgNewURL = images.filter(img => !img.url)
-        const imgOldURL = images.filter(img => img.url)
+        const imagesNewURL = images.filter(img => !img.url)
+        const imagesOldURL = images.filter(img => img.url)
 
-        if (imgNewURL.length > 0) media = await imageUpload(imgNewURL)
+
+        const imageNewURL = image.filter(img => !img.url)
+        const imageOldURL = image.filter(img => img.url)
+
+        if (imagesNewURL.length > 0) mediaImages = await imageUpload(imagesNewURL)
+        if (imageNewURL.length > 0) mediaImage = await imageUpload(imageNewURL)
 
         let res;
         if (onEdit) {
-            res = await putData(`product/${id}`, { ...product, images: [...imgOldURL, ...media] }, auth.token)
+            res = await putData(`products/${id}`, {
+                ...product,
+                images: [...imagesOldURL, ...mediaImages],
+                images: [...imageOldURL, ...mediaImage],
+            }, token)
             if (res.err) return dispatch({ type: 'NOTIFY', payload: { error: res.err } })
         } else {
-            res = await postData('product', { ...product, images: [...imgOldURL, ...media] }, auth.token)
-            if (res.err) return dispatch({ type: 'NOTIFY', payload: { error: res.err } })
+            res = await postData('products', { ...product, images: [...imgOldURL, ...media] }, token)
+            console.log("🚀 ~ file: create.js ~ line 140 ~ res", res)
+            // if (res.err) return dispatch({ type: 'NOTIFY', payload: { error: res.err } })
         }
 
-        return dispatch({ type: 'NOTIFY', payload: { success: res.msg } })
+        // successMsg(res.message)
     }
     return (
 
         <div>
+            {isLoading && <Loading />}
             <Head>
                 <title>Product</title>
             </Head>
@@ -144,26 +167,26 @@ const ProductIndex = () =>
                 <hr />
                 <div className='col-md-6 my-4'>
 
-                    <div class="mb-3 row">
-                        <label htmlFor="title" class="col-sm-2 col-form-label">Title</label>
-                        <div class="col-sm-10">
+                    <div className="mb-3 row">
+                        <label htmlFor="title" className="col-sm-2 col-form-label">Title</label>
+                        <div className="col-sm-10">
                             <input type="text" name="title" id="title"
-                                value={title} class="form-control" onChange={handleChangeInput}
+                                value={title} className="form-control" onChange={handleChangeInput}
                                 placeholder="Product Title" />
                         </div>
                     </div>
 
-                    <div class="mb-3 row">
-                        <label htmlFor="price" class="col-sm-2 col-form-label">Price</label>
-                        <div class="col-sm-10">
+                    <div className="mb-3 row">
+                        <label htmlFor="price" className="col-sm-2 col-form-label">Price</label>
+                        <div className="col-sm-10">
                             <input type="number" name="price" id="price"
-                                value={price} class="form-control" onChange={handleChangeInput}
+                                value={price} className="form-control" onChange={handleChangeInput}
                                 placeholder="Product Price" />
                         </div>
                     </div>
-                    <div class="mb-3 row">
-                        <label htmlFor="description" class="col-sm-2 col-form-label">Description</label>
-                        <div class="col-sm-10">
+                    <div className="mb-3 row">
+                        <label htmlFor="description" className="col-sm-2 col-form-label">Description</label>
+                        <div className="col-sm-10">
                             <textarea name="description" id="description" cols="30" rows="5"
                                 placeholder="Description" onChange={handleChangeInput}
                                 className="form-control" value={description} />
@@ -171,19 +194,19 @@ const ProductIndex = () =>
                     </div>
                 </div>
                 <div className='col-md-6 my-4'>
-                    <div class="mb-3 row">
-                        <label htmlFor="inStock" class="col-sm-2 col-form-label">In Stock</label>
-                        <div class="col-sm-10">
+                    <div className="mb-3 row">
+                        <label htmlFor="inStock" className="col-sm-2 col-form-label">In Stock</label>
+                        <div className="col-sm-10">
                             <input type="number" name="inStock" id="inStock" value={inStock}
                                 placeholder="In Stock" className="form-control"
                                 onChange={handleChangeInput} />
                         </div>
                     </div>
-                    <div class="mb-3 row">
-                        <label htmlFor="category" class="col-sm-2 col-form-label">Category</label>
-                        <div class="col-sm-10">
-                            <select class="form-select" name="category" id="category" value={category}
-                                onChange={handleChangeInput} className="form-control">
+                    <div className="mb-3 row">
+                        <label htmlFor="category" className="col-sm-2 col-form-label">Category</label>
+                        <div className="col-sm-10">
+                            <select className="form-select" name="category" id="category" value={category}
+                                onChange={handleChangeInput} >
                                 <option value="all">All Products</option>
                                 {
                                     categories.map(item => (
@@ -197,9 +220,9 @@ const ProductIndex = () =>
                     </div>
 
 
-                    <div class="mb-3 row">
-                        <label htmlFor="content" class="col-sm-2 col-form-label">Content</label>
-                        <div class="col-sm-10">
+                    <div className="mb-3 row">
+                        <label htmlFor="content" className="col-sm-2 col-form-label">Content</label>
+                        <div className="col-sm-10">
                             <textarea name="content" id="content" cols="30" rows="5"
                                 placeholder="Content" onChange={handleChangeInput}
                                 className="form-control" value={content} />
@@ -214,9 +237,9 @@ const ProductIndex = () =>
                 </div>
                 <hr />
                 <div className="col-md-6 my-4">
-                    <div class="mb-3">
-                        <label htmlFor="images" class="form-label">Multiple Upload</label>
-                        <input class="form-control" type="file" id="images"
+                    <div className="mb-3">
+                        <label htmlFor="images" className="form-label">Sample Image [ not more than 5 ]</label>
+                        <input className="form-control" type="file" id="images"
                             onChange={handleMultipleUploadInput}
                             multiple
                             accept="image/*" />
@@ -236,9 +259,9 @@ const ProductIndex = () =>
                     </div>
                 </div>
                 <div className="col-md-6 my-4">
-                    <div class="mb-3">
-                        <label htmlFor="image" class="form-label">Single Upload</label>
-                        <input class="form-control" type="file" id="image"
+                    <div className="mb-3">
+                        <label htmlFor="image" className="form-label">Product Image</label>
+                        <input className="form-control" type="file" id="image"
                             onChange={handleSingleUploadInput}
                             multiple
                             accept="image/*" />
@@ -260,8 +283,8 @@ const ProductIndex = () =>
 
             </div>
             <div className='row'>
-                <div class="">
-                    <button type="submit" className="btn btn-info btn-sm my-2 px-4" onClick={() => handleSubmit(e)}>
+                <div className="">
+                    <button type="submit" className="btn btn-info btn-sm my-2 px-4" onClick={(e) => handleSubmit(e)}>
                         <i className="fas fa-plus-circle"></i>&nbsp;{onEdit ? 'Update' : 'Create'}
                     </button>
                 </div>
@@ -271,4 +294,4 @@ const ProductIndex = () =>
     )
 }
 
-export default ProductIndex
+export default ProductCreate

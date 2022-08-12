@@ -41,9 +41,9 @@ function Sidebar()
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link href='/admin/product'>
+                                    <Link href='/admin/product/create'>
                                         <a className={"link-dark d-inline-flex text-decoration-none rounded" + isActive('/admin/product')}>
-                                            <i class="fas fa-box"></i>&nbsp;Product management
+                                            <i className="fas fa-box"></i>&nbsp;Product management
                                         </a>
                                     </Link>
 
