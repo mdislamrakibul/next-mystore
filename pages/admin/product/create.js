@@ -9,6 +9,7 @@ import { imageUpload } from '../../../helpers/imageUpload';
 import { errorMsg } from '../../../helpers/Toastify';
 import { DataContext } from '../../../store/GlobalState';
 import { putData } from './../../../helpers/dataOps';
+import { successMsg } from './../../../helpers/Toastify';
 
 const ProductCreate = () =>
 {
@@ -125,7 +126,7 @@ const ProductCreate = () =>
             return
         }
 
-        // setIsLoading(true)
+        setIsLoading(true)
 
 
         let media = []
@@ -154,11 +155,17 @@ const ProductCreate = () =>
                 images: [...imagesOldURL, ...mediaImages],
                 image: [...imageOldURL, ...mediaImage],
             }, token)
-            console.log("🚀 ~ file: create.js ~ line 140 ~ res", res)
+            if (!res.status) {
+                errorMsg(res.message)
+                return
+            }
             // if (res.err) return dispatch({ type: 'NOTIFY', payload: { error: res.err } })
         }
-
-        // successMsg(res.message)
+        setIsLoading(false)
+        successMsg(res.message)
+        setProduct(initialState)
+        setImages([])
+        setImage([])
     }
     return (
 
