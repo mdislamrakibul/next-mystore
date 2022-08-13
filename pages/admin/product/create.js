@@ -4,9 +4,11 @@ import { useRouter } from 'next/router';
 import { parseCookies } from 'nookies';
 import React, { useContext, useState } from 'react';
 import Loading from '../../../components/Loading';
+import { postData } from '../../../helpers/dataOps';
 import { imageUpload } from '../../../helpers/imageUpload';
 import { errorMsg } from '../../../helpers/Toastify';
 import { DataContext } from '../../../store/GlobalState';
+import { putData } from './../../../helpers/dataOps';
 
 const ProductCreate = () =>
 {
@@ -133,9 +135,10 @@ const ProductCreate = () =>
 
         const imageNewURL = image.filter(img => !img.url)
         const imageOldURL = image.filter(img => img.url)
-
-        if (imagesNewURL.length > 0) mediaImages = await imageUpload(imagesNewURL)
-        if (imageNewURL.length > 0) mediaImage = await imageUpload(imageNewURL)
+        let mediaImages = [];
+        let mediaImage = [];
+        if (imagesNewURL.length > 0) { mediaImages = await imageUpload(imagesNewURL) }
+        if (imageNewURL.length > 0) { mediaImage = await imageUpload(imageNewURL) }
 
         let res;
         if (onEdit) {
@@ -146,7 +149,11 @@ const ProductCreate = () =>
             }, token)
             if (res.err) return dispatch({ type: 'NOTIFY', payload: { error: res.err } })
         } else {
-            res = await postData('products', { ...product, images: [...imgOldURL, ...media] }, token)
+            res = await postData('products', {
+                ...product,
+                images: [...imagesOldURL, ...mediaImages],
+                image: [...imageOldURL, ...mediaImage],
+            }, token)
             console.log("🚀 ~ file: create.js ~ line 140 ~ res", res)
             // if (res.err) return dispatch({ type: 'NOTIFY', payload: { error: res.err } })
         }
