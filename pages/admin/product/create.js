@@ -8,8 +8,8 @@ import { postData } from '../../../helpers/dataOps';
 import { imageUpload } from '../../../helpers/imageUpload';
 import { errorMsg } from '../../../helpers/Toastify';
 import { DataContext } from '../../../store/GlobalState';
-import { putData } from './../../../helpers/dataOps';
-import { successMsg } from './../../../helpers/Toastify';
+import { putData } from '../../../helpers/dataOps';
+import { successMsg } from '../../../helpers/Toastify';
 
 const ProductCreate = () =>
 {

@@ -31,6 +31,19 @@ function NavBar()
 
   }
 
+  // useEffect(() =>
+  // {
+  //   const results = fetch('http://res.cloudinary.com/x-gwkjs-8zn7m-3/image/upload',
+  //     {
+  //       headers: {
+  //         Authorization: `Basic ${Buffer.from(process.env.CLOUDINARY_API_KEY + ':' + process.env.CLOUDINARY_API_SECRET).toString('base64')}`
+  //       }
+  //     }).then(r =>
+  //     {
+  //       console.log(r);
+  //     });
+  // }, [])
+
   return (
     <nav className="navbar navbar-expand-lg " aria-label="Offcanvas navbar large">
       <div className="container-fluid">
