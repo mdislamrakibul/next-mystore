@@ -4,12 +4,10 @@ import { useRouter } from 'next/router';
 import { parseCookies } from 'nookies';
 import React, { useContext, useState } from 'react';
 import Loading from '../../../components/Loading';
-import { postData } from '../../../helpers/dataOps';
+import { postData, putData } from '../../../helpers/dataOps';
 import { imageUpload } from '../../../helpers/imageUpload';
-import { errorMsg } from '../../../helpers/Toastify';
+import { errorMsg, successMsg } from '../../../helpers/Toastify';
 import { DataContext } from '../../../store/GlobalState';
-import { putData } from '../../../helpers/dataOps';
-import { successMsg } from '../../../helpers/Toastify';
 
 const ProductCreate = () =>
 {
@@ -308,26 +306,5 @@ const ProductCreate = () =>
     )
 }
 
-export async function getServerSideProps(ctx)
-{
-    const { token } = parseCookies(ctx)
-    if (!token) {
-        const { res } = ctx
-        res.writeHead(302, { Location: "/login" })
-        res.end()
-    }
-
-    // const res = await fetch(`${baseUrl}/api/orders`, {
-    //     headers: {
-    //         "Authorization": token
-    //     }
-    // })
-    // const res2 = await res.json()
-    // console.log(res2)
-
-    return {
-        props: { orders: [] }
-    }
-}
 
 export default ProductCreate
