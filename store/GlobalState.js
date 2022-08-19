@@ -55,7 +55,6 @@ export const DataProvider = ({ children }) =>
             getData('category', token)
                 .then(res =>
                 {
-                    console.log("🚀 ~ file: GlobalState.js ~ line 57 ~ res", res)
                     dispatch({
                         type: "GET_CATEGORY", payload: res.data
                     })

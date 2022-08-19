@@ -69,7 +69,8 @@ const updateProduct = async (req, res) =>
     const { id } = req.query
     const { title, price, inStock, description, content, category, images, image } = req.body
 
-    if (!title || !price || !inStock || !description || !content || category === 'all' || images.length === 0 || !image) {
+    if (!title || !price || !inStock || !description || !content || category === 'all'
+      || images.length === 0 || !image) {
       return res.status(200).json({
         message: "Please fill all fields",
         status: false,
@@ -77,7 +78,7 @@ const updateProduct = async (req, res) =>
       })
     }
     const newProd = await Product.findOneAndUpdate({ _id: id }, {
-      title: title.toLowerCase(), price, inStock, description, content, category, images
+      title: title.toLowerCase(), price, inStock, description, content, category, image: image[0].url
     }, { new: true })
 
     return res.status(200).json({

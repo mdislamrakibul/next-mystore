@@ -6,7 +6,6 @@ import AdminLayout from './../components/admin/AdminLayout';
 function MyApp({ Component, pageProps, router })
 {
   const adminPanel = router.route.startsWith('/admin') ? true : false
-  console.log("🚀 ~ file: _app.js ~ line 9 ~ const", adminPanel)
   const getLayout =
     adminPanel ? ((page) => <AdminLayout children={page} />)
       : ((page) => <Layout children={page} />);
