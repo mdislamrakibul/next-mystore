@@ -64,7 +64,7 @@ class APIfeatures
 const getallProducts = async (req, res) =>
 {
     try {
-        const features = new APIfeatures(Product.find(), req.query)
+        const features = new APIfeatures(Product.find({ isActive: true }), req.query)
             .filtering().sorting().paginating()
 
         const products = await features.query
@@ -100,7 +100,6 @@ const saveProduct = async (req, res) =>
 
     try {
         const result = await auth(req, res)
-        console.log("🚀 ~ file: index.js ~ line 56 ~ result", result)
         if (result.data.role !== 'root') {
             return res.status(200).json({
                 status: false,

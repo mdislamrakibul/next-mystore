@@ -13,7 +13,8 @@ export const DataProvider = ({ children }) =>
         cart: [],
         modal: {},
         orders: [],
-        categories: []
+        categories: [],
+        bulkDeleteData: []
     }
     const { token, user } = parseCookies()
     const [state, dispatch] = useReducer(reducers, initialState);

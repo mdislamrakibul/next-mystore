@@ -49,10 +49,29 @@ const getProduct = async (req, res) =>
 
 const deleteProduct = async (req, res) =>
 {
-  const { pid } = req.query
-  await Product.findByIdAndDelete({ _id: pid })
-  res.status(200).json({})
+  try {
+    const { pid } = req.query
+    const updatedProd = await Product.findOneAndUpdate({ _id: id }, {
+      isActive: false
+    }, { new: true })
+
+    return res.status(200).json({
+      message: "Product Deleted",
+      status: true,
+      data: updatedProd
+    })
+  } catch (err) {
+    return res.status(200).json({
+      status: false,
+      message: err.message || "Something Wrong",
+      data: {}
+    })
+  }
+
 }
+
+
+
 
 const updateProduct = async (req, res) =>
 {

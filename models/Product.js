@@ -43,6 +43,10 @@ const ProductsSchema = new Schema({
     sold: {
         type: Number,
         default: 0
+    },
+    isActive: {
+        type: Boolean,
+        default: true
     }
 },
     {

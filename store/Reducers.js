@@ -25,11 +25,11 @@ const reducers = (state, action) =>
                 ...state,
                 modal: action.payload
             }
-        case ACTIONS.REMOVE_FROM_CART:
-            return {
-                ...state,
-                modal: action.payload
-            }
+        // case ACTIONS.REMOVE_FROM_CART:
+        //     return {
+        //         ...state,
+        //         modal: action.payload
+        //     }
         case ACTIONS.GET_ORDER:
             return {
                 ...state,
@@ -39,6 +39,11 @@ const reducers = (state, action) =>
             return {
                 ...state,
                 categories: action.payload
+            }
+        case ACTIONS.BULK_DELETE:
+            return {
+                ...state,
+                bulkDeleteData: action.payload
             }
         default:
             return state

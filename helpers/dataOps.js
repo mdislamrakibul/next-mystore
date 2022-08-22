@@ -2,6 +2,7 @@ import baseUrl from './baseUrl';
 
 export const getData = async (url, token) =>
 {
+
     const res = await fetch(`${baseUrl}/api/${url}`, {
         method: 'GET',
         headers: {
@@ -15,11 +16,12 @@ export const getData = async (url, token) =>
 
 export const postData = async (url, post, token) =>
 {
+
     const res = await fetch(`${baseUrl}/api/${url}`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + token
+            'Authorization': 'Bearer ' + token,
         },
         body: JSON.stringify(post)
     })
@@ -32,6 +34,8 @@ export const postData = async (url, post, token) =>
 
 export const putData = async (url, post, token) =>
 {
+
+
     const res = await fetch(`${baseUrl}/api/${url}`, {
         method: 'PUT',
         headers: {
@@ -47,6 +51,7 @@ export const putData = async (url, post, token) =>
 
 export const patchData = async (url, post, token) =>
 {
+
     const res = await fetch(`${baseUrl}/api/${url}`, {
         method: 'PATCH',
         headers: {
@@ -63,6 +68,7 @@ export const patchData = async (url, post, token) =>
 
 export const deleteData = async (url, token) =>
 {
+
     const res = await fetch(`${baseUrl}/api/${url}`, {
         method: 'DELETE',
         headers: {

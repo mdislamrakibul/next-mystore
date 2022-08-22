@@ -8,11 +8,13 @@ import { DataContext } from '../../../store/GlobalState';
 function ProductList({ products, result })
 {
     const { state, dispatch } = useContext(DataContext)
-    const { categories } = state
-    console.log("🚀 ~ file: list.js ~ line 12 ~ categories", categories)
+    const { categories, bulkDeleteData } = state
+    // console.log("🚀 ~ file: list.js ~ line 12 ~ categories", categories)
     const router = useRouter();
 
     const [page, setPage] = useState(1)
+    const [isCheck, setIsCheck] = useState(false)
+    const [checkedProducts, setCheckedProducts] = useState([])
     const handleLoadMore = () =>
     {
         setPage(page + 1)
@@ -49,24 +51,54 @@ function ProductList({ products, result })
             }
         }
     }
+    let newD = []
+    const handleCheckALL = (product) =>
+    {
+        if (bulkDeleteData.length > 0 && bulkDeleteData.find(x => x._id === product._id)) {
+            dispatch({ type: 'BULK_DELETE', payload: bulkDeleteData.filter(item => item._id !== product._id) })
+        } else {
+            dispatch({ type: 'BULK_DELETE', payload: [...bulkDeleteData, product] })
+        }
+    }
 
+    const handleBulkDelete = () =>
+    {
+        dispatch({
+            type: 'ADD_MODAL',
+            payload: {
+                data: bulkDeleteData,
+                id: '',
+                title: 'Delete all selected products?',
+                type: 'BULK_DELETE_PRODUCT'
+            }
+        })
+    }
     return (
         <div>
-            <h5>Product List</h5>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                <h5>Product List</h5>
+                <span>Total Product : {result}</span>
+            </div>
             <hr />
             <table className='table table-responsive table-hover'>
                 <thead>
                     <tr>
+                        <th></th>
                         <th>#Id</th>
                         <th>Title</th>
                         {/* <th>Category</th> */}
                         <th>Image</th>
+                        <th>Status</th>
                         <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
                     {products.map(product => (
                         <tr key={product._id}>
+                            <td>
+                                <input type="checkbox" onChange={() => handleCheckALL(product)}
+                                    style={{ width: '15px', height: '15px', transform: 'translateY(8px)' }} />
+                            </td>
                             <td>{product._id}</td>
                             <td>{product.title}</td>
                             {/* <td>{categories.length > 0 ? categories.find(cat => String(cat._id) === String(product.category)).name : 'No Category Found'}</td> */}
@@ -74,11 +106,26 @@ function ProductList({ products, result })
                                 <img src={product.image} alt={product.title} className="img-thumbnail"
                                     style={{ minWidth: '30px', height: '30px' }} />
                             </td>
+                            <td>
+                                {
+                                    product.isActive
+                                        ? <><i class="far fa-check-circle" style={{ color: 'green' }}></i></>
+                                        : <><i class="far fa-times-circle" style={{ color: 'red' }}></i></>
+                                }
+                            </td>
                             <td style={{ gap: '10px', display: 'flex' }}>
                                 <button className='btn btn-sm btn-info'>
                                     <i className="far fa-eye"></i>
                                 </button>
-                                <button className='btn btn-sm btn-danger'>
+                                <button className='btn btn-sm btn-danger' onClick={() => dispatch({
+                                    type: 'ADD_MODAL',
+                                    payload: {
+                                        data: product,
+                                        _id: product._id,
+                                        title: product.title,
+                                        type: 'DELETE_PRODUCT'
+                                    }
+                                })} data-bs-toggle="modal" data-bs-target="#exampleModal">
                                     <i className="far fa-trash-alt"></i>
                                 </button>
                                 <button className='btn btn-sm btn-primary'>
@@ -89,6 +136,13 @@ function ProductList({ products, result })
                     ))}
                 </tbody>
             </table >
+            {bulkDeleteData.length > 1 &&
+                <>
+                    <button className='btn btn-sm btn-danger' onClick={() => handleBulkDelete()} data-bs-toggle="modal" data-bs-target="#exampleModal">
+                        <i className="fas fa-trash-alt"></i>&nbsp;Bulk Delete
+                    </button>
+                </>
+            }
             <br />
             {
                 result < page * 4 ? ""
