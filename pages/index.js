@@ -1,6 +1,8 @@
 
+import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+import Filter from '../components/Filter';
 import baseUrl from '../helpers/baseUrl';
 import filterSearch from '../helpers/filterSearch';
 import ProductItem from './product/ProductItem';
@@ -18,8 +20,15 @@ const Home = ({ products, result }) =>
     if (Object.keys(router.query).length === 0) setPage(1)
     else setPage(Number(router.query.page))
   }, [router.query])
+  const state = []
   return (
     <div>
+      <Head>
+        <title>My Store</title>
+      </Head>
+
+      <Filter />
+
       <div className="row">
         {products.length < 1 ? 'No Products Found' : products.map(product => <ProductItem key={product._id} product={product} />)}
       </div >
