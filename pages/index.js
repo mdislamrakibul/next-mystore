@@ -1,10 +1,11 @@
 
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import Filter from '../components/Filter';
 import baseUrl from '../helpers/baseUrl';
 import filterSearch from '../helpers/filterSearch';
+import { DataContext } from '../store/GlobalState';
 import ProductItem from './product/ProductItem';
 const Home = ({ products, result }) =>
 {
@@ -17,18 +18,19 @@ const Home = ({ products, result }) =>
   }
   useEffect(() =>
   {
-    if (Object.keys(router.query).length === 0) setPage(1)
-    else setPage(Number(router.query.page))
+    if (Object.keys(router.query).length === 0)
+      setPage(1)
+
   }, [router.query])
-  const state = []
+  const { state, dispatch } = useContext(DataContext)
   return (
     <div>
       <Head>
         <title>My Store</title>
       </Head>
 
-      <Filter />
-
+      <Filter state={state} />
+      <br />
       <div className="row">
         {products.length < 1 ? 'No Products Found' : products.map(product => <ProductItem key={product._id} product={product} />)}
       </div >

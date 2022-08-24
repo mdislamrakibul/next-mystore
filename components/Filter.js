@@ -1,8 +1,8 @@
 import { useRouter } from 'next/router';
-import React, { useContext, useState } from 'react';
-import { DataContext } from '../store/GlobalState';
+import React, { useEffect, useState } from 'react';
+import filterSearch from '../helpers/filterSearch';
 
-const Filter = () =>
+const Filter = ({ state }) =>
 {
     const [title, setTitle] = useState('')
     const [search, setSearch] = useState('')
@@ -11,26 +11,60 @@ const Filter = () =>
 
     const router = useRouter()
 
-    const { state, dispatch } = useContext(DataContext)
     const { categories } = state
-    return (
-        <div className='input-group'>
-            <select value={categories} class="form-select">
-                <option value="all">--Select--</option>
-                {categories.map(x => (
-                    <option value={x._id}>{x.name}</option>
 
-                ))}
-            </select>
-            <form>
-                <input type="text" className='form-control' list='title_product' value={search.toLowerCase()} />
-                <datalist id='title_product'>.
-                    <option value="name">Title</option>
-                </datalist>
-                <button className='btn btn-sm btn-info' style={{ top: '0', right: '0', visibility: 'hidden' }}>
-                    <i class="fas fa-search"></i>
-                </button>
+    const handleCategory = (e) =>
+    {
+        setCategory(e.target.value)
+        filterSearch({ router, category: e.target.value })
+    }
+
+    const handleSort = (e) =>
+    {
+        setSort(e.target.value)
+        filterSearch({ router, sort: e.target.value })
+    }
+
+    useEffect(() =>
+    {
+        filterSearch({ router, search: search ? search : 'all' })
+    }, [search])
+
+
+    return (
+        <div className="input-group">
+            <div className=" col-md-2 px-0 mt-2">
+                <select className="form-control custom-select text-capitalize"
+                    value={category} onChange={handleCategory}>
+
+                    <option value="all">All Products</option>
+
+                    {
+                        categories.map(item => (
+                            <option key={item._id} value={item._id}>{item.name}</option>
+                        ))
+                    }
+                </select>
+            </div>
+
+            <form autoComplete="off" className="mt-2 col-md-8 px-0">
+                <input type="text" className="form-control" list="title_product"
+                    value={search} onChange={e => setSearch(e.target.value)} />
             </form>
+
+            <div className="col-md-2 px-0 mt-2">
+                <select className="form-control custom-select text-capitalize"
+                    value={sort} onChange={handleSort}>
+                    <option value="-createdAt">Newest</option>
+                    <option value="oldest">Oldest</option>
+                    <option value="-sold">Best sales</option>
+                    <option value="-price">Price: High-Low</option>
+                    <option value="price">Price: Low-High</option>
+
+                </select>
+            </div>
+
+
         </div>
     )
 }

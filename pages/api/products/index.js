@@ -23,6 +23,7 @@ class APIfeatures
         this.query = query;
         this.queryString = queryString;
     }
+
     filtering()
     {
         const queryObj = { ...this.queryString }
@@ -32,10 +33,11 @@ class APIfeatures
 
         if (queryObj.category !== 'all')
             this.query.find({ category: queryObj.category })
-        if (queryObj.title !== 'all')
-            this.query.find({ title: { $regex: queryObj.title } })
+        if (queryObj.title !== 'all') {
+            this.query.find({ title: { $regex: queryObj.title, $options: 'i' } })
+        }
 
-        this.query.find()
+        // this.query.find()
         return this;
     }
 
@@ -54,7 +56,7 @@ class APIfeatures
     paginating()
     {
         const page = this.queryString.page * 1 || 1
-        const limit = this.queryString.limit * 1 || 6
+        const limit = this.queryString.limit * 1 || 4
         const skip = (page - 1) * limit;
         this.query = this.query.skip(skip).limit(limit)
         return this;
