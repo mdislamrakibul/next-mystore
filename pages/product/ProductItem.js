@@ -23,8 +23,8 @@ const ProductItem = ({ product }) =>
         dispatch(addToCart(product, cart))
     }
     return (
-        <div className="col-md-3" key={product?._id} >
-            <div className="card" style={{ width: '16rem' }}>
+        <div className="col-md-3 col-lg-3 col-sm-3 mb-2" key={product?._id} >
+            <div className="card" style={{ width: '19rem' }}>
                 <img src={product.image} className="card-img-top" alt={product.title} />
                 <div className="card-body">
                     <h5 className="card-title">

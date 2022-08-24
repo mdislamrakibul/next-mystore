@@ -146,10 +146,10 @@ function ProductList({ products, result })
             <br />
             {
                 result < page * 4 ? ""
-                    : <div className='text-center'>
+                    : <div className='text-center mt-5'>
                         <button className="btn btn-outline-info btn-sm "
                             onClick={handleLoadMore}>
-                            Load more
+                            <i class="fas fa-spinner"></i>&nbsp; Load more
                         </button>
                     </div>
             }

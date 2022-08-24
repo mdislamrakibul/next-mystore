@@ -1,4 +1,5 @@
 import Head from 'next/head'
+import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { parseCookies } from 'nookies'
 import { useContext, useRef, useState } from 'react'
@@ -52,11 +53,16 @@ const Product = ({ product }) =>
       </Head>
       <br />
       <div className='container'>
+        <Link href="/">
+          <a className="btn btn-sm btn-warning my-3 px-4"  >
+            Back &nbsp;<i className="fas fa-hand-point-left"></i>
+          </a>
+        </Link>
         <div className='row'>
           <div className='col-md-5'>
             <img src={product.images[tab].url} alt={product.title}
-              className="d-block img-thumbnail rounded mt-4 w-100"
-              style={{ height: '300px', marginTop: '10px', }} />
+              className="d-block img-thumbnail rounded w-100"
+              style={{ height: '300px' }} />
             <br />
 
             <div style={{ cursor: 'pointer' }} >
@@ -99,10 +105,15 @@ const Product = ({ product }) =>
               {product.content}
             </div>
             <br />
-            <button className="btn btn-sm btn-success my-3 px-5 justify-content-between"
-              onClick={() => addToCartHandleClick(product, cart)} disabled={product.inStock ? false : true}>
-              Buy &nbsp;<i className="material-icons">add_shopping_cart</i>
-            </button>
+            <div style={{
+              display: 'flex', gap: '10px'
+            }}>
+
+              <button className="btn btn-sm btn-success my-3 px-4 justify-content-between"
+                onClick={() => addToCartHandleClick(product, cart)} disabled={product.inStock ? false : true}>
+                Buy &nbsp;<i className="fas fa-cart-plus"></i>
+              </button>
+            </div>
           </div>
         </div>
       </div>

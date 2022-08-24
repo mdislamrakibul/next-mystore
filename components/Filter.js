@@ -32,8 +32,8 @@ const Filter = ({ state }) =>
 
 
     return (
-        <div className="input-group">
-            <div className=" col-md-2 px-0 mt-2">
+        <div className="input-group my-2">
+            <div className=" col-md-2  ">
                 <select className="form-control custom-select text-capitalize"
                     value={category} onChange={handleCategory}>
 
@@ -47,12 +47,12 @@ const Filter = ({ state }) =>
                 </select>
             </div>
 
-            <form autoComplete="off" className="mt-2 col-md-8 px-0">
-                <input type="text" className="form-control" list="title_product"
+            <div className=" col-md-8 ">
+                <input type="text" className="form-control" list="title_product" placeholder='Search ...'
                     value={search} onChange={e => setSearch(e.target.value)} />
-            </form>
+            </div>
 
-            <div className="col-md-2 px-0 mt-2">
+            <div className="col-md-2 ">
                 <select className="form-control custom-select text-capitalize"
                     value={sort} onChange={handleSort}>
                     <option value="-createdAt">Newest</option>
