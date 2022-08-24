@@ -109,8 +109,8 @@ function ProductList({ products, result })
                             <td>
                                 {
                                     product.isActive
-                                        ? <><i class="far fa-check-circle" style={{ color: 'green' }}></i></>
-                                        : <><i class="far fa-times-circle" style={{ color: 'red' }}></i></>
+                                        ? <><i className="far fa-check-circle" style={{ color: 'green' }}></i></>
+                                        : <><i className="far fa-times-circle" style={{ color: 'red' }}></i></>
                                 }
                             </td>
                             <td style={{ gap: '10px', display: 'flex' }}>
@@ -149,7 +149,7 @@ function ProductList({ products, result })
                     : <div className='text-center mt-5'>
                         <button className="btn btn-outline-info btn-sm "
                             onClick={handleLoadMore}>
-                            <i class="fas fa-spinner"></i>&nbsp; Load more
+                            <i className="fas fa-spinner"></i>&nbsp; Load more
                         </button>
                     </div>
             }
@@ -170,7 +170,6 @@ export async function getServerSideProps({ query })
     const data = await res.json()
     if (data.status) {
         const product = data.data
-
         return {
             props: {
                 products: product,

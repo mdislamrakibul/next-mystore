@@ -4,9 +4,11 @@ import { parseCookies } from 'nookies';
 import { useEffect, useState } from 'react';
 import baseUrl from '../helpers/baseUrl';
 import { errorMsg, successMsg } from '../helpers/Toastify';
+import Loading from './Loading';
 function UserRoles()
 {
     const [users, setUsers] = useState([])
+    const [isLoading, setIsLoading] = useState(false)
     const { token, user } = parseCookies()
     const authUser = Cookies.get('user') && JSON.parse(Cookies.get('user'))
 
@@ -16,6 +18,7 @@ function UserRoles()
     }, [])
     const fetchUser = async () =>
     {
+        setIsLoading(true)
         const res = await fetch(`${baseUrl}/api/users`, {
             headers: {
                 "Authorization": token
@@ -23,8 +26,10 @@ function UserRoles()
         })
         const resp = await res.json()
         if (resp.status) {
+            setIsLoading(false)
             successMsg(resp.message)
         } else {
+            setIsLoading(false)
             errorMsg(resp.message)
         }
         setUsers(resp?.data?.length ? resp.data : [])
@@ -33,6 +38,7 @@ function UserRoles()
 
     const handleRole = async (_id, role) =>
     {
+        setIsLoading(true)
         const res = await fetch(`${baseUrl}/api/users`, {
             method: "PUT",
             headers: {
@@ -46,8 +52,10 @@ function UserRoles()
         })
         const res2 = await res.json()
         if (!res2.status) {
+            setIsLoading(false)
             errorMsg(res2.message)
         } else {
+            setIsLoading(false)
             const updatedUsers = users.map(user =>
             {
                 if ((user.role != res2.data.role) && (user.email == res2.data.email)) {
@@ -66,6 +74,7 @@ function UserRoles()
 
     const handleActivity = async (_id, isActive) =>
     {
+        setIsLoading(true)
         const res = await fetch(`${baseUrl}/api/users`, {
             method: "PUT",
             headers: {
@@ -80,8 +89,10 @@ function UserRoles()
         })
         const res2 = await res.json()
         if (!res2.status) {
+            setIsLoading(false)
             errorMsg(res2.message)
         } else {
+            setIsLoading(false)
             successMsg(res2.message)
         }
         const updatedUsers = users.map(user =>
@@ -96,6 +107,7 @@ function UserRoles()
     }
     return (
         <>
+            {isLoading && <Loading />}
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                 <span>
                     <h5>User & roles </h5><h6 style={{ color: 'red' }}>[ Actions are restricted for user management ]</h6>

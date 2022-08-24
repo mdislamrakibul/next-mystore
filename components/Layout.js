@@ -15,11 +15,11 @@ const layout = ({ children }) =>
                 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" ></link>
                 <link rel="stylesheet" href="/style.css" />
             </Head>
-            <body class="d-flex flex-column h-100">
+            <body className="d-flex flex-column h-100">
 
                 <NavBar />
                 <Modal />
-                <main class="flex-shrink-0">
+                <main className="flex-shrink-0">
                     <div className="container">
                         <div className='row'>
                             <div className='col-md-12'>

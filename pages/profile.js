@@ -36,35 +36,6 @@ const Profile = () =>
     const [data, setData] = useState(initialSate)
     const [isLoading, setIsLoading] = useState(false)
     const { avatar, username, password, cf_password } = data
-    const OrderHistory = () =>
-    {
-        return (
-            <ul className="collapsible" ref={orderCard}>
-
-                {orders.map(item =>
-                {
-                    return (
-                        <li key={item._id}>
-                            <div className="collapsible-header"><i className="material-icons">folder</i>{item.createdAt}</div>
-                            <div className="collapsible-body">
-                                <h5>Total  ₹ {item.total}</h5>
-                                {
-                                    item.products.map(pitem =>
-                                    {
-                                        return <h6 key={pitem._id}>{pitem.product.name} X {pitem.quantity}</h6>
-                                    })
-                                }
-
-                            </div>
-                        </li>
-                    )
-                })}
-
-
-            </ul>
-
-        )
-    }
 
     const changeAvatar = (e) =>
     {
@@ -94,6 +65,7 @@ const Profile = () =>
     }
     const handleUpdateProfile = (e) =>
     {
+        setIsLoading(true)
         e.preventDefault()
         if (password) {
             const errMsg = valid(username, user.email, password, cf_password)

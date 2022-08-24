@@ -35,7 +35,7 @@ const Home = ({ products, result }) =>
           products.length < 1
             ?
             <div className='col-md-12'>
-              <div class="alert alert-info text-center" role="alert">
+              <div className="alert alert-info text-center" role="alert">
                 <img src="https://res.cloudinary.com/x-gwkjs-8zn7m-3/image/upload/v1661326320/no-product-found-removebg-preview_hevwjv.png" />
               </div>
             </div>
@@ -48,7 +48,7 @@ const Home = ({ products, result }) =>
           : <div className='text-center my-5'>
             <button className="btn btn-outline-info btn-sm "
               onClick={handleLoadMore}>
-              <i class="fas fa-spinner"></i>&nbsp;Load more
+              <i className="fas fa-spinner"></i>&nbsp;Load more
             </button>
           </div>
       }
