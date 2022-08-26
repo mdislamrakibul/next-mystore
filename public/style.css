@@ -208,3 +208,8 @@ btn:focus {
   font-weight: bolder;
   border: 1px solid crimson;
 }
+
+.page-item:hover , :focus{
+  outline: none;
+  border: none;
+}

@@ -21,10 +21,34 @@ function Sidebar()
                     </a></Link>
                 <ul className="list-unstyled ps-0">
                     <li className="mb-1">
-                        <button className="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="true">
-                            <i className="fas fa-home"></i>&nbsp;Home
+                        <button className="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#product-collapse" aria-expanded="false">
+                            <i className="fas fa-tasks"></i>&nbsp;Product Management
                         </button>
-                        <div className="collapse show" id="home-collapse" style={{ marginLeft: '50px' }}>
+                        <div className="collapse" id="product-collapse" style={{ marginLeft: '50px' }}>
+                            <ul className="btn-toggle-nav list-unstyled fw-normal pb-1 small" >
+                                <li>
+                                    <Link href='/admin/product/list'>
+                                        <a className={"link-dark d-inline-flex text-decoration-none rounded" + isActive('/admin/product/list')}>
+                                            <i className="fas fa-list-ol"></i>&nbsp;All Product
+                                        </a>
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link href='/admin/product/create'>
+                                        <a className={"link-dark d-inline-flex text-decoration-none rounded" + isActive('/admin/product/create')}>
+                                            <i className="fas fa-plus"></i>&nbsp;Add Product
+                                        </a>
+                                    </Link>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li className="mb-1">
+                        <button className="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="false">
+                        <i class="fas fa-hammer"></i>&nbsp;Settings
+                        </button>
+                        {/* show */}
+                        <div className="collapse" id="home-collapse" style={{ marginLeft: '50px' }}>
                             <ul className="btn-toggle-nav list-unstyled fw-normal pb-1 small">
                                 <li>
                                     <Link href='/admin/user'>
@@ -44,35 +68,10 @@ function Sidebar()
                         </div>
                     </li>
                     <li className="mb-1">
-                        <button className="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#product-collapse" aria-expanded="false">
-                            <i className="fas fa-tasks"></i>&nbsp;Product Management
+                        <button className="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#sales-collapse" aria-expanded="false">
+                        <i class="fas fa-coins"></i>&nbsp;Sales
                         </button>
-                        <div className="collapse" id="product-collapse" style={{ marginLeft: '50px' }}>
-                            <ul className="btn-toggle-nav list-unstyled fw-normal pb-1 small" >
-                                <li>
-                                    <Link href='/admin/product/list'>
-                                        <a className={"link-dark d-inline-flex text-decoration-none rounded" + isActive('/admin/product/list')}>
-                                            <i className="fas fa-list-ol"></i>&nbsp;All Product
-                                        </a>
-                                    </Link>
-
-                                </li>
-                                <li>
-                                    <Link href='/admin/product/create'>
-                                        <a className={"link-dark d-inline-flex text-decoration-none rounded" + isActive('/admin/product/create')}>
-                                            <i className="fas fa-plus"></i>&nbsp;Add Product
-                                        </a>
-                                    </Link>
-
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
-                    <li className="mb-1">
-                        <button className="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#dashboard-collapse" aria-expanded="false">
-                            <i className="fas fa-tachometer-alt"></i>&nbsp;Dashboard
-                        </button>
-                        <div className="collapse" id="dashboard-collapse" style={{ marginLeft: '50px' }}>
+                        <div className="collapse" id="sales-collapse" style={{ marginLeft: '50px' }}>
                             <ul className="btn-toggle-nav list-unstyled fw-normal pb-1 small">
                                 <li><a href="#" className="link-dark d-inline-flex text-decoration-none rounded">Overview</a></li>
                                 <li><a href="#" className="link-dark d-inline-flex text-decoration-none rounded">Weekly</a></li>
@@ -113,5 +112,4 @@ function Sidebar()
         </>
     )
 }
-
 export default Sidebar

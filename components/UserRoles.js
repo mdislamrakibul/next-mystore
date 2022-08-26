@@ -5,19 +5,22 @@ import { useEffect, useState } from 'react';
 import baseUrl from '../helpers/baseUrl';
 import { errorMsg, successMsg } from '../helpers/Toastify';
 import Loading from './Loading';
-function UserRoles()
-{
+import Pagination from './Pagination';
+// import Pagination from '@material-ui/lab/Pagination';
+function UserRoles() {
     const [users, setUsers] = useState([])
     const [isLoading, setIsLoading] = useState(false)
     const { token, user } = parseCookies()
+    const [page, setPage] = useState(1);
     const authUser = Cookies.get('user') && JSON.parse(Cookies.get('user'))
 
-    useEffect(() =>
-    {
+    const [currentPage, setCurrentPage] = useState(1);
+    const [recordsPerPage] = useState(5);
+
+    useEffect(() => {
         fetchUser()
     }, [])
-    const fetchUser = async () =>
-    {
+    const fetchUser = async () => {
         setIsLoading(true)
         const res = await fetch(`${baseUrl}/api/users`, {
             headers: {
@@ -33,11 +36,8 @@ function UserRoles()
             errorMsg(resp.message)
         }
         setUsers(resp?.data?.length ? resp.data : [])
-
     }
-
-    const handleRole = async (_id, role) =>
-    {
+    const handleRole = async (_id, role) => {
         setIsLoading(true)
         const res = await fetch(`${baseUrl}/api/users`, {
             method: "PUT",
@@ -56,8 +56,7 @@ function UserRoles()
             errorMsg(res2.message)
         } else {
             setIsLoading(false)
-            const updatedUsers = users.map(user =>
-            {
+            const updatedUsers = users.map(user => {
                 if ((user.role != res2.data.role) && (user.email == res2.data.email)) {
                     return res2.data
                 } else {
@@ -68,12 +67,8 @@ function UserRoles()
         }
         // console.log(res2.data);
         // setUsers(res2)
-
     }
-
-
-    const handleActivity = async (_id, isActive) =>
-    {
+    const handleActivity = async (_id, isActive) => {
         setIsLoading(true)
         const res = await fetch(`${baseUrl}/api/users`, {
             method: "PUT",
@@ -95,8 +90,7 @@ function UserRoles()
             setIsLoading(false)
             successMsg(res2.message)
         }
-        const updatedUsers = users.map(user =>
-        {
+        const updatedUsers = users.map(user => {
             if (user.email == res2.data.email) {
                 return res2.data
             } else {
@@ -105,6 +99,18 @@ function UserRoles()
         })
         setUsers(updatedUsers)
     }
+    const handlePageChange = (event, value) => {
+        console.log(event, value);
+        console.log(users);
+        setPage(value);
+    }
+
+    const indexOfLastRecord = currentPage * recordsPerPage;
+    const indexOfFirstRecord = indexOfLastRecord - recordsPerPage;
+    const currentRecords = users.slice(indexOfFirstRecord, indexOfLastRecord);
+    const nPages = Math.ceil(users.length / recordsPerPage)
+
+
     return (
         <>
             {isLoading && <Loading />}
@@ -118,7 +124,6 @@ function UserRoles()
                     </a>
                 </span>
             </div>
-
             <hr />
             <table className="table table-bordered table-hover">
                 <thead>
@@ -132,8 +137,7 @@ function UserRoles()
                     </tr>
                 </thead>
                 <tbody>
-                    {users.map(item =>
-                    {
+                    {currentRecords.map(item => {
                         return (
                             <tr key={item._id}>
                                 <td>
@@ -146,11 +150,8 @@ function UserRoles()
                                     {item.role === 'root' && <span className="badge text-bg-primary" style={{ color: 'white' }}><b>{item.role} [{item.isActive ? 'A' : 'D'}]</b></span>}
                                     {item.role === 'admin' && <span className="badge text-bg-success" style={{ color: 'white' }}><b>{item.role} [{item.isActive ? 'A' : 'D'}]</b></span>}
                                     {item.role === 'user' && <span className="badge  text-bg-secondary" style={{ color: 'white' }}><b>{item.role} [{item.isActive ? 'A' : 'D'}]</b></span>}
-
-
                                 </td>
                                 <td>
-
                                     {authUser?.role === 'root' &&
                                         (
                                             <div className="btn-group" role="group" aria-label="Basic example">
@@ -168,7 +169,6 @@ function UserRoles()
                                                         <i className="far fa-check-circle"></i>
                                                     </button>
                                                 }
-
                                             </div>
                                         )}
                                 </td>
@@ -177,9 +177,16 @@ function UserRoles()
                     })}
                 </tbody>
             </table>
-
+            {/* <div>
+                {page}
+                <Pagination count={users.length / 1} page={page} onChange={handlePageChange} />
+            </div> */}
+            <Pagination
+                nPages={nPages}
+                currentPage={currentPage}
+                setCurrentPage={setCurrentPage}
+            />
         </>
     )
 }
-
 export default UserRoles
