@@ -7,7 +7,6 @@ function Sidebar() {
     const router = useRouter()
     const { token } = parseCookies()
     const user = Cookies.get('user') && JSON.parse(Cookies.get('user'))
-    console.log("🚀 ~ file: Sidebar.js ~ line 10 ~ Sidebar ~ user", user)
     const isActive = (r) => {
         if (r === router.pathname) {
             return " active"

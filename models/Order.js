@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose, { Date } from 'mongoose';
 const { ObjectId } = mongoose.Schema.Types
 
 const orderSchema = new mongoose.Schema({
@@ -19,6 +19,9 @@ const orderSchema = new mongoose.Schema({
     delivered: { type: Boolean, default: false },
     paid: { type: Boolean, default: false },
     dateOfPayment: Date,
+    rejectedIs: { type: Boolean, default: false },
+    rejectedBy: { type: ObjectId, ref: 'User', },
+    rejectedTime: { type: Date }
 }, {
     timestamps: true
 })

@@ -7,17 +7,14 @@ import baseUrl from '../helpers/baseUrl';
 import filterSearch from '../helpers/filterSearch';
 import { DataContext } from '../store/GlobalState';
 import ProductItem from './product/ProductItem';
-const Home = ({ products, result }) =>
-{
+const Home = ({ products, result }) => {
   const router = useRouter();
   const [page, setPage] = useState(1)
-  const handleLoadMore = () =>
-  {
+  const handleLoadMore = () => {
     setPage(page + 1)
     filterSearch({ router, page: page + 1 })
   }
-  useEffect(() =>
-  {
+  useEffect(() => {
     if (Object.keys(router.query).length === 0)
       setPage(1)
 
@@ -56,8 +53,7 @@ const Home = ({ products, result }) =>
   )
 }
 
-export async function getServerSideProps({ query })
-{
+export async function getServerSideProps({ query }) {
   const page = query.page || 1
   const category = query.category || 'all'
   const sort = query.sort || ''
@@ -87,3 +83,16 @@ export async function getServerSideProps({ query })
 }
 
 export default Home
+
+
+//TODO: ORDER ::
+//TODO: ORDER :: REJECT - USER (PENDING) + ADMIN (DONE)
+//TODO: ORDER :: LIST - ADMIN (DONE)
+//TODO: ORDER
+//TODO: ORDER
+//TODO: ORDER
+//TODO: ORDER
+//TODO: ORDER
+//TODO: ORDER
+//TODO: ORDER
+//TODO: ORDER

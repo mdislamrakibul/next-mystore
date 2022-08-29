@@ -7,6 +7,7 @@ import { useState } from 'react';
 import { errorMsg, successMsg } from '../helpers/Toastify';
 import Loading from './Loading';
 const OrderDetail = ({ orderDetail, state, dispatch }) => {
+    console.log(orderDetail);
     const { auth, orders } = state
     const { token, user } = parseCookies()
     const [isLoading, setIsLoading] = useState(false)
@@ -34,7 +35,63 @@ const OrderDetail = ({ orderDetail, state, dispatch }) => {
         <>
             {isLoading && <Loading />}
             {orderDetail.map(order => (
-                <div key={order._id} style={{ margin: '20px auto' }} className="row justify-content-around">
+                <div key={order._id} style={{ margin: '20px auto', position: 'relative' }} className="row justify-content-around">
+                    {order.delivered && order.paid &&
+                        <img src='https://res.cloudinary.com/x-gwkjs-8zn7m-3/image/upload/v1661763694/delivered-stamp-delivered-rubber-stamp-illustration-isolated-white-background-124829036-removebg-preview_nnelrh.png'
+                            style={{
+                                position: 'absolute',
+                                margin: 'auto',
+                                left: '0',
+                                right: '0',
+                                top: '0',
+                                bottom: '0',
+                                textAlign: 'center',
+                                zIndex: '-999',
+                                opacity: '.3',
+                                width: '45%'
+                            }} />}
+                    {order.paid && !order.delivered &&
+                        <img src='https://res.cloudinary.com/x-gwkjs-8zn7m-3/image/upload/v1661764967/images-removebg-preview_vvbisl.png'
+                            style={{
+                                position: 'absolute',
+                                margin: 'auto',
+                                left: '0',
+                                right: '0',
+                                top: '0',
+                                bottom: '0',
+                                textAlign: 'center',
+                                zIndex: '-999',
+                                opacity: '.3',
+                                width: '45%'
+                            }} />}
+                    {!order.paid && !order.delivered && !order.rejectedIs &&
+                        <img src='https://res.cloudinary.com/x-gwkjs-8zn7m-3/image/upload/v1661766343/depositphotos_34813181-stock-photo-in-progress-grunge-red-round-removebg-preview_nopk3d.png'
+                            style={{
+                                position: 'absolute',
+                                margin: 'auto',
+                                left: '0',
+                                right: '0',
+                                top: '0',
+                                bottom: '0',
+                                textAlign: 'center',
+                                zIndex: '-999',
+                                opacity: '.3',
+                                width: '45%'
+                            }} />}
+                    {order.rejectedIs &&
+                        <img src='https://res.cloudinary.com/x-gwkjs-8zn7m-3/image/upload/v1661766788/reject_chofzx.png'
+                            style={{
+                                position: 'absolute',
+                                margin: 'auto',
+                                left: '0',
+                                right: '0',
+                                top: '0',
+                                bottom: '0',
+                                textAlign: 'center',
+                                zIndex: '-999',
+                                opacity: '.3',
+                                width: '45%'
+                            }} />}
 
                     <div className="my-3">
                         <div className='justify-content-between'>
@@ -62,21 +119,20 @@ const OrderDetail = ({ orderDetail, state, dispatch }) => {
                                     <h6 className="text-break">Order##{order._id}</h6>
                                 </div>
                                 <div className='container'>
-
                                     <div className='row'>
                                         <div className='col-md-6'>
                                             <table>
                                                 <tbody>
                                                     <tr>
-                                                        <td style={{ width: '170px', textAlign: 'right' }}>Method</td>
+                                                        <td >Method</td>
                                                         <td>&nbsp; &nbsp;: &nbsp; &nbsp; {order.method}</td>
                                                     </tr>
                                                     <tr>
-                                                        <td style={{ width: '170px', textAlign: 'right' }}>Payment Id</td>
+                                                        <td >Payment Id</td>
                                                         <td>&nbsp; &nbsp;: &nbsp; &nbsp; {order.paymentId}</td>
                                                     </tr>
                                                     <tr>
-                                                        <td style={{ width: '170px', textAlign: 'right' }}>PromoCode Redeem</td>
+                                                        <td  >PromoCode Redeem</td>
                                                         <td>&nbsp; &nbsp;: &nbsp; &nbsp; {order.promoCodeRedeem ? <i className="fas fa-check-circle text-success"></i>
                                                             : <i className="fas fa-times-circle text-danger"></i>}</td>
                                                     </tr>
@@ -89,16 +145,16 @@ const OrderDetail = ({ orderDetail, state, dispatch }) => {
                                             <table>
                                                 <tbody>
                                                     <tr>
-                                                        <td style={{ width: '170px', textAlign: 'right' }}>Amount Redeem</td>
+                                                        <td  >Amount Redeem</td>
                                                         <td>&nbsp; &nbsp;: &nbsp; &nbsp; $ {order.amountRedeem}</td>
                                                     </tr>
                                                     <tr>
-                                                        <td style={{ width: '170px', textAlign: 'right' }}>Paid</td>
+                                                        <td  >Paid</td>
                                                         <td>&nbsp; &nbsp;: &nbsp; &nbsp; {order.paid ? <i className="fas fa-check-circle text-success"></i>
                                                             : <i className="fas fa-times-circle text-danger"></i>}</td>
                                                     </tr>
                                                     <tr>
-                                                        <td style={{ width: '170px', textAlign: 'right' }}>Delivered</td>
+                                                        <td  >Delivered</td>
                                                         <td>&nbsp; &nbsp;: &nbsp; &nbsp; {order.delivered
                                                             ? <i className="fas fa-check-circle text-success"></i>
                                                             : <i className="fas fa-times-circle text-danger"></i>}</td>
@@ -120,27 +176,27 @@ const OrderDetail = ({ orderDetail, state, dispatch }) => {
                                     <table>
                                         <tbody>
                                             <tr >
-                                                <td style={{ width: '120px', textAlign: 'right' }}>FirstName</td>
+                                                <td   >FirstName</td>
                                                 <td>&nbsp; &nbsp;: &nbsp;&nbsp;{order.user.firstName}</td>
                                             </tr>
                                             <tr>
-                                                <td style={{ width: '120px', textAlign: 'right' }}>LastName</td>
+                                                <td   >LastName</td>
                                                 <td>&nbsp; &nbsp;: &nbsp; &nbsp;{order.user.lastName}</td>
                                             </tr>
                                             <tr>
-                                                <td style={{ width: '120px', textAlign: 'right' }}>Username</td>
+                                                <td   >Username</td>
                                                 <td>&nbsp; &nbsp;: &nbsp; &nbsp;{order.user.username}</td>
                                             </tr>
                                             <tr>
-                                                <td style={{ width: '120px', textAlign: 'right' }}>Email</td>
+                                                <td   >Email</td>
                                                 <td>&nbsp; &nbsp;: &nbsp; &nbsp;{order.user.email}</td>
                                             </tr>
                                             <tr>
-                                                <td style={{ width: '120px', textAlign: 'right' }}>Phone</td>
+                                                <td   >Phone</td>
                                                 <td>&nbsp; &nbsp;: &nbsp; &nbsp;{order.user.phone}</td>
                                             </tr>
                                             <tr>
-                                                <td style={{ width: '120px', textAlign: 'right' }}>Address</td>
+                                                <td   >Address</td>
                                                 <td>&nbsp; &nbsp;: &nbsp; &nbsp;{order.user.address}</td>
                                             </tr>
 
@@ -156,23 +212,23 @@ const OrderDetail = ({ orderDetail, state, dispatch }) => {
                                     <table>
                                         <tbody>
                                             <tr >
-                                                <td style={{ width: '120px', textAlign: 'right' }}>FirstName</td>
+                                                <td   >FirstName</td>
                                                 <td>&nbsp; &nbsp;: &nbsp;&nbsp;{order.firstName}</td>
                                             </tr>
                                             <tr>
-                                                <td style={{ width: '120px', textAlign: 'right' }}>LastName</td>
+                                                <td   >LastName</td>
                                                 <td>&nbsp; &nbsp;: &nbsp; &nbsp;{order.lastName}</td>
                                             </tr>
                                             <tr>
-                                                <td style={{ width: '120px', textAlign: 'right' }}>Email</td>
+                                                <td   >Email</td>
                                                 <td>&nbsp; &nbsp;: &nbsp; &nbsp;{order.email}</td>
                                             </tr>
                                             <tr>
-                                                <td style={{ width: '120px', textAlign: 'right' }}>Phone</td>
+                                                <td   >Phone</td>
                                                 <td>&nbsp; &nbsp;: &nbsp; &nbsp;{order.phone}</td>
                                             </tr>
                                             <tr>
-                                                <td style={{ width: '120px', textAlign: 'right' }}>Address</td>
+                                                <td   >Address</td>
                                                 <td>&nbsp; &nbsp;: &nbsp; &nbsp;{order.address}</td>
                                             </tr>
 
