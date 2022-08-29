@@ -15,7 +15,7 @@ function UserRoles() {
     const authUser = Cookies.get('user') && JSON.parse(Cookies.get('user'))
 
     const [currentPage, setCurrentPage] = useState(1);
-    const [recordsPerPage] = useState(5);
+    const [recordsPerPage] = useState(10);
 
     useEffect(() => {
         fetchUser()
@@ -128,7 +128,8 @@ function UserRoles() {
             <table className="table table-bordered table-hover">
                 <thead>
                     <tr>
-                        <th></th>
+                        <th>Sl.</th>
+                        <th>Image</th>
                         <th>Name</th>
                         <th>Email</th>
                         <th>Created</th>
@@ -137,9 +138,12 @@ function UserRoles() {
                     </tr>
                 </thead>
                 <tbody>
-                    {currentRecords.map(item => {
+                    {currentRecords.map((item, index) => {
                         return (
                             <tr key={item._id}>
+                                <td>
+                                    {index + 1}.
+                                </td>
                                 <td>
                                     <img src={item.image} alt={item.username} width={'50px'} height={'auto'} />
                                 </td>

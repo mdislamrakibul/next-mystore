@@ -11,14 +11,12 @@ import { errorMsg, successMsg } from '../helpers/Toastify';
 import valid from '../helpers/valid';
 import { DataContext } from '../store/GlobalState';
 
-const Profile = () =>
-{
+const Profile = () => {
     const router = useRouter()
     const orderCard = useRef(null)
     const cookie = parseCookies()
     const user = cookie.user ? JSON.parse(cookie.user) : ""
-    useEffect(() =>
-    {
+    useEffect(() => {
         if (user) {
             setData({ ...data, username: user.username, email: user.email })
         }
@@ -37,8 +35,7 @@ const Profile = () =>
     const [isLoading, setIsLoading] = useState(false)
     const { avatar, username, password, cf_password } = data
 
-    const changeAvatar = (e) =>
-    {
+    const changeAvatar = (e) => {
         const file = e.target.files[0]
         if (!file) {
             errorMsg("Please select an image")
@@ -58,13 +55,11 @@ const Profile = () =>
 
         setData({ ...data, avatar: file })
     }
-    const handleChange = (e) =>
-    {
+    const handleChange = (e) => {
         const { name, value } = e.target
         setData({ ...data, [name]: value })
     }
-    const handleUpdateProfile = (e) =>
-    {
+    const handleUpdateProfile = (e) => {
         setIsLoading(true)
         e.preventDefault()
         if (password) {
@@ -79,12 +74,10 @@ const Profile = () =>
 
         if (avatar) updateUserInfo()
     }
-    const updatePassword = async () =>
-    {
+    const updatePassword = async () => {
         setIsLoading(true)
         patchData('user/resetPassword', { password, username }, cookie.token)
-            .then(res =>
-            {
+            .then(res => {
                 if (!res.status) {
                     setIsLoading(false)
                     errorMsg(res.message)
@@ -96,15 +89,13 @@ const Profile = () =>
             })
     }
 
-    const updateUserInfo = async () =>
-    {
+    const updateUserInfo = async () => {
         let media;
         setIsLoading(true)
         if (avatar) media = await imageUpload([avatar])
         patchData('user',
             { avatar: avatar ? media[0].url : user.image }, cookie.token
-        ).then(res =>
-        {
+        ).then(res => {
             setIsLoading(false)
             if (!res.status) {
                 errorMsg(res.message)
@@ -170,58 +161,7 @@ const Profile = () =>
                         {/* {user?.image && <img src={user?.image} alt={user?.username} width={'150px'} height={'auto'} />} */}
                     </div>
                     <div className='col-md-8'>
-                        <h3 className="text-uppercase">Orders</h3>
 
-                        <div className="my-3 table-responsive">
-                            <table className="table-bordered table-hover w-100 text-uppercase"
-                                style={{ minWidth: '600px' }}>
-                                <thead className="bg-light font-weight-bold">
-                                    <tr>
-                                        <td className="p-2">id</td>
-                                        <td className="p-2">date</td>
-                                        <td className="p-2">total</td>
-                                        <td className="p-2">Method</td>
-                                        <td className="p-2">delivered</td>
-                                        <td className="p-2">paid</td>
-                                    </tr>
-                                </thead>
-
-                                <tbody>
-                                    {
-                                        orders.map(order => (
-                                            <tr key={order._id}>
-                                                <td className="p-2">
-                                                    <Link href={`/order/${order._id}`}>
-                                                        <a style={{ textDecoration: 'none', color: 'slateblue' }}>{order._id}</a>
-                                                    </Link>
-
-                                                </td>
-                                                <td className="p-2">
-                                                    {new Date(order.createdAt).toLocaleDateString()}
-                                                </td>
-                                                <td className="p-2">${order.total}</td>
-                                                <td className="p-2">{order.method}</td>
-                                                <td className="p-2">
-                                                    {
-                                                        order.delivered
-                                                            ? <i className="fas fa-check-circle text-success"></i>
-                                                            : <i className="fas fa-times-circle text-danger"></i>
-                                                    }
-                                                </td>
-                                                <td className="p-2">
-                                                    {
-                                                        order.paid
-                                                            ? <i className="fas fa-check-circle text-success"></i>
-                                                            : <i className="fas fa-times-circle text-danger"></i>
-                                                    }
-                                                </td>
-                                            </tr>
-                                        ))
-                                    }
-                                </tbody>
-
-                            </table>
-                        </div>
                     </div>
                 </div>
             </section>
@@ -262,8 +202,7 @@ const Profile = () =>
 }
 
 
-export async function getServerSideProps(ctx)
-{
+export async function getServerSideProps(ctx) {
     const { token } = parseCookies(ctx)
     if (!token) {
         const { res } = ctx

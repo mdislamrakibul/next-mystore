@@ -6,17 +6,14 @@ import moment from 'moment';
 import { useState } from 'react';
 import { errorMsg, successMsg } from '../helpers/Toastify';
 import Loading from './Loading';
-const OrderDetail = ({ orderDetail, state, dispatch }) =>
-{
+const OrderDetail = ({ orderDetail, state, dispatch }) => {
     const { auth, orders } = state
     const { token, user } = parseCookies()
     const [isLoading, setIsLoading] = useState(false)
-    const handleDelivered = (order) =>
-    {
+    const handleDelivered = (order) => {
         setIsLoading(true)
         patchData(`order/delivered/${order._id}`, {}, token)
-            .then(res =>
-            {
+            .then(res => {
                 setIsLoading(false)
                 if (!res.status) {
                     errorMsg(res.message)
