@@ -104,7 +104,7 @@ const OrderDetail = ({ orderDetail, state, dispatch }) => {
                                         : <span style={{ color: 'red' }}>[Not Delivered]&nbsp;</span>
                                 }
                                 {
-                                    user.role !== 'user' && !order.delivered &&
+                                    user.role !== 'user' && !order.delivered && !order.rejectedIs &&
                                     <button className="btn btn-sm btn-success text-uppercase"
                                         onClick={() => handleDelivered(order)}>
                                         <i className="fas fa-truck"></i>&nbsp; &nbsp; Mark as delivered
@@ -132,8 +132,8 @@ const OrderDetail = ({ orderDetail, state, dispatch }) => {
                                                         <td>&nbsp; &nbsp;: &nbsp; &nbsp; {order.paymentId}</td>
                                                     </tr>
                                                     <tr>
-                                                        <td  >PromoCode Redeem</td>
-                                                        <td>&nbsp; &nbsp;: &nbsp; &nbsp; {order.promoCodeRedeem ? <i className="fas fa-check-circle text-success"></i>
+                                                        <td>Paid</td>
+                                                        <td>&nbsp; &nbsp;: &nbsp; &nbsp; {order.paid ? <i className="fas fa-check-circle text-success"></i>
                                                             : <i className="fas fa-times-circle text-danger"></i>}</td>
                                                     </tr>
                                                 </tbody>
@@ -145,16 +145,17 @@ const OrderDetail = ({ orderDetail, state, dispatch }) => {
                                             <table>
                                                 <tbody>
                                                     <tr>
-                                                        <td  >Amount Redeem</td>
-                                                        <td>&nbsp; &nbsp;: &nbsp; &nbsp; $ {order.amountRedeem}</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td  >Paid</td>
-                                                        <td>&nbsp; &nbsp;: &nbsp; &nbsp; {order.paid ? <i className="fas fa-check-circle text-success"></i>
+                                                        <td  >PromoCode Redeem</td>
+                                                        <td>&nbsp; &nbsp;: &nbsp; &nbsp; {order.promoCodeRedeem ? <i className="fas fa-check-circle text-success"></i>
                                                             : <i className="fas fa-times-circle text-danger"></i>}</td>
                                                     </tr>
                                                     <tr>
-                                                        <td  >Delivered</td>
+                                                        <td>Amount Redeem</td>
+                                                        <td>&nbsp; &nbsp;: &nbsp; &nbsp; $ {order.amountRedeem}</td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>Delivered</td>
                                                         <td>&nbsp; &nbsp;: &nbsp; &nbsp; {order.delivered
                                                             ? <i className="fas fa-check-circle text-success"></i>
                                                             : <i className="fas fa-times-circle text-danger"></i>}</td>
