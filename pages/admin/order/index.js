@@ -11,7 +11,7 @@ import Cookie from 'js-cookie';
 function OrderIndex() {
 
     const { token } = parseCookies()
-    const user = Cookie.get('user') ?? JSON.parse(Cookie.get('user'))
+    const user = Cookie.get('user') && JSON.parse(Cookie.get('user'))
     const { state, dispatch } = useContext(DataContext)
     const { auth, notify, orders } = state
 

@@ -6,10 +6,12 @@ import moment from 'moment';
 import { useState } from 'react';
 import { errorMsg, successMsg } from '../helpers/Toastify';
 import Loading from './Loading';
+import Cookies from 'js-cookie';
 const OrderDetail = ({ orderDetail, state, dispatch }) => {
     console.log(orderDetail);
     const { auth, orders } = state
-    const { token, user } = parseCookies()
+    const { token } = parseCookies()
+    const user = Cookies.get('user') && JSON.parse(Cookies.get('user'))
     const [isLoading, setIsLoading] = useState(false)
     const handleDelivered = (order) => {
         setIsLoading(true)
@@ -35,7 +37,7 @@ const OrderDetail = ({ orderDetail, state, dispatch }) => {
         <>
             {isLoading && <Loading />}
             {orderDetail.map(order => (
-                <div key={order._id} style={{ margin: '20px auto', position: 'relative' }} className="row justify-content-around">
+                <div key={order._id} style={{ margin: '20px auto', position: 'relative', fontWeight: 'bold' }} className="row justify-content-around">
                     {order.delivered && order.paid &&
                         <img src='https://res.cloudinary.com/x-gwkjs-8zn7m-3/image/upload/v1661763694/delivered-stamp-delivered-rubber-stamp-illustration-isolated-white-background-124829036-removebg-preview_nnelrh.png'
                             style={{
@@ -47,7 +49,7 @@ const OrderDetail = ({ orderDetail, state, dispatch }) => {
                                 bottom: '0',
                                 textAlign: 'center',
                                 zIndex: '-999',
-                                opacity: '.3',
+                                opacity: '.2',
                                 width: '45%'
                             }} />}
                     {order.paid && !order.delivered &&
@@ -61,7 +63,7 @@ const OrderDetail = ({ orderDetail, state, dispatch }) => {
                                 bottom: '0',
                                 textAlign: 'center',
                                 zIndex: '-999',
-                                opacity: '.3',
+                                opacity: '.2',
                                 width: '45%'
                             }} />}
                     {!order.paid && !order.delivered && !order.rejectedIs &&
@@ -75,7 +77,7 @@ const OrderDetail = ({ orderDetail, state, dispatch }) => {
                                 bottom: '0',
                                 textAlign: 'center',
                                 zIndex: '-999',
-                                opacity: '.3',
+                                opacity: '.2',
                                 width: '45%'
                             }} />}
                     {order.rejectedIs &&
@@ -89,7 +91,7 @@ const OrderDetail = ({ orderDetail, state, dispatch }) => {
                                 bottom: '0',
                                 textAlign: 'center',
                                 zIndex: '-999',
-                                opacity: '.3',
+                                opacity: '.2',
                                 width: '45%'
                             }} />}
 
@@ -104,7 +106,7 @@ const OrderDetail = ({ orderDetail, state, dispatch }) => {
                                         : <span style={{ color: 'red' }}>[Not Delivered]&nbsp;</span>
                                 }
                                 {
-                                    user.role === 'root' && !order.delivered && !order.rejectedIs &&
+                                    user && user.role === 'root' && !order.delivered && !order.rejectedIs &&
                                     <button className="btn btn-sm btn-success text-uppercase"
                                         onClick={() => handleDelivered(order)}>
                                         <i className="fas fa-truck"></i>&nbsp; &nbsp; Mark as delivered
@@ -115,7 +117,7 @@ const OrderDetail = ({ orderDetail, state, dispatch }) => {
                         </div>
                         <div className='row mb-3'>
                             <div className='col-md-12'>
-                                <div className="alert alert-secondary" >
+                                <div className="alert alert-primary" style={{ opacity: '.5' }}>
                                     <h6 className="text-break">Order##{order._id}</h6>
                                 </div>
                                 <div className='container'>
@@ -125,7 +127,7 @@ const OrderDetail = ({ orderDetail, state, dispatch }) => {
                                                 <tbody>
                                                     <tr>
                                                         <td >Method</td>
-                                                        <td>&nbsp; &nbsp;: &nbsp; &nbsp; {order.method}</td>
+                                                        <td>&nbsp; &nbsp;: &nbsp; &nbsp; {order.method === 'cod' ? 'Cash On Delivery' : order.method}</td>
                                                     </tr>
                                                     <tr>
                                                         <td >Payment Id</td>
@@ -170,7 +172,7 @@ const OrderDetail = ({ orderDetail, state, dispatch }) => {
                         </div>
                         <div className='row mb-3'>
                             <div className='col-md-6'>
-                                <div className="alert alert-secondary" >
+                                <div className="alert alert-primary" style={{ opacity: '.5' }}>
                                     <h6 className="text-break">User Information</h6>
                                 </div>
                                 <div className='container'>
@@ -206,7 +208,7 @@ const OrderDetail = ({ orderDetail, state, dispatch }) => {
                                 </div>
                             </div>
                             <div className='col-md-6'>
-                                <div className="alert alert-secondary" >
+                                <div className="alert alert-primary" style={{ opacity: '.5' }}>
                                     <h6 className="text-break">Buyer Information</h6>
                                 </div>
                                 <div className='container'>
@@ -239,7 +241,7 @@ const OrderDetail = ({ orderDetail, state, dispatch }) => {
                             </div>
                         </div>
                         <div className='row mb-3'>
-                            <div className="alert alert-secondary" >
+                            <div className="alert alert-primary" style={{ opacity: '.5' }}>
                                 <h6 className="text-break">Products</h6>
                             </div>
                             <div className='col-md-12 table-responsive'>
