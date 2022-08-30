@@ -5,8 +5,7 @@ import { useContext, useEffect, useState } from 'react';
 import CartItem from '../components/CartItem';
 import { getData } from '../helpers/dataOps';
 import { DataContext } from '../store/GlobalState';
-const Cart = () =>
-{
+const Cart = () => {
     const { user } = parseCookies()
     let cartLocal = []
     const { state, dispatch } = useContext(DataContext)
@@ -14,8 +13,7 @@ const Cart = () =>
     const [address, setAddress] = useState('')
     const [mobile, setMobile] = useState('')
     const [total, setTotal] = useState(0)
-    useEffect(() =>
-    {
+    useEffect(() => {
         cartLocal = localStorage.getItem('__nextStore__cart__00_L') ? JSON.parse(localStorage.getItem('__nextStore__cart__00_L')) : []
         // cartLocal = Cookies.get('__nextStore__cart__00_C') ? JSON.parse(Cookies.get('__nextStore__cart__00_C')) : []
         // console.log("cartLocal", cartLocal.length)
@@ -26,8 +24,7 @@ const Cart = () =>
         // }
         if (cartLocal && cartLocal.length > 0) {
             let newArr = []
-            const updateCart = async () =>
-            {
+            const updateCart = async () => {
                 for (const item of cartLocal) {
                     const res = await getData(`products/${item._id}`)
                     const { _id, title, images, price, inStock, sold, image } = res.data
@@ -47,12 +44,9 @@ const Cart = () =>
     }, [])
 
 
-    useEffect(() =>
-    {
-        const getTotal = () =>
-        {
-            const res = cart.reduce((prev, item) =>
-            {
+    useEffect(() => {
+        const getTotal = () => {
+            const res = cart.reduce((prev, item) => {
                 return prev + (item.price * item.quantity)
             }, 0)
 
@@ -78,8 +72,7 @@ const Cart = () =>
 
             </div>
         )
-    const handlePayment = () =>
-    {
+    const handlePayment = () => {
         console.log("go to payment");
     }
     return (
@@ -159,14 +152,14 @@ const Cart = () =>
 
                             <div className="row">
                                 <div className="mb-3 row">
-                                    <label for="address" className="col-sm-1 col-form-label">
+                                    <label htmlFor="address" className="col-sm-1 col-form-label">
                                         <i className="fas fa-map-marked-alt"></i>
                                     </label>
                                     <div className="col-sm-11">
                                         <div className="form-floating">
                                             <input type="text" className="form-control" id="address" name="address"
                                                 onChange={e => setAddress(e.target.value)} value={address} placeholder="Address" />
-                                            <label for="address" className="form-label">Address</label>
+                                            <label htmlFor="address" className="form-label">Address</label>
                                         </div>
 
                                     </div>
@@ -175,14 +168,14 @@ const Cart = () =>
 
                             <div className="row">
                                 <div className="mb-3 row">
-                                    <label for="mobile" className="col-sm-1 col-form-label">
+                                    <label htmlFor="mobile" className="col-sm-1 col-form-label">
                                         <i className="fas fa-mobile-alt"></i>
                                     </label>
                                     <div className="col-sm-11">
                                         <div className="form-floating">
                                             <input type="text" className="form-control" id="mobile" name="mobile"
                                                 onChange={e => setMobile(e.target.value)} value={mobile} placeholder="Mobile" />
-                                            <label for="mobile" className="form-label">Mobile</label>
+                                            <label htmlFor="mobile" className="form-label">Mobile</label>
                                         </div>
 
                                     </div>

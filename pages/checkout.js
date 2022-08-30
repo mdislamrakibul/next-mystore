@@ -5,8 +5,7 @@ import { postData } from '../helpers/dataOps';
 import { errorMsg, successMsg } from '../helpers/Toastify';
 import { DataContext } from '../store/GlobalState';
 
-function Checkout()
-{
+function Checkout() {
     const router = useRouter()
     const { state, dispatch } = useContext(DataContext)
     const { cart } = state
@@ -27,8 +26,7 @@ function Checkout()
     const [emailError, setEmailError] = useState(false)
     const [phoneError, setPhoneError] = useState(false)
     const [addressError, setAddressError] = useState(false)
-    useEffect(() =>
-    {
+    useEffect(() => {
         cartLocal = cart && cart.length ? cart :
             (localStorage.getItem('__nextStore__cart__00_L') ? JSON.parse(localStorage.getItem('__nextStore__cart__00_L')) : [])
 
@@ -37,8 +35,7 @@ function Checkout()
             router.push('/')
         }
 
-        let sum = cartLocal.reduce(function (previousValue, currentValue)
-        {
+        let sum = cartLocal.reduce(function (previousValue, currentValue) {
             return previousValue + (currentValue.price * currentValue.quantity);
         }, 0);
 
@@ -53,13 +50,11 @@ function Checkout()
 
     const [chkValue, setChkValue] = useState('cod')
 
-    const handleCHange = (e) =>
-    {
+    const handleCHange = (e) => {
         setChkValue(e.target.value)
     }
 
-    const handleRedeem = () =>
-    {
+    const handleRedeem = () => {
         if (promoCode !== 'X7e9D43') {
             errorMsg('Invalid Promo Code')
             return
@@ -75,8 +70,7 @@ function Checkout()
         }
     }
 
-    const handleRefresh = (e) =>
-    {
+    const handleRefresh = (e) => {
         e.preventDefault()
         setFirstNameError(false)
         setLastNameError(false)
@@ -89,8 +83,7 @@ function Checkout()
         setPhone('')
         setAddress('')
     }
-    const handleProceed = async (e) =>
-    {
+    const handleProceed = async (e) => {
         e.preventDefault();
 
         setFirstNameError(false)
@@ -208,12 +201,12 @@ function Checkout()
                                 <div className="form-check">
                                     <input id="cod" type="radio" className="form-check-input"
                                         onChange={handleCHange} value='cod' checked={chkValue === 'cod'} />
-                                    <label className="form-check-label" for="cod">Cash on delivery (COD)</label>
+                                    <label className="form-check-label" htmlFor="cod">Cash on delivery (COD)</label>
                                 </div>
                                 <div className="form-check">
                                     <input id="op" type="radio" className="form-check-input"
                                         onChange={handleCHange} value='op' checked={chkValue === 'op'} />
-                                    <label className="form-check-label" for="op">Online Payment</label>
+                                    <label className="form-check-label" htmlFor="op">Online Payment</label>
                                 </div>
                             </div>
                             <hr />
@@ -223,7 +216,7 @@ function Checkout()
                                     <form>
                                         <div className="row g-3">
                                             <div className="col-sm-6">
-                                                <label for="firstName" className="form-label">First name</label>
+                                                <label htmlFor="firstName" className="form-label">First name</label>
                                                 <input type="text" className="form-control" id="firstName" placeholder="Mr. John"
                                                     value={firstName} onChange={(e) => setFirstName(e.target.value)} required />
                                                 <div style={{ color: 'red' }} className={firstNameError ? 'd-block' : 'd-none'}>
@@ -232,7 +225,7 @@ function Checkout()
                                             </div>
 
                                             <div className="col-sm-6">
-                                                <label for="lastName" className="form-label">Last name</label>
+                                                <label htmlFor="lastName" className="form-label">Last name</label>
                                                 <input type="text" className="form-control" id="lastName" placeholder="Doe"
                                                     value={lastName} onChange={(e) => setLastName(e.target.value)}
                                                     required />
@@ -242,7 +235,7 @@ function Checkout()
                                             </div>
 
                                             <div className="col-sm-6">
-                                                <label for="email" className="form-label">Email <span className="text-muted"></span></label>
+                                                <label htmlFor="email" className="form-label">Email <span className="text-muted"></span></label>
                                                 <input type="email" className="form-control" id="email" placeholder="you@example.com"
                                                     value={email} onChange={(e) => setEmail(e.target.value)} />
                                                 <div style={{ color: 'red' }} className={emailError ? 'd-block' : 'd-none'}>
@@ -250,7 +243,7 @@ function Checkout()
                                                 </div>
                                             </div>
                                             <div className="col-sm-6">
-                                                <label for="phone" className="form-label">Phone No. <span className="text-muted"></span></label>
+                                                <label htmlFor="phone" className="form-label">Phone No. <span className="text-muted"></span></label>
                                                 <input type="text" className="form-control" id="phone" placeholder="88018000000" required
                                                     value={phone} onChange={(e) => setPhone(e.target.value)} />
                                                 <div style={{ color: 'red' }} className={phoneError ? 'd-block' : 'd-none'}>
@@ -259,7 +252,7 @@ function Checkout()
                                             </div>
 
                                             <div className="col-12">
-                                                <label for="address" className="form-label">Address</label>
+                                                <label htmlFor="address" className="form-label">Address</label>
                                                 <input type="text" className="form-control" id="address" placeholder="1234 Main St" required
                                                     value={address} onChange={(e) => setAddress(e.target.value)} />
                                                 <div style={{ color: 'red' }} className={addressError ? 'd-block' : 'd-none'}>
@@ -272,12 +265,12 @@ function Checkout()
 
                                         <div className="form-check">
                                             <input type="checkbox" className="form-check-input" id="same-address" />
-                                            <label className="form-check-label" for="same-address">Shipping address is the same as my billing address</label>
+                                            <label className="form-check-label" htmlFor="same-address">Shipping address is the same as my billing address</label>
                                         </div>
 
                                         <div className="form-check">
                                             <input type="checkbox" className="form-check-input" id="save-info" />
-                                            <label className="form-check-label" for="save-info">Save this information for next time</label>
+                                            <label className="form-check-label" htmlFor="save-info">Save this information for next time</label>
                                         </div>
 
                                         <hr />
@@ -290,16 +283,14 @@ function Checkout()
                                                 <button className="btn btn-primary btn-sm" onClick={(e) => handleRefresh(e)}>
                                                     <i className="fas fa-redo"></i>&nbsp; Refresh
                                                 </button>
-                                                <button className="btn btn-danger btn-sm" onClick={() =>
-                                                {
+                                                <button className="btn btn-danger btn-sm" onClick={() => {
                                                     router.push("/cart")
                                                 }}>
                                                     <i className="far fa-times-circle"></i>&nbsp; Cancel
                                                 </button>
                                             </div>
                                             :
-                                            <button className="btn btn-info btn-smp" onClick={() =>
-                                            {
+                                            <button className="btn btn-info btn-smp" onClick={() => {
                                                 router.push("/login")
                                             }}>
                                                 <i className="fas fa-sign-in-alt"></i>&nbsp; Login
@@ -316,7 +307,7 @@ function Checkout()
                                 &&
                                 <div className="row gy-3">
                                     <div className="col-md-6">
-                                        <label for="cc-name" className="form-label">Name on card</label>
+                                        <label htmlFor="cc-name" className="form-label">Name on card</label>
                                         <input type="text" className="form-control" id="cc-name" placeholder="" required />
                                         <small className="text-muted">Full name as displayed on card</small>
                                         <div className="invalid-feedback">
@@ -325,7 +316,7 @@ function Checkout()
                                     </div>
 
                                     <div className="col-md-6">
-                                        <label for="cc-number" className="form-label">Credit card number</label>
+                                        <label htmlFor="cc-number" className="form-label">Credit card number</label>
                                         <input type="text" className="form-control" id="cc-number" placeholder="" required />
                                         <div className="invalid-feedback">
                                             Credit card number is required
@@ -333,7 +324,7 @@ function Checkout()
                                     </div>
 
                                     <div className="col-md-3">
-                                        <label for="cc-expiration" className="form-label">Expiration</label>
+                                        <label htmlFor="cc-expiration" className="form-label">Expiration</label>
                                         <input type="text" className="form-control" id="cc-expiration" placeholder="" required />
                                         <div className="invalid-feedback">
                                             Expiration date required
@@ -341,7 +332,7 @@ function Checkout()
                                     </div>
 
                                     <div className="col-md-3">
-                                        <label for="cc-cvv" className="form-label">CVV</label>
+                                        <label htmlFor="cc-cvv" className="form-label">CVV</label>
                                         <input type="text" className="form-control" id="cc-cvv" placeholder="" required />
                                         <div className="invalid-feedback">
                                             Security code required

@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import { parseCookies } from 'nookies';
 import { useContext, useEffect, useRef, useState } from 'react';
 import Loading from '../components/Loading';
-import { patchData } from '../helpers/dataOps';
+import { patchData, getData } from '../helpers/dataOps';
 import { imageUpload } from '../helpers/imageUpload';
 import { errorMsg, successMsg } from '../helpers/Toastify';
 import valid from '../helpers/valid';
@@ -17,8 +17,15 @@ const Profile = () => {
     const cookie = parseCookies()
     const user = cookie.user ? JSON.parse(cookie.user) : ""
     useEffect(() => {
+        setIsLoading(true)
         if (user) {
             setData({ ...data, username: user.username, email: user.email })
+            getData('user/basicInfoUpdate', cookie.token)
+                .then(res => {
+                    setIsLoading(false)
+                    setBasicInfoData(res.data)
+                })
+
         }
     }, [])
 
@@ -28,12 +35,30 @@ const Profile = () => {
     const initialSate = {
         avatar: '',
         username: '',
-        password: '',
+        newPassword: '',
         cf_password: ''
     }
+    const initialBasicInfoState = {
+        firstname: '',
+        lastname: '',
+        phone: '',
+        dob: '',
+        address: '',
+        gender: ''
+        // address: "dafasdfasd",
+        // dob: "2022-08-09",
+        // firstname: "Md. Rakibul",
+        // gender: "male",
+        // lastname: "Islam",
+        // phone: "8801676365335",
+    }
     const [data, setData] = useState(initialSate)
+    const [basicInfoData, setBasicInfoData] = useState(initialBasicInfoState)
+
     const [isLoading, setIsLoading] = useState(false)
-    const { avatar, username, password, cf_password } = data
+
+    const { avatar, username, newPassword, cf_password } = data
+    const { firstname, lastname, phone, dob, address, gender } = basicInfoData
 
     const changeAvatar = (e) => {
         const file = e.target.files[0]
@@ -60,10 +85,13 @@ const Profile = () => {
         setData({ ...data, [name]: value })
     }
     const handleUpdateProfile = (e) => {
-        setIsLoading(true)
         e.preventDefault()
-        if (password) {
-            const errMsg = valid(username, user.email, password, cf_password)
+        if (!newPassword) {
+            errorMsg('Fil both password field')
+            return
+        }
+        if (newPassword) {
+            const errMsg = valid(username, user.email, newPassword, cf_password)
             if (errMsg) {
                 errorMsg(errMsg)
                 setIsLoading(false)
@@ -75,8 +103,9 @@ const Profile = () => {
         if (avatar) updateUserInfo()
     }
     const updatePassword = async () => {
+
         setIsLoading(true)
-        patchData('user/resetPassword', { password, username }, cookie.token)
+        patchData('user/resetPassword', { newPassword, username }, cookie.token)
             .then(res => {
                 if (!res.status) {
                     setIsLoading(false)
@@ -85,6 +114,7 @@ const Profile = () => {
                 }
                 setIsLoading(false)
                 successMsg(res.message)
+
                 Cookies.set('user', res.data)
             })
     }
@@ -105,6 +135,32 @@ const Profile = () => {
             Cookies.set('user', res.data)
             router.push('/profile')
         })
+    }
+
+
+    const basicInfoChange = (e) => {
+        const { name, value } = e.target
+        setBasicInfoData({ ...basicInfoData, [name]: value })
+    }
+
+    const handleBasicInfo = async (e) => {
+        e.preventDefault()
+        // errorMsg("please select a gender")
+        if (gender === '') {
+            errorMsg("please select a gender")
+            return
+        }
+        setIsLoading(true)
+        patchData('user/basicInfoUpdate', { firstname, lastname, phone, dob, address, gender }, cookie.token)
+            .then(res => {
+                if (!res.status) {
+                    setIsLoading(false)
+                    errorMsg(res.message)
+                    return
+                }
+                setIsLoading(false)
+                successMsg(res.message)
+            })
     }
     return (
         <div className='container profile_page'>
@@ -143,9 +199,9 @@ const Profile = () => {
                         </div>
 
                         <div className="mb-3">
-                            <label htmlFor="password">New Password</label>
-                            <input type="password" name="password" value={password} className="form-control"
-                                placeholder="Your new password" onChange={handleChange} id="password" />
+                            <label htmlFor="newPassword">New Password</label>
+                            <input type="password" name="newPassword" value={newPassword} className="form-control"
+                                placeholder="Your new password" onChange={handleChange} id="newPassword" />
                         </div>
 
                         <div className="mb-3">
@@ -161,43 +217,52 @@ const Profile = () => {
                         {/* {user?.image && <img src={user?.image} alt={user?.username} width={'150px'} height={'auto'} />} */}
                     </div>
                     <div className='col-md-8'>
+                        <h3 className='my-4'>Basic Information</h3>
+                        <hr />
+                        <div className="row g-3">
+                            <div className="col-md-6">
+                                <label htmlFor="firstname" className="form-label">FirstName</label>
+                                <input type="text" className="form-control" id="firstname" name="firstname" value={firstname} onChange={basicInfoChange} />
+                            </div>
+                            <div className="col-md-6">
+                                <label htmlFor="lastname" className="form-label">LastName</label>
+                                <input type="text" className="form-control" id="lastname" name="lastname" value={lastname} onChange={basicInfoChange} />
+                            </div>
+                            <div className="col-md-6">
+                                <label htmlFor="phone" className="form-label">Phone</label>
+                                <input type="text" className="form-control" id="phone" name="phone" value={phone} onChange={basicInfoChange} />
+                            </div>
+                            <div className="col-md-6">
+                                <label htmlFor="dob" className="form-label">DOB</label>
+                                <input type="date" className="form-control" id="dob" name="dob" value={dob} onChange={basicInfoChange} />
+                            </div>
+                            <div className="col-md-6">
+                                <label htmlFor="address" className="form-label">Address</label>
+                                <textarea type="text" className="form-control" id="address" name="address" placeholder="1234 Main St" value={address} onChange={basicInfoChange}>
 
+                                </textarea>
+                            </div>
+
+                            <div className="col-md-6">
+                                <label htmlFor="gender" className="form-label">Gender</label>
+                                <select id="gender" className="form-select" name='gender' value={gender} onChange={basicInfoChange}>
+                                    <option value="">Choose...</option>
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                </select>
+                            </div>
+
+                            <div className="col-md-12" style={{ textAlign: 'end' }}>
+                                <button className="btn btn-success btn-sm" onClick={(e) => handleBasicInfo(e)}>
+                                    <i className="fas fa-user-edit"></i>&nbsp;
+                                    Update
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </section>
-            {/* <div className="row" style={{ backgroundColor: 'lightgray', borderRadius: '10px', padding: '10px' }} >
-                <div className="col-md-4">
-                    <div>
-                        {user?.image && <img src={user?.image} alt={user?.username} width={'150px'} height={'auto'} />}
-
-                        <br />
-                        <h6>Name : <b>{user?.username}</b></h6>
-                        <h6>Email : {user?.email}</h6>
-                    </div>
-                </div>
-
-                <div className="col-md-8">
-                    <div>
-                        Phone : <b>01234567890</b><br />
-                        Address : <b>Commercial Cove, 52, Gulshan -1, Dhaka</b><br />
-                        BirthDay : <b>01-01-1970</b><br />
-                        Gender : <b>Male</b><br />
-                        Username : <b>{user?.username}</b><br />
-                        Password : <b>**********</b><br />
-                    </div>
-                    <div>
-
-                    </div>
-                </div>
-            </div>
-            <div className='row'>
-                <div className='col-md-12'>
-                    {user?.role === 'root'
-                        && <UserRoles />
-                    }
-                </div>
-            </div> */}
-        </div >
+        </div>
     )
 }
 

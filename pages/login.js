@@ -6,16 +6,14 @@ import React, { useContext, useEffect, useState } from 'react';
 import baseUrl from '../helpers/baseUrl';
 import { errorMsg, successMsg } from '../helpers/Toastify';
 import { DataContext } from '../store/GlobalState';
-const Login = () =>
-{
+const Login = () => {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const router = useRouter()
   const { state, dispatch } = useContext(DataContext)
   const { auth } = state
   const cookie = parseCookies()
-  const handleClick = async (e) =>
-  {
+  const handleClick = async (e) => {
     e.preventDefault()
     const res = await fetch(`${baseUrl}/api/login`, {
       method: "POST",
@@ -48,15 +46,13 @@ const Login = () =>
     }
 
   }
-  const reset = async (e) =>
-  {
+  const reset = async (e) => {
     e.preventDefault()
     setEmail("")
     setPassword("")
   }
 
-  useEffect(() =>
-  {
+  useEffect(() => {
     if (cookie.token && cookie.user) {
       router.push('/')
     }
@@ -74,7 +70,7 @@ const Login = () =>
               <form>
                 <div className="row">
                   <div className="mb-3 row">
-                    <label for="email" className="col-sm-1 col-form-label">
+                    <label htmlFor="email" className="col-sm-1 col-form-label">
                       <i className="fas fa-at"></i>
                     </label>
                     <div className="col-sm-11">
@@ -90,7 +86,7 @@ const Login = () =>
 
                 <div className="row">
                   <div className="mb-3 row">
-                    <label for="password" className="col-sm-1 col-form-label">
+                    <label htmlFor="password" className="col-sm-1 col-form-label">
                       <i className="fas fa-key"></i>
                     </label>
                     <div className="col-sm-11">

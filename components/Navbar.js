@@ -76,22 +76,24 @@ function NavBar() {
                   </Link>
                 </li>
               }
-              <li>
-                <Link href="/admin/dashboard">
-                  <a className={"nav-link" + isActive('/admin/dashboard')}>
-                    <i className="fab fa-cpanel"></i>&nbsp;Dashboard
-                  </a>
-                </Link>
-              </li>
+
               {user ?
                 <li className="nav-item dropdown">
-                  <span className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  <div className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                     <img src={user.image} alt="avatar" style={{
                       borderRadius: '50%', width: '30px', height: '30px',
                       transform: 'translateY(-3px)', marginRight: '3px'
                     }} />&nbsp;{user.username}
-                  </span>
+                  </div>
                   <ul className="dropdown-menu">
+                    <li>
+                      <Link href="/admin/dashboard">
+                        <a className={"dropdown-item" + isActive('/admin/dashboard')}>
+                          <i className="fab fa-cpanel"></i>&nbsp;Dashboard
+                        </a>
+                      </Link>
+                    </li>
+                    <li className="dropdown-divider"></li>
                     <li>
                       <Link href="/profile">
                         <a className={"dropdown-item" + isActive('/profile')}>

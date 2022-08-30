@@ -3,12 +3,12 @@ import React, { useContext } from 'react';
 import { errorMsg } from '../../helpers/Toastify';
 import { addToCart } from '../../store/Actions';
 import { DataContext } from '../../store/GlobalState';
-const ProductItem = ({ product }) =>
-{
+import Cookie from 'js-cookie';
+const ProductItem = ({ product }) => {
     const { state, dispatch } = useContext(DataContext)
     const { cart } = state
-    const addToCartHandleClick = (product, cart) =>
-    {
+    // const user = Cookie.get('user') ? JSON.parse(Cookie.get(user)) : {}
+    const addToCartHandleClick = (product, cart) => {
 
         if (product.inStock === 0) {
             errorMsg(`${product.title} is out of stock`)
@@ -51,6 +51,7 @@ const ProductItem = ({ product }) =>
                         onClick={() => addToCartHandleClick(product, cart)} disabled={product.inStock ? false : true}>
                         <i className="fas fa-cart-plus"></i>
                     </button>
+
                 </div>
             </div>
         </div >

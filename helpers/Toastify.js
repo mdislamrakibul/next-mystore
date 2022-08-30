@@ -10,19 +10,15 @@ const options = {
     draggable: true,
     progress: undefined,
 }
-export const successMsg = (msg) =>
-{
+export const successMsg = (msg) => {
     toast.success(msg, options)
 }
-export const errorMsg = (msg) =>
-{
+export const errorMsg = (msg) => {
     toast.error(msg, options)
 }
-export const infoMsg = (msg) =>
-{
+export const infoMsg = (msg) => {
     toast.info(msg, options)
 }
-export const warningMsg = (msg) =>
-{
+export const warningMsg = (msg) => {
     toast.warning(msg, options)
 }

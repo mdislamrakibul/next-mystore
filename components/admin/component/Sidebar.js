@@ -19,10 +19,10 @@ function Sidebar() {
             <div className="flex-shrink-0 p-3 bg-white" style={{ width: '280px' }}>
                 <Link href="/admin/dashboard" >
                     <a className="pb-3 mb-3 link-dark text-decoration-none border-bottom">
-                        <h5 className="">
-                            {user && user.role === 'user' ? 'User' : 'Admin'} Panel
+                        <h5 >
+                            {(user && user.role === 'user') ? 'User' : 'Admin'} Panel
                         </h5>
-                        <h6 className="">
+                        <h6 >
                             Welcome, {user && user.email}
                         </h6>
                     </a>
@@ -57,7 +57,7 @@ function Sidebar() {
                     {user && user.role !== 'user' &&
                         <li className="mb-1">
                             <button className="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="false">
-                                <i class="fas fa-hammer"></i>&nbsp;Settings
+                                <i className="fas fa-hammer"></i>&nbsp;Settings
                             </button>
                             {/* show */}
                             <div className="collapse" id="home-collapse" style={{ marginLeft: '50px' }}>
@@ -83,7 +83,7 @@ function Sidebar() {
 
                     {/* <li className="mb-1">
                         <button className="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#sales-collapse" aria-expanded="false">
-                            <i class="fas fa-coins"></i>&nbsp;Sales
+                            <i className="fas fa-coins"></i>&nbsp;Sales
                         </button>
                         <div className="collapse" id="sales-collapse" style={{ marginLeft: '50px' }}>
                             <ul className="btn-toggle-nav list-unstyled fw-normal pb-1 small">
@@ -104,7 +104,7 @@ function Sidebar() {
                                 <li>
                                     <Link href='/admin/order'>
                                         <a className={"link-dark d-inline-flex text-decoration-none rounded" + isActive('/admin/order')}>
-                                            <i class="fas fa-sort-amount-down-alt"></i>&nbsp;All Order
+                                            <i className="fas fa-sort-amount-down-alt"></i>&nbsp;All Order
                                         </a>
                                     </Link>
                                 </li>

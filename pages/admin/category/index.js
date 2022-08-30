@@ -1,3 +1,4 @@
+import Cookies from 'js-cookie';
 import Head from 'next/head';
 import { parseCookies } from 'nookies';
 import React, { useContext, useEffect, useState } from 'react';
@@ -10,7 +11,7 @@ function CategoryIndex() {
     const [name, setName] = useState('')
     const [isLoading, setIsLoading] = useState(false)
     const { state, dispatch } = useContext(DataContext)
-    // const user = Cookies.get('user') && JSON.parse(Cookies.get('user'))
+    const user = Cookies.get('user') && JSON.parse(Cookies.get('user'))
     const { token } = parseCookies()
     const { categories } = state
     const [id, setId] = useState('')
@@ -86,7 +87,7 @@ function CategoryIndex() {
                                 <div style={{ cursor: 'pointer' }}>
                                     <i className="fas fa-edit mr-2 text-info"
                                         onClick={() => handleEditCategory(category)}></i>
-                                    <i className="fas fa-trash-alt text-danger"
+                                    {user && user.role === 'root' && <i className="fas fa-trash-alt text-danger"
                                         data-bs-toggle="modal" data-bs-target="#exampleModal"
                                         onClick={() => dispatch({
                                             type: 'ADD_MODAL',
@@ -94,7 +95,8 @@ function CategoryIndex() {
                                                 data: categories, _id: category._id,
                                                 title: category.name, type: 'GET_CATEGORY'
                                             }
-                                        })} ></i>
+                                        })} ></i>}
+
                                 </div>
                             </div>
                         </div>
