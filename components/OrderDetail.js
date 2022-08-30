@@ -104,7 +104,7 @@ const OrderDetail = ({ orderDetail, state, dispatch }) => {
                                         : <span style={{ color: 'red' }}>[Not Delivered]&nbsp;</span>
                                 }
                                 {
-                                    user.role !== 'user' && !order.delivered && !order.rejectedIs &&
+                                    user.role === 'root' && !order.delivered && !order.rejectedIs &&
                                     <button className="btn btn-sm btn-success text-uppercase"
                                         onClick={() => handleDelivered(order)}>
                                         <i className="fas fa-truck"></i>&nbsp; &nbsp; Mark as delivered
@@ -246,7 +246,7 @@ const OrderDetail = ({ orderDetail, state, dispatch }) => {
                                 <table className="table-bordered table table-hover w-100">
                                     <thead>
                                         <tr>
-                                            <td>#</td>
+                                            <td>Sl.</td>
                                             <td>image</td>
                                             <td>Title</td>
                                             <td>Price</td>
@@ -258,7 +258,7 @@ const OrderDetail = ({ orderDetail, state, dispatch }) => {
                                         {order?.cart?.map((product, index) =>
                                         (
                                             <tr key={product._id}>
-                                                <td> {index + 1}</td>
+                                                <td> {index + 1}.</td>
                                                 <td> <img src={product.image} alt={product.image}
                                                     style={{ width: '50px', height: '45px', objectFit: 'cover' }} /></td>
                                                 <td>{product.title}</td>

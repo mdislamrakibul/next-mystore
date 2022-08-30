@@ -6,10 +6,12 @@ import Pagination from '../../../components/Pagination';
 import { postData, getData } from '../../../helpers/dataOps';
 import { parseCookies } from 'nookies';
 import { errorMsg, successMsg } from '../../../helpers/Toastify';
+import Cookie from 'js-cookie';
 
 function OrderIndex() {
 
     const { token } = parseCookies()
+    const user = Cookie.get('user') ?? JSON.parse(Cookie.get('user'))
     const { state, dispatch } = useContext(DataContext)
     const { auth, notify, orders } = state
 
@@ -112,7 +114,7 @@ function OrderIndex() {
                                                             :
                                                             <div>
                                                                 <img src='https://res.cloudinary.com/x-gwkjs-8zn7m-3/image/upload/v1661766343/depositphotos_34813181-stock-photo-in-progress-grunge-red-round-removebg-preview_nopk3d.png' width="50px" style={{ marginRight: "5px" }} />
-                                                                <i className="fas fa-trash-alt text-danger" onClick={() => handleReject(order)} style={{ cursor: 'pointer' }}></i>
+                                                                {user && user.role === 'root' && <i className="fas fa-trash-alt text-danger" onClick={() => handleReject(order)} style={{ cursor: 'pointer' }}></i>}
                                                             </div>
 
                                                     }

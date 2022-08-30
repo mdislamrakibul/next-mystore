@@ -4,16 +4,14 @@ import { useRouter } from 'next/router'
 import React, { useContext } from 'react'
 import { DataContext } from '../store/GlobalState'
 
-function NavBar()
-{
+function NavBar() {
   const router = useRouter()
   const { state, dispatch } = useContext(DataContext)
   const { cart } = state
   // const { user, token } = parseCookies()
   const user = Cookie.get('user') && JSON.parse(Cookie.get('user'))
 
-  const isActive = (r) =>
-  {
+  const isActive = (r) => {
     if (r === router.pathname) {
       return " active"
     } else {
@@ -21,8 +19,7 @@ function NavBar()
     }
   }
 
-  const handleLogout = () =>
-  {
+  const handleLogout = () => {
     localStorage.clear()
     dispatch({ type: 'AUTH', payload: {} })
     Cookie.remove('user')
@@ -79,17 +76,13 @@ function NavBar()
                   </Link>
                 </li>
               }
-              {user && user.role === 'root' &&
-
-                <li>
-                  <Link href="/admin/dashboard">
-                    <a className={"nav-link" + isActive('/admin/dashboard')}>
-                      <i className="fab fa-cpanel"></i>&nbsp;Dashboard
-                    </a>
-                  </Link>
-                </li>
-
-              }
+              <li>
+                <Link href="/admin/dashboard">
+                  <a className={"nav-link" + isActive('/admin/dashboard')}>
+                    <i className="fab fa-cpanel"></i>&nbsp;Dashboard
+                  </a>
+                </Link>
+              </li>
               {user ?
                 <li className="nav-item dropdown">
                   <span className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
