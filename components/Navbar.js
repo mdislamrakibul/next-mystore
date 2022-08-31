@@ -54,28 +54,26 @@ function NavBar() {
           </div>
           <div className="offcanvas-body" style={{ backgroundColor: 'white !important' }}>
             <ul className="navbar-nav justify-content-end flex-grow-1 pe-3">
-              {user && user.role === 'user' &&
-                <li className="nav-item">
-                  <Link href="/cart">
-                    <a className={"nav-link" + isActive('/cart')}>
-                      <i className="fas fa-shopping-cart position-relative" aria-hidden="true">
-                        <span className="position-absolute"
-                          style={{
-                            padding: '3px 6px',
-                            background: '#ed143dc2',
-                            borderRadius: '50%',
-                            top: '-10px',
-                            right: '-10px',
-                            color: 'white',
-                            fontSize: '14px'
-                          }}>
-                          {cart.length}
-                        </span>
-                      </i> Cart
-                    </a>
-                  </Link>
-                </li>
-              }
+              <li className="nav-item">
+                <Link href="/cart">
+                  <a className={"nav-link" + isActive('/cart')}>
+                    <i className="fas fa-shopping-cart position-relative" aria-hidden="true">
+                      <span className="position-absolute"
+                        style={{
+                          padding: '3px 6px',
+                          background: '#ed143dc2',
+                          borderRadius: '50%',
+                          top: '-10px',
+                          right: '-10px',
+                          color: 'white',
+                          fontSize: '14px'
+                        }}>
+                        {cart.length}
+                      </span>
+                    </i> Cart
+                  </a>
+                </Link>
+              </li>
 
               {user ?
                 <li className="nav-item dropdown">

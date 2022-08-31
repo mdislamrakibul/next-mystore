@@ -4,6 +4,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { postData } from '../helpers/dataOps';
 import { errorMsg, successMsg } from '../helpers/Toastify';
 import { DataContext } from '../store/GlobalState';
+import StripeCheckout from "react-stripe-checkout";
 
 function Checkout() {
     const router = useRouter()
@@ -140,6 +141,16 @@ function Checkout() {
         setCountPromoCode(0)
         router.push('/')
     }
+
+
+    const handleCheckout = async (paymentInfo) => {
+        console.log(paymentInfo)
+        postData('admin/payment', paymentInfo, token)
+            .then(res => {
+                console.log(res);
+            })
+    }
+
     return (
         <div >
             <div className="container" >
@@ -154,7 +165,7 @@ function Checkout() {
                             </h4>
                             <ul className="list-group mb-3">
                                 {cart.map(item => (
-                                    <li className="list-group-item d-flex justify-content-between lh-sm">
+                                    <li className="list-group-item d-flex justify-content-between lh-sm" key={item._id}>
                                         <div className='justify-content-between'>
                                             <img src={item.image} alt={item.title}
                                                 className="img-thumbnail"
@@ -206,7 +217,7 @@ function Checkout() {
                                 <div className="form-check">
                                     <input id="op" type="radio" className="form-check-input"
                                         onChange={handleCHange} value='op' checked={chkValue === 'op'} />
-                                    <label className="form-check-label" htmlFor="op">Online Payment</label>
+                                    <label className="form-check-label" htmlFor="op">Online Payment (Card)</label>
                                 </div>
                             </div>
                             <hr />
@@ -302,54 +313,24 @@ function Checkout() {
                                 </>
                             }
 
-
                             {chkValue === 'op'
                                 &&
-                                <div className="row gy-3">
-                                    <div className="col-md-6">
-                                        <label htmlFor="cc-name" className="form-label">Name on card</label>
-                                        <input type="text" className="form-control" id="cc-name" placeholder="" required />
-                                        <small className="text-muted">Full name as displayed on card</small>
-                                        <div className="invalid-feedback">
-                                            Name on card is required
-                                        </div>
-                                    </div>
+                                <StripeCheckout
+                                    stripeKey="pk_test_51IIsAbGmZm2y53ypb2h6tEtmxaQ6inGxNUWZ4eVGE5sC74Pd5Vp28tbcwgPk9wxO3ss7hY2QuhtezhnRQev3X22Y00ZZiECEoT"
+                                    image="https://res.cloudinary.com/x-gwkjs-8zn7m-3/image/upload/v1660992466/cld-sample-4.jpg"
+                                    token={(paymentInfo) => handleCheckout(paymentInfo)}
+                                    // amount={product.price * 100}
+                                    name="My Store"
+                                    currency="USD"
+                                    amount={total * 100}
+                                    billingAddress={true}
+                                    shippingAddress={true}
+                                >
+                                    <button className="btn btn-success btn-small">Pay with Stripe</button>
+                                </StripeCheckout>
 
-                                    <div className="col-md-6">
-                                        <label htmlFor="cc-number" className="form-label">Credit card number</label>
-                                        <input type="text" className="form-control" id="cc-number" placeholder="" required />
-                                        <div className="invalid-feedback">
-                                            Credit card number is required
-                                        </div>
-                                    </div>
-
-                                    <div className="col-md-3">
-                                        <label htmlFor="cc-expiration" className="form-label">Expiration</label>
-                                        <input type="text" className="form-control" id="cc-expiration" placeholder="" required />
-                                        <div className="invalid-feedback">
-                                            Expiration date required
-                                        </div>
-                                    </div>
-
-                                    <div className="col-md-3">
-                                        <label htmlFor="cc-cvv" className="form-label">CVV</label>
-                                        <input type="text" className="form-control" id="cc-cvv" placeholder="" required />
-                                        <div className="invalid-feedback">
-                                            Security code required
-                                        </div>
-                                    </div>
-                                </div>
                             }
-
-
-
-
-
-
-
                         </div>
-
-
                     </div>
                 </main>
             </div>
