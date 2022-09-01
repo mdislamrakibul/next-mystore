@@ -8,8 +8,10 @@ initDb()
 
 const stripe = Stripe(process.env.STRIPE_SECRET)
 export default async (req, res) => {
-    const { paymentInfo } = req.body
-    const { authorization } = req.headers
+    const { paymentInfo, cart } = req.body
+    console.log('🚀 ~ file: index.js ~ line 12 ~ cart', cart);
+    console.log('🚀 ~ file: index.js ~ line 12 ~ paymentInfo', paymentInfo);
+    // const { authorization } = req.headers
     // if (!authorization) {
     //     return res.status(200).json({
     //         statue: false,
@@ -18,12 +20,9 @@ export default async (req, res) => {
     // }
 
     try {
-        // const { userId } = jwt.verify(authorization, process.env.JWT_SECRET)
-
-        const cart = localStorage.getItem('__nextStore__cart__00_Lyt')
         let price = 0
-        cart.products.forEach(item => {
-            price = price + item.quantity * item.product.price
+        cart.forEach(item => {
+            price = price + item.quantity * item.price
         })
         const prevCustomer = await stripe.customers.list({
             email: paymentInfo.email
@@ -49,15 +48,15 @@ export default async (req, res) => {
         }
         )
         await new Order({
-            user: userId,
+            // user: userId,
             email: paymentInfo.email,
             total: price,
-            products: cart.products
+            products: cart
         }).save()
-        await Cart.findOneAndUpdate(
-            { _id: cart._id },
-            { $set: { products: [] } }
-        )
+        // await Cart.findOneAndUpdate(
+        //     { _id: cart._id },
+        //     { $set: { products: [] } }
+        // )
         res.status(200).json({ message: "payment was successful" })
 
 

@@ -145,7 +145,10 @@ function Checkout() {
 
     const handleCheckout = async (paymentInfo) => {
         console.log(paymentInfo)
-        postData('admin/payment', paymentInfo, token)
+        postData('payment', {
+            paymentInfo: paymentInfo,
+            cart: cart
+        }, token)
             .then(res => {
                 console.log(res);
             })
