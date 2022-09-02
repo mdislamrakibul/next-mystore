@@ -316,28 +316,40 @@ function Checkout() {
                                 </>
                             }
 
-                            {chkValue === 'op'
-                                &&
-                                <StripeCheckout
-                                    stripeKey="pk_test_51IIsAbGmZm2y53ypb2h6tEtmxaQ6inGxNUWZ4eVGE5sC74Pd5Vp28tbcwgPk9wxO3ss7hY2QuhtezhnRQev3X22Y00ZZiECEoT"
-                                    image="https://res.cloudinary.com/x-gwkjs-8zn7m-3/image/upload/v1660992466/cld-sample-4.jpg"
-                                    token={(paymentInfo) => handleCheckout(paymentInfo)}
-                                    // amount={product.price * 100}
-                                    name="My Store"
-                                    currency="USD"
-                                    amount={total * 100}
-                                    billingAddress={true}
-                                    shippingAddress={true}
-                                >
-                                    <button className="btn btn-success btn-small">Pay with Stripe</button>
-                                </StripeCheckout>
-
+                            {chkValue === 'op' &&
+                                <div>
+                                    {user
+                                        ?
+                                        <StripeCheckout
+                                            stripeKey="pk_test_51IIsAbGmZm2y53ypb2h6tEtmxaQ6inGxNUWZ4eVGE5sC74Pd5Vp28tbcwgPk9wxO3ss7hY2QuhtezhnRQev3X22Y00ZZiECEoT"
+                                            image="https://res.cloudinary.com/x-gwkjs-8zn7m-3/image/upload/v1660992466/cld-sample-4.jpg"
+                                            token={(paymentInfo) => handleCheckout(paymentInfo)}
+                                            // amount={product.price * 100}
+                                            name="My Store"
+                                            currency="USD"
+                                            amount={total * 100}
+                                            billingAddress={true}
+                                            shippingAddress={true}
+                                        >
+                                            <button className="btn btn-success btn-small">Pay with Stripe</button>
+                                        </StripeCheckout>
+                                        :
+                                        <div class="alert alert-secondary text-center" role="alert">
+                                            <h5>To make online payment you need to login first</h5>
+                                            <button className="btn btn-info btn-smp" onClick={() => {
+                                                router.push("/login")
+                                            }}>
+                                                <i className="fas fa-sign-in-alt"></i>&nbsp; Login
+                                            </button>
+                                        </div>
+                                    }
+                                </div>
                             }
                         </div>
                     </div>
                 </main>
-            </div>
-        </div>
+            </div >
+        </div >
 
     )
 }

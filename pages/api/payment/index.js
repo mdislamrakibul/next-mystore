@@ -1,25 +1,16 @@
 import Stripe from 'stripe'
 import { v4 as uuidV4 } from 'uuid'
-import Cart from '../../../models/Cart'
-import jwt from 'jsonwebtoken'
-import Order from '../../../models/Order'
 import initDb from '../../../helpers/initDB'
+import auth from '../../../helpers/auth'
+import OnlinePay from '../../../models/OnlinePay'
 initDb()
 
 const stripe = Stripe(process.env.STRIPE_SECRET)
 export default async (req, res) => {
     const { paymentInfo, cart } = req.body
-    console.log('🚀 ~ file: index.js ~ line 12 ~ cart', cart);
-    console.log('🚀 ~ file: index.js ~ line 12 ~ paymentInfo', paymentInfo);
-    // const { authorization } = req.headers
-    // if (!authorization) {
-    //     return res.status(200).json({
-    //         statue: false,
-    //         message: "you must logged in"
-    //     })
-    // }
-
+    const result = await auth(req, res)
     try {
+
         let price = 0
         cart.forEach(item => {
             price = price + item.quantity * item.price
@@ -32,7 +23,8 @@ export default async (req, res) => {
         if (!isExistingCustomer) {
             newCustomer = await stripe.customers.create({
                 email: paymentInfo.email,
-                source: paymentInfo.id
+                source: paymentInfo.id,
+                name: paymentInfo.card.name,
             })
         }
 
@@ -47,22 +39,30 @@ export default async (req, res) => {
             idempotencyKey: uuidV4()
         }
         )
-        await new Order({
-            // user: userId,
+        await new OnlinePay({
+            user: result.data._id,
             email: paymentInfo.email,
-            total: price,
-            products: cart
+            cart: cart,
+            name: paymentInfo.card.name,
+            address_city: paymentInfo.card.address_city,
+            address_country: paymentInfo.card.address_country,
+            address_line1: paymentInfo.card.address_line1,
+            address_zip: paymentInfo.card.address_zip,
+            totalPrice: price,
+            brand: paymentInfo.card.brand,
+            country: paymentInfo.card.country,
+            exp_month: paymentInfo.card.exp_month,
+            exp_year: paymentInfo.card.exp_year,
+            funding: paymentInfo.card.funding,
+            card_id: paymentInfo.card.id,
+            last4: paymentInfo.card.last4,
+            client_ip: paymentInfo.client_ip,
+            token_id: paymentInfo.id,
+            type: paymentInfo.type,
+            livemode: paymentInfo.livemode
         }).save()
-        // await Cart.findOneAndUpdate(
-        //     { _id: cart._id },
-        //     { $set: { products: [] } }
-        // )
+
         res.status(200).json({ message: "payment was successful" })
-
-
-
-
-
 
     } catch (err) {
         console.log(err)
