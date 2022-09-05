@@ -1,8 +1,7 @@
 
 import { ACTIONS } from './Actions';
 
-const reducers = (state, action) =>
-{
+const reducers = (state, action) => {
     switch (action.type) {
 
         case ACTIONS.NOTIFY:
@@ -44,6 +43,11 @@ const reducers = (state, action) =>
             return {
                 ...state,
                 bulkDeleteData: action.payload
+            }
+        case ACTIONS.ONLINE_PAY:
+            return {
+                ...state,
+                onlinePay: action.payload
             }
         default:
             return state

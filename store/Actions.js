@@ -8,11 +8,11 @@ export const ACTIONS = {
     GET_ORDER: 'GET_ORDER',
     GET_CATEGORY: 'GET_CATEGORY',
     BULK_DELETE: 'BULK_DELETE',
+    ONLINE_PAY: 'ONLINE_PAY'
 }
 
 
-export const addToCart = (product, cart) =>
-{
+export const addToCart = (product, cart) => {
     successMsg(`${product.title} is added to cart`)
     return ({
         type: 'ADD_TO_CART',
@@ -28,22 +28,18 @@ export const addToCart = (product, cart) =>
 
 }
 
-export const decrease = (data, id) =>
-{
+export const decrease = (data, id) => {
     const newData = [...data]
-    newData.forEach(item =>
-    {
+    newData.forEach(item => {
         if (item._id === id) item.quantity -= 1
     })
 
     return ({ type: 'ADD_TO_CART', payload: newData })
 }
 
-export const increase = (data, id) =>
-{
+export const increase = (data, id) => {
     const newData = [...data]
-    newData.forEach(item =>
-    {
+    newData.forEach(item => {
         if (item._id === id) item.quantity += 1
     })
 
@@ -51,8 +47,7 @@ export const increase = (data, id) =>
 }
 
 
-export const removeFromCart = (data, _id, title, type) =>
-{
+export const removeFromCart = (data, _id, title, type) => {
     // console.log("🚀 ~ file: Actions.js ~ line 42 ~ data", data)
     // console.log("🚀 ~ file: Actions.js ~ line 42 ~ _id", _id)
     // console.log("🚀 ~ file: Actions.js ~ line 42 ~ type", type)
@@ -62,14 +57,12 @@ export const removeFromCart = (data, _id, title, type) =>
     return ({ type, payload: newData })
 }
 
-export const deleteItem = (data, id, type) =>
-{
+export const deleteItem = (data, id, type) => {
     const newData = data.filter(item => item._id !== id)
     return ({ type, payload: newData })
 }
 
-export const updateItem = (data, id, post, type) =>
-{
+export const updateItem = (data, id, post, type) => {
     const newData = data.map(item => (item._id === id ? post : item))
     return ({ type, payload: newData })
 }

@@ -28,18 +28,23 @@ export default async (req, res) => {
             })
         }
 
-        await stripe.charges.create(
+        const stripeUser = await stripe.charges.create(
             {
                 currency: "USD",
                 amount: price * 100,
                 receipt_email: paymentInfo.email,
                 customer: isExistingCustomer ? prevCustomer.data[0].id : newCustomer.id,
                 description: `you purchased a product | ${paymentInfo.email}`
-            }, {
-            idempotencyKey: uuidV4()
-        }
+            }, { idempotencyKey: uuidV4() }
         )
-        await new OnlinePay({
+        if (!stripeUser) {
+            res.status(200).json({
+                status: false,
+                data: {},
+                message: "Payment user not created"
+            })
+        }
+        const onlinePay = await new OnlinePay({
             user: result.data._id,
             email: paymentInfo.email,
             cart: cart,
@@ -62,11 +67,26 @@ export default async (req, res) => {
             livemode: paymentInfo.livemode
         }).save()
 
-        res.status(200).json({ message: "payment was successful" })
+        if (!onlinePay) {
+            res.status(200).json({
+                status: false,
+                data: {},
+                message: "payment not successful"
+            })
+        }
+
+        res.status(200).json({
+            status: true,
+            message: "payment was successful",
+            data: {}
+        })
 
     } catch (err) {
-        console.log(err)
-        return res.status(401).json({ error: "error processing payment" })
+        return res.status(401).json({
+            status: true,
+            message: "error processing payment",
+            data: {}
+        })
     }
 
 

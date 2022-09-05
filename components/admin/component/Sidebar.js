@@ -98,6 +98,22 @@ function Sidebar() {
                             </ul>
                         </div>
                     </li>
+                    <li className="mb-1">
+                        <button className="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#accounts-collapse" aria-expanded="false">
+                            <i className="fas fa-file-invoice-dollar"></i>&nbsp;Accounts
+                        </button>
+                        <div className="collapse" id="accounts-collapse" style={{ marginLeft: '50px' }}>
+                            <ul className="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                                <li>
+                                    <Link href='/admin/account/transaction'>
+                                        <a className={"link-dark d-inline-flex text-decoration-none rounded" + isActive('/admin/account/transaction')}>
+                                            <i className="fas fa-sort-amount-down-alt"></i>&nbsp;Transactions
+                                        </a>
+                                    </Link>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
                 </ul>
             </div>
         </>

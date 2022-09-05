@@ -13,7 +13,8 @@ export const DataProvider = ({ children }) => {
         modal: {},
         orders: [],
         categories: [],
-        bulkDeleteData: []
+        bulkDeleteData: [],
+        onlinePay: []
     }
     const { token, user } = parseCookies()
     const [state, dispatch] = useReducer(reducers, initialState);
@@ -51,6 +52,17 @@ export const DataProvider = ({ children }) => {
                 .then(res => {
                     dispatch({
                         type: "GET_CATEGORY", payload: res.data
+                    })
+                })
+        }
+    }, [])
+
+    useEffect(() => {
+        if (token) {
+            getData('account/transaction', token)
+                .then(res => {
+                    dispatch({
+                        type: "ONLINE_PAY", payload: res.data
                     })
                 })
         }
