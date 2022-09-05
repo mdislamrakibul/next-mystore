@@ -66,10 +66,13 @@ function CategoryIndex() {
     return (
         <>
             {isLoading && <Loading />}
-            <div className="col-md-6 mx-auto my-3">
+            <div className="col-md-12 mx-auto my-3">
                 <Head>
                     <title>Category</title>
                 </Head>
+                <div className="alert alert-secondary justify-content-between">
+                    <div className="text-uppercase">Category</div>
+                </div>
                 <div className="input-group mb-3">
                     <input type="text" className="form-control"
                         placeholder="Add a new category" value={name}

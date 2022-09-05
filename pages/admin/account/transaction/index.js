@@ -5,6 +5,7 @@ import { DataContext } from '../../../../store/GlobalState';
 import Loading from '../../../../components/Loading';
 import Pagination from '../../../../components/Pagination';
 import Link from 'next/link';
+import TransactionDetails from './transactionDetails';
 
 function TransactionIndex() {
 
@@ -27,9 +28,9 @@ function TransactionIndex() {
     return (
         <div>
             {(!onlinePay.length || isLoading) && <Loading />}
-            <div className='justify-content-between'>
-                <h3 className="text-uppercase">Transactions</h3>
-                <h5>Total : {onlinePay.length}</h5>
+            <div className="alert alert-secondary justify-content-between">
+                <div className="text-uppercase">Transaction</div>
+                <div>Total : {onlinePay.length}</div>
             </div>
             <div className="my-3 table-responsive">
                 <table className="table table-bordered table-hover w-100 text-uppercase"

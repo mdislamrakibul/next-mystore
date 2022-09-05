@@ -50,11 +50,10 @@ function OrderIndex() {
     return (
         <div>
             {(!orders.length || isLoading) && <Loading />}
-            <div className='justify-content-between'>
-                <h3 className="text-uppercase">Orders</h3>
-                <h5>Total : {orders.length}</h5>
+            <div className="alert alert-secondary justify-content-between">
+                <div className="text-uppercase">Order</div>
+                <div>Total : {orders.length}</div>
             </div>
-
             <div className="my-3 table-responsive">
                 <table className="table table-bordered table-hover w-100 text-uppercase"
                 >
@@ -68,6 +67,8 @@ function OrderIndex() {
                             <td className="p-2">delivered</td>
                             <td className="p-2">paid</td>
                             <td className="p-2">Status</td>
+                            {user && user.role === 'root' &&
+                                <td className="p-2">Action</td>}
 
                         </tr>
                     </thead>
@@ -114,7 +115,6 @@ function OrderIndex() {
                                                             :
                                                             <div>
                                                                 <img src='https://res.cloudinary.com/x-gwkjs-8zn7m-3/image/upload/v1661766343/depositphotos_34813181-stock-photo-in-progress-grunge-red-round-removebg-preview_nopk3d.png' width="50px" style={{ marginRight: "5px" }} />
-                                                                {user && user.role === 'root' && <i className="fas fa-trash-alt text-danger" onClick={() => handleReject(order)} style={{ cursor: 'pointer' }}></i>}
                                                             </div>
 
                                                     }
@@ -122,6 +122,13 @@ function OrderIndex() {
                                         }
 
                                     </td>
+                                    {user && user.role === 'root' &&
+                                        <td>
+                                            {!order.rejectedIs && (!order.paid || !order.delivered) &&
+                                                <i className="fas fa-trash-alt text-danger" onClick={() => handleReject(order)}
+                                                    style={{ cursor: 'pointer' }}></i>
+                                            }
+                                        </td>}
                                 </tr>
                             ))
                         }

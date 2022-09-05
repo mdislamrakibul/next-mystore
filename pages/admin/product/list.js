@@ -69,12 +69,12 @@ function ProductList({ products, result }) {
     }
     return (
         <div>
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                <h5>Product List</h5>
-                <span>Total Product : {result}</span>
+            <div className="alert alert-secondary justify-content-between">
+                <div className="text-uppercase">Product List</div>
+                <div>Total Product : {result}</div>
             </div>
             <hr />
-            <table className='table table-responsive table-hover'>
+            <table className='table table-responsive table-hover table-bordered'>
                 <thead>
                     <tr>
                         <th></th>

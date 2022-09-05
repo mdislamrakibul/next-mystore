@@ -31,11 +31,7 @@ const DetailOrder = () => {
 
             <div className='container'>
                 {!orderDetail.length && <Loading />}
-                <div>
-                    <button className="btn btn-sm btn-danger" onClick={() => router.back()}>
-                        <i className="fas fa-long-arrow-alt-left" aria-hidden="true"></i> Go Back
-                    </button>
-                </div>
+
                 <OrderDetail orderDetail={orderDetail} state={state} dispatch={dispatch} />
             </div>
         </div>

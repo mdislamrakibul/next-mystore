@@ -115,6 +115,9 @@ function UserRoles() {
         <>
             {isLoading && <Loading />}
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+
+            </div>
+            <div className="alert alert-secondary justify-content-between">
                 <span>
                     <h5>User & roles </h5><h6 style={{ color: 'red' }}></h6>
                 </span>

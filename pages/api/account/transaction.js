@@ -19,7 +19,8 @@ const getOnlinePayment = async (req, res) => {
         const authResp = await auth(req, res)
         let onlinePays;
         if (authResp.data.role === 'user') {
-            onlinePays = await OnlinePay.find({ user: authResp.data._id }).populate("user", "-password")
+            onlinePays = await OnlinePay.find({ user: authResp.data._id }).sort({ createdAt: -1 })
+                .populate("user", "-password")
         } else {
             onlinePays = await OnlinePay.find().populate("user", "-password")
         }

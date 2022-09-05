@@ -7,6 +7,7 @@ import { useState } from 'react';
 import { errorMsg, successMsg } from '../helpers/Toastify';
 import Loading from './Loading';
 import Cookies from 'js-cookie';
+import router from 'next/router';
 const OrderDetail = ({ orderDetail, state, dispatch }) => {
     console.log(orderDetail);
     const { auth, orders } = state
@@ -96,8 +97,14 @@ const OrderDetail = ({ orderDetail, state, dispatch }) => {
                             }} />}
 
                     <div className="my-3">
-                        <div className='justify-content-between'>
-                            <h4 className="text-break">Order Details</h4>
+                        <div className="alert alert-secondary justify-content-between">
+                            <div className='d-flex' style={{ gap: '10px' }}>
+                                <button className="btn btn-sm btn-danger" onClick={() => router.back()}>
+                                    <i className="fas fa-long-arrow-alt-left" aria-hidden="true"></i>
+                                </button>
+
+                                <h4 className="text-break">Order Details</h4>
+                            </div>
                             <div className="justify-content-between">
                                 {
                                     order.delivered

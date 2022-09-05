@@ -28,58 +28,66 @@ function Sidebar() {
                     </a>
                 </Link>
                 <hr />
-                <ul className="list-unstyled ps-0">
-                    {user && user.role !== 'user' &&
-                        <li className="mb-1">
-                            <button className="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#product-collapse" aria-expanded="false">
-                                <i className="fas fa-tasks"></i>&nbsp;Product Management
-                            </button>
-                            <div className="collapse" id="product-collapse" style={{ marginLeft: '50px' }}>
-                                <ul className="btn-toggle-nav list-unstyled fw-normal pb-1 small" >
-                                    <li>
-                                        <Link href='/admin/product/list'>
-                                            <a className={"link-dark d-inline-flex text-decoration-none rounded" + isActive('/admin/product/list')}>
-                                                <i className="fas fa-list-ol"></i>&nbsp;All Product
-                                            </a>
-                                        </Link>
-                                    </li>
-                                    <li>
-                                        <Link href='/admin/product/create'>
-                                            <a className={"link-dark d-inline-flex text-decoration-none rounded" + isActive('/admin/product/create')}>
-                                                <i className="fas fa-plus"></i>&nbsp;Add Product
-                                            </a>
-                                        </Link>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
-                    }
 
+                <ul className="list-unstyled ps-0">
+                    <li className="mb-1">
+                        <Link href='/admin/dashboard'>
+                            <a className={"border-0 btn btn-toggle link-dark d-inline-flex text-decoration-none rounded" + isActive('/admin/dashboard')}>
+                                <i class="fas fa-tachometer-alt"></i>&nbsp;Dashboard
+                            </a>
+                        </Link>
+                    </li>
                     {user && user.role !== 'user' &&
-                        <li className="mb-1">
-                            <button className="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="false">
-                                <i className="fas fa-hammer"></i>&nbsp;Settings
-                            </button>
-                            {/* show */}
-                            <div className="collapse" id="home-collapse" style={{ marginLeft: '50px' }}>
-                                <ul className="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                                    <li>
-                                        <Link href='/admin/user'>
-                                            <a className={"link-dark d-inline-flex text-decoration-none rounded" + isActive('/admin/user')}>
-                                                <i className="fas fa-user-ninja"></i>&nbsp;User management
-                                            </a>
-                                        </Link>
-                                    </li>
-                                    <li>
-                                        <Link href='/admin/category'>
-                                            <a className={"link-dark d-inline-flex text-decoration-none rounded" + isActive('/admin/category')}>
-                                                <i className="fas fa-tags"></i>&nbsp;Category management
-                                            </a>
-                                        </Link>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
+                        <>
+                            <li className="mb-1">
+                                <button className="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#product-collapse" aria-expanded="false">
+                                    <i className="fas fa-tasks"></i>&nbsp;Product Management
+                                </button>
+                                <div className="collapse" id="product-collapse" style={{ marginLeft: '50px' }}>
+                                    <ul className="btn-toggle-nav list-unstyled fw-normal pb-1 small" >
+                                        <li>
+                                            <Link href='/admin/product/list'>
+                                                <a className={"link-dark d-inline-flex text-decoration-none rounded" + isActive('/admin/product/list')}>
+                                                    <i className="fas fa-list-ol"></i>&nbsp;All Product
+                                                </a>
+                                            </Link>
+                                        </li>
+                                        <li>
+                                            <Link href='/admin/product/create'>
+                                                <a className={"link-dark d-inline-flex text-decoration-none rounded" + isActive('/admin/product/create')}>
+                                                    <i className="fas fa-plus"></i>&nbsp;Add Product
+                                                </a>
+                                            </Link>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+
+                            <li className="mb-1">
+                                <button className="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="false">
+                                    <i className="fas fa-hammer"></i>&nbsp;Settings
+                                </button>
+                                {/* show */}
+                                <div className="collapse" id="home-collapse" style={{ marginLeft: '50px' }}>
+                                    <ul className="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                                        <li>
+                                            <Link href='/admin/user'>
+                                                <a className={"link-dark d-inline-flex text-decoration-none rounded" + isActive('/admin/user')}>
+                                                    <i className="fas fa-user-ninja"></i>&nbsp;User management
+                                                </a>
+                                            </Link>
+                                        </li>
+                                        <li>
+                                            <Link href='/admin/category'>
+                                                <a className={"link-dark d-inline-flex text-decoration-none rounded" + isActive('/admin/category')}>
+                                                    <i className="fas fa-tags"></i>&nbsp;Category management
+                                                </a>
+                                            </Link>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                        </>
                     }
 
                     <li className="mb-1">

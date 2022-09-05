@@ -9,8 +9,7 @@ import { imageUpload } from '../../../helpers/imageUpload';
 import { errorMsg, successMsg } from '../../../helpers/Toastify';
 import { DataContext } from '../../../store/GlobalState';
 
-const ProductCreate = () =>
-{
+const ProductCreate = () => {
     const initialState = {
         title: '',
         price: 0,
@@ -33,14 +32,12 @@ const ProductCreate = () =>
     const [isLoading, setIsLoading] = useState(false)
     const user = Cookies.get('user') && JSON.parse(Cookies.get('user'))
     const { token } = parseCookies()
-    const handleChangeInput = e =>
-    {
+    const handleChangeInput = e => {
         const { name, value } = e.target
         setProduct({ ...product, [name]: value })
     }
 
-    const handleMultipleUploadInput = e =>
-    {
+    const handleMultipleUploadInput = e => {
         let newImages = []
         let num = 0
         let err = ''
@@ -51,8 +48,7 @@ const ProductCreate = () =>
             return
         }
 
-        files.forEach(file =>
-        {
+        files.forEach(file => {
             if (file.size > 1024 * 1024)
                 return err = 'The largest image size is 1mb'
 
@@ -76,14 +72,12 @@ const ProductCreate = () =>
         }
         setImages([...images, ...newImages])
     }
-    const deleteMultipleImage = index =>
-    {
+    const deleteMultipleImage = index => {
         const newArr = [...images]
         newArr.splice(index, 1)
         setImages(newArr)
     }
-    const handleSingleUploadInput = e =>
-    {
+    const handleSingleUploadInput = e => {
         const file = e.target.files[0]
         if (!file) {
             errorMsg("Please select an image")
@@ -102,14 +96,12 @@ const ProductCreate = () =>
         }
         setImage([file])
     }
-    const deleteSingleImage = index =>
-    {
+    const deleteSingleImage = index => {
         setImage([])
     }
 
 
-    const handleSubmit = async (e) =>
-    {
+    const handleSubmit = async (e) => {
         console.log('images = ' + images);
         console.log('image = ' + image);
         e.preventDefault()
@@ -173,8 +165,8 @@ const ProductCreate = () =>
                 <title>Product</title>
             </Head>
             <div className='row'>
-                <div>
-                    <h5>Information Section</h5>
+                <div className="alert alert-secondary justify-content-between">
+                    <div className="text-uppercase">Product Create</div>
                 </div>
                 <hr />
                 <div className='col-md-6 my-4'>
@@ -219,7 +211,7 @@ const ProductCreate = () =>
                         <div className="col-sm-10">
                             <select className="form-select" name="category" id="category" value={category}
                                 onChange={handleChangeInput} >
-                                <option value="all">All Products</option>
+                                <option value="all">All Category</option>
                                 {
                                     categories.map(item => (
                                         <option key={item._id} value={item._id}>
