@@ -1,7 +1,6 @@
 import baseUrl from './baseUrl';
 
-export const getData = async (url, token) =>
-{
+export const getData = async (url, token) => {
 
     const res = await fetch(`${baseUrl}/api/${url}`, {
         method: 'GET',
@@ -14,8 +13,7 @@ export const getData = async (url, token) =>
     return data
 }
 
-export const postData = async (url, post, token) =>
-{
+export const postData = async (url, post, token) => {
 
     const res = await fetch(`${baseUrl}/api/${url}`, {
         method: 'POST',
@@ -32,10 +30,7 @@ export const postData = async (url, post, token) =>
 
 
 
-export const putData = async (url, post, token) =>
-{
-
-
+export const putData = async (url, post, token) => {
     const res = await fetch(`${baseUrl}/api/${url}`, {
         method: 'PUT',
         headers: {
@@ -49,9 +44,8 @@ export const putData = async (url, post, token) =>
     return data
 }
 
-export const patchData = async (url, post, token) =>
-{
-
+export const patchData = async (url, post, token) => {
+    console.log(url);
     const res = await fetch(`${baseUrl}/api/${url}`, {
         method: 'PATCH',
         headers: {
@@ -66,8 +60,7 @@ export const patchData = async (url, post, token) =>
 }
 
 
-export const deleteData = async (url, token) =>
-{
+export const deleteData = async (url, token) => {
 
     const res = await fetch(`${baseUrl}/api/${url}`, {
         method: 'DELETE',

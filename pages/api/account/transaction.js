@@ -1,6 +1,7 @@
 import initDb from '../../../helpers/initDB'
 import auth from '../../../helpers/auth'
 import OnlinePay from '../../../models/OnlinePay'
+import { errorResponse, successResponse } from '../../../helpers/response';
 initDb()
 
 export default async (req, res) => {
@@ -8,6 +9,7 @@ export default async (req, res) => {
         case 'GET':
             await getOnlinePayment(req, res);
             break
+
     }
 }
 
@@ -15,11 +17,9 @@ const getOnlinePayment = async (req, res) => {
 
     try {
         const authResp = await auth(req, res)
-        console.log('🚀 ~ file: transaction.js ~ line 18 ~ getOnlinePayment ~ authResp', authResp);
         let onlinePays;
         if (authResp.data.role === 'user') {
             onlinePays = await OnlinePay.find({ user: authResp.data._id }).populate("user", "-password")
-            console.log('🚀 ~ file: transaction.js ~ line 22 ~ getOnlinePayment ~ onlinePays', onlinePays);
         } else {
             onlinePays = await OnlinePay.find().populate("user", "-password")
         }
@@ -54,3 +54,4 @@ const getOnlinePayment = async (req, res) => {
 
 
 }
+

@@ -2,14 +2,35 @@ import Cookies from 'js-cookie';
 import { parseCookies } from 'nookies';
 import React, { useState } from 'react'
 import Loading from '../../../../components/Loading';
+import { getData, patchData, putData } from '../../../../helpers/dataOps';
+import { errorMsg, successMsg } from '../../../../helpers/Toastify';
+import moment from 'moment';
 
 function TransactionDetails({ transactionDetail, state, dispatch }) {
-    console.log('🚀 ~ file: transactionDetails.js ~ line 6 ~ TransactionDetails ~ transactionDetail', transactionDetail);
     const { onlinePay } = state
     const { token } = parseCookies()
     const user = Cookies.get('user') && JSON.parse(Cookies.get('user'))
     const [isLoading, setIsLoading] = useState(false)
     if (!user) return null;
+
+    const handleDelivered = (transaction) => {
+        setIsLoading(true)
+        patchData(`account/transaction/${transaction._id}`, {}, token)
+            .then(res => {
+                setIsLoading(false)
+                if (!res.status) {
+                    errorMsg(res.message)
+                    return
+                }
+                getData('account/transaction', token)
+                    .then(res => {
+                        dispatch({
+                            type: "ONLINE_PAY", payload: res.data
+                        })
+                    })
+                successMsg(res.message)
+            })
+    }
     return (
         <div>
             {isLoading && <Loading />}
@@ -58,7 +79,7 @@ function TransactionDetails({ transactionDetail, state, dispatch }) {
                                 {
                                     user && user.role === 'root' && !transaction.isDelivered &&
                                     <button className="btn btn-sm btn-success text-uppercase"
-                                        onClick={() => handleDelivered(order)}>
+                                        onClick={() => handleDelivered(transaction)}>
                                         <i className="fas fa-truck"></i>&nbsp; &nbsp; Mark as delivered
                                     </button>
                                 }

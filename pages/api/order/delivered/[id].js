@@ -4,8 +4,7 @@ import Order from '../../../../models/Order';
 
 initDB()
 
-export default async (req, res) =>
-{
+export default async (req, res) => {
     switch (req.method) {
         case "PATCH":
             await deliveredOrder(req, res)
@@ -13,8 +12,7 @@ export default async (req, res) =>
     }
 }
 
-const deliveredOrder = async (req, res) =>
-{
+const deliveredOrder = async (req, res) => {
     try {
         const result = await auth(req, res)
         console.log("🚀 ~ file: [id].js ~ line 20 ~ result", result.data.role)
@@ -67,7 +65,6 @@ const deliveredOrder = async (req, res) =>
         }
 
     } catch (err) {
-        console.log("0000000000000000000000");
         return res.status(200).json({
             message: err.message || 'Something went wrong',
             status: false,
