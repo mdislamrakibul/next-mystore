@@ -23,7 +23,8 @@ const onlinePaySchema = new mongoose.Schema({
     type: { type: String },
     cart: { type: Array },
     livemode: { type: Boolean },
-
+    isDelivered: { type: Boolean, default: false },
+    deliveryDate: { type: Date }
 }, {
     timestamps: true
 })
