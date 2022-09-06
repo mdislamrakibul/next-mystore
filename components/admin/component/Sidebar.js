@@ -20,7 +20,7 @@ function Sidebar() {
                 <Link href="/admin/dashboard" >
                     <a className="pb-3 mb-3 link-dark text-decoration-none border-bottom">
                         <h5 >
-                            {(user && user.role === 'user') ? 'User' : 'Admin'} Panel
+                            {(user && user.role === 'user') ? 'User' : (user && user.role === 'admin') ? 'Admin' : 'Root'} Panel
                         </h5>
                         <h6 >
                             Welcome, {user && user.email}
