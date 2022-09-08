@@ -20,17 +20,17 @@ function TransactionIndex() {
 
     const indexOfLastRecord = currentPage * recordsPerPage;
     const indexOfFirstRecord = indexOfLastRecord - recordsPerPage;
-    const currentRecords = onlinepay?.slice(indexOfFirstRecord, indexOfLastRecord);
-    const nPages = Math.ceil(onlinepay?.length / recordsPerPage)
+    const currentRecords = onlinePay?.slice(indexOfFirstRecord, indexOfLastRecord);
+    const nPages = Math.ceil(onlinePay?.length / recordsPerPage)
 
 
 
     return (
         <div>
-            {(!onlinepay?.length || isLoading) && <Loading />}
+            {(!onlinePay?.length || isLoading) && <Loading />}
             <div className="alert alert-secondary justify-content-between">
                 <div className="text-uppercase">Transaction</div>
-                <div>Total : {onlinepay?.length}</div>
+                <div>Total : {onlinePay?.length}</div>
             </div>
             <div className="my-3 table-responsive">
                 <table className="table table-bordered table-hover w-100 text-uppercase"
