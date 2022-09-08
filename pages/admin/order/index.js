@@ -27,7 +27,7 @@ function OrderIndex() {
 
     const handleReject = (order) => {
         setIsLoading(true)
-        if (order.delivered || order.paid) {
+        if (order?.delivered || order?.paid) {
             setIsLoading(false)
             errorMsg('You cannot reject this order')
             return
@@ -76,40 +76,40 @@ function OrderIndex() {
                     <tbody>
                         {
                             currentRecords.map((order, index) => (
-                                <tr key={order._id} style={{ textAlign: 'center', verticalAlign: 'middle' }}>
+                                <tr key={order?._id} style={{ textAlign: 'center', verticalAlign: 'middle' }}>
                                     <td>{index + 1}.</td>
                                     <td className="p-2">
-                                        <Link href={`/admin/order/${order._id}`}>
-                                            <a style={{ textDecoration: 'none', color: 'slateblue' }}>{order._id}</a>
+                                        <Link href={`/admin/order/${order?._id}`}>
+                                            <a style={{ textDecoration: 'none', color: 'slateblue' }}>{order?._id}</a>
                                         </Link>
 
                                     </td>
                                     <td className="p-2">
-                                        {new Date(order.createdAt).toLocaleDateString()}
+                                        {new Date(order?.createdAt).toLocaleDateString()}
                                     </td>
-                                    <td className="p-2">${order.total}</td>
-                                    <td className="p-2">{order.method}</td>
+                                    <td className="p-2">${order?.total}</td>
+                                    <td className="p-2">{order?.method}</td>
                                     <td className="p-2">
                                         {
-                                            order.delivered
+                                            order?.delivered
                                                 ? <i className="fas fa-check-circle text-success"></i>
                                                 : <i className="fas fa-times-circle text-danger"></i>
                                         }
                                     </td>
                                     <td className="p-2">
                                         {
-                                            order.paid
+                                            order?.paid
                                                 ? <i className="fas fa-check-circle text-success"></i>
                                                 : <i className="fas fa-times-circle text-danger"></i>
                                         }
                                     </td>
                                     <td className="p-2">
                                         {
-                                            order.rejectedIs
+                                            order?.rejectedIs
                                                 ? <img src='https://res.cloudinary.com/x-gwkjs-8zn7m-3/image/upload/v1661766788/reject_chofzx.png' width="50px" />
                                                 : <>
                                                     {
-                                                        (order.paid || order.delivered)
+                                                        (order?.paid || order?.delivered)
                                                             ?
                                                             <img src='https://res.cloudinary.com/x-gwkjs-8zn7m-3/image/upload/v1661763694/delivered-stamp-delivered-rubber-stamp-illustration-isolated-white-background-124829036-removebg-preview_nnelrh.png' width="50px" />
                                                             :
@@ -124,7 +124,7 @@ function OrderIndex() {
                                     </td>
                                     {user && user.role === 'root' &&
                                         <td>
-                                            {!order.rejectedIs && (!order.paid || !order.delivered) &&
+                                            {!order?.rejectedIs && (!order?.paid || !order?.delivered) &&
                                                 <i className="fas fa-trash-alt text-danger" onClick={() => handleReject(order)}
                                                     style={{ cursor: 'pointer' }}></i>
                                             }

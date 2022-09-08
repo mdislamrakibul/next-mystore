@@ -173,14 +173,14 @@ function Checkout() {
 							</h4>
 							<ul className="list-group mb-3">
 								{cart.map(item => (
-									<li className="list-group-item d-flex justify-content-between lh-sm" key={item._id}>
+									<li className="list-group-item d-flex justify-content-between lh-sm" key={item?._id}>
 										<div className='justify-content-between'>
-											<img src={item.image} alt={item.title}
+											<img src={item?.image} alt={item?.title}
 												className="img-thumbnail"
 												style={{ minWidth: '30px', height: '30px' }} />&nbsp;&nbsp;
-											<h6 className="my-0">{item.title}</h6>
+											<h6 className="my-0">{item?.title}</h6>
 										</div>
-										<span className="text-muted">${item.price * item.quantity}</span>
+										<span className="text-muted">${item?.price * item?.quantity}</span>
 									</li>
 								))}
 

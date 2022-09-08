@@ -31,14 +31,14 @@ const Product = ({ product }) => {
   }
   const addToCartHandleClick = (product, cart) => {
 
-    if (product.inStock === 0) {
-      errorMsg(`${product.title} is out of stock`)
+    if (product?.inStock === 0) {
+      errorMsg(`${product?.title} is out of stock`)
       return
     }
-    const check = cart.length && cart.find(item => item._id === product._id)
+    const check = cart.length && cart.find(item => item._id === product?._id)
 
     if (check) {
-      errorMsg(`${product.title} is already in your cart`)
+      errorMsg(`${product?.title} is already in your cart`)
       return
     }
     dispatch(addToCart(product, cart))
@@ -57,13 +57,13 @@ const Product = ({ product }) => {
         </Link>
         <div className='row'>
           <div className='col-md-5'>
-            <img src={product.images[tab].url} alt={product.title}
+            <img src={product?.images[tab].url} alt={product?.title}
               className="d-block img-thumbnail rounded w-100"
               style={{ height: '300px' }} />
             <br />
 
             <div style={{ cursor: 'pointer' }} >
-              {product.images.map((img, index) => (
+              {product?.images.map((img, index) => (
                 <img key={index} src={img.url} alt={img.url}
                   className={`img-thumbnail ${isActive(index)}`}
                   style={{ height: '80px', width: '20%', marginRight: '10px' }}
@@ -74,32 +74,32 @@ const Product = ({ product }) => {
           </div>
           <div className='col-md-7'>
             <div className='d-flex'>
-              <img className='img-thumbnail' src={product.image} alt={product.title} style={{ height: '80px', width: '20%', marginRight: '10px' }} />
-              <h2 className="text-uppercase">{product.title}</h2>
+              <img className='img-thumbnail' src={product?.image ? product?.image : 'https://res.cloudinary.com/x-gwkjs-8zn7m-3/image/upload/v1660200423/no-image-available_bitpsk.png'} alt={product?.title} style={{ height: '80px', width: '20%', marginRight: '10px' }} />
+              <h2 className="text-uppercase">{product?.title}</h2>
             </div>
             <br />
-            <h5 className="text-danger">Price : ${product.price}</h5>
+            <h5 className="text-danger">Price : ${product?.price}</h5>
 
             <div className="d-flex justify-content-between">
               {
-                product.inStock > 0
-                  ? <h6 className="text-danger">In Stock: {product.inStock}</h6>
+                product?.inStock > 0
+                  ? <h6 className="text-danger">In Stock: {product?.inStock}</h6>
                   : <h6 className="text-danger">Out Stock</h6>
               }
 
-              <h6 className="text-danger">Sold: {product.sold}</h6>
+              <h6 className="text-danger">Sold: {product?.sold}</h6>
             </div>
             <br />
             <div className="my-2">
               <h5>Description</h5>
               <hr />
-              {product.description}
+              {product?.description}
             </div>
             <br />
             <div className="my-2">
               <h5>Content</h5>
               <hr />
-              {product.content}
+              {product?.content}
             </div>
             <br />
             <div style={{
@@ -107,7 +107,7 @@ const Product = ({ product }) => {
             }}>
 
               <button className="btn btn-sm btn-success my-3 px-4 justify-content-between"
-                onClick={() => addToCartHandleClick(product, cart)} disabled={product.inStock ? false : true}>
+                onClick={() => addToCartHandleClick(product, cart)} disabled={product?.inStock ? false : true}>
                 Buy &nbsp;<i className="fas fa-cart-plus"></i>
               </button>
             </div>

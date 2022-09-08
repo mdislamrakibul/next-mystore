@@ -46,8 +46,8 @@ function ProductList({ products, result }) {
     }
     let newD = []
     const handleCheckALL = (product) => {
-        if (bulkDeleteData.length > 0 && bulkDeleteData.find(x => x._id === product._id)) {
-            dispatch({ type: 'BULK_DELETE', payload: bulkDeleteData.filter(item => item._id !== product._id) })
+        if (bulkDeleteData.length > 0 && bulkDeleteData.find(x => x._id === product?._id)) {
+            dispatch({ type: 'BULK_DELETE', payload: bulkDeleteData.filter(item => item._id !== product?._id) })
         } else {
             dispatch({ type: 'BULK_DELETE', payload: [...bulkDeleteData, product] })
         }
@@ -85,21 +85,21 @@ function ProductList({ products, result }) {
                 </thead>
                 <tbody>
                     {products.map(product => (
-                        <tr key={product._id}>
+                        <tr key={product?._id}>
                             {/* <td>
                                 <input type="checkbox" onChange={() => handleCheckALL(product)}
                                     style={{ width: '15px', height: '15px', transform: 'translateY(8px)' }} />
                             </td> */}
-                            <td>{product._id}</td>
-                            <td>{product.title}</td>
-                            {/* <td>{categories.length > 0 ? categories.find(cat => String(cat._id) === String(product.category)).name : 'No Category Found'}</td> */}
+                            <td>{product?._id}</td>
+                            <td>{product?.title}</td>
+                            {/* <td>{categories.length > 0 ? categories.find(cat => String(cat._id) === String(product?.category)).name : 'No Category Found'}</td> */}
                             <td>
-                                <img src={product.image} alt={product.title} className="img-thumbnail"
+                                <img src={product?.image ? product?.image : 'https://res.cloudinary.com/x-gwkjs-8zn7m-3/image/upload/v1660200423/no-image-available_bitpsk.png'} alt={product?.title} className="img-thumbnail"
                                     style={{ minWidth: '30px', height: '30px' }} />
                             </td>
                             <td>
                                 {
-                                    product.isActive
+                                    product?.isActive
                                         ? <><i className="far fa-check-circle" style={{ color: 'green' }}></i></>
                                         : <><i className="far fa-times-circle" style={{ color: 'red' }}></i></>
                                 }
@@ -114,8 +114,8 @@ function ProductList({ products, result }) {
                                         type: 'ADD_MODAL',
                                         payload: {
                                             data: product,
-                                            _id: product._id,
-                                            title: product.title,
+                                            _id: product?._id,
+                                            title: product?.title,
                                             type: 'DELETE_PRODUCT'
                                         }
                                     })} data-bs-toggle="modal" data-bs-target="#exampleModal">

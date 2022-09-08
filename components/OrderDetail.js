@@ -16,7 +16,7 @@ const OrderDetail = ({ orderDetail, state, dispatch }) => {
     const [isLoading, setIsLoading] = useState(false)
     const handleDelivered = (order) => {
         setIsLoading(true)
-        patchData(`order/delivered/${order._id}`, {}, token)
+        patchData(`order/delivered/${order?._id}`, {}, token)
             .then(res => {
                 setIsLoading(false)
                 if (!res.status) {
@@ -25,7 +25,7 @@ const OrderDetail = ({ orderDetail, state, dispatch }) => {
                 }
                 const { paid, dateOfPayment, method, delivered } = res.data
 
-                dispatch(updateItem(orders, order._id, {
+                dispatch(updateItem(orders, order?._id, {
                     ...order, paid, dateOfPayment, method, delivered
                 }, 'GET_ORDERS'))
 
@@ -38,8 +38,8 @@ const OrderDetail = ({ orderDetail, state, dispatch }) => {
         <>
             {isLoading && <Loading />}
             {orderDetail.map(order => (
-                <div key={order._id} style={{ margin: '20px auto', position: 'relative', fontWeight: 'bold' }} className="row justify-content-around">
-                    {order.delivered && order.paid &&
+                <div key={order?._id} style={{ margin: '20px auto', position: 'relative', fontWeight: 'bold' }} className="row justify-content-around">
+                    {order?.delivered && order?.paid &&
                         <img src='https://res.cloudinary.com/x-gwkjs-8zn7m-3/image/upload/v1661763694/delivered-stamp-delivered-rubber-stamp-illustration-isolated-white-background-124829036-removebg-preview_nnelrh.png'
                             style={{
                                 position: 'absolute',
@@ -53,7 +53,7 @@ const OrderDetail = ({ orderDetail, state, dispatch }) => {
                                 opacity: '.2',
                                 width: '45%'
                             }} />}
-                    {order.paid && !order.delivered &&
+                    {order?.paid && !order?.delivered &&
                         <img src='https://res.cloudinary.com/x-gwkjs-8zn7m-3/image/upload/v1661764967/images-removebg-preview_vvbisl.png'
                             style={{
                                 position: 'absolute',
@@ -67,7 +67,7 @@ const OrderDetail = ({ orderDetail, state, dispatch }) => {
                                 opacity: '.2',
                                 width: '45%'
                             }} />}
-                    {!order.paid && !order.delivered && !order.rejectedIs &&
+                    {!order?.paid && !order?.delivered && !order?.rejectedIs &&
                         <img src='https://res.cloudinary.com/x-gwkjs-8zn7m-3/image/upload/v1661766343/depositphotos_34813181-stock-photo-in-progress-grunge-red-round-removebg-preview_nopk3d.png'
                             style={{
                                 position: 'absolute',
@@ -81,7 +81,7 @@ const OrderDetail = ({ orderDetail, state, dispatch }) => {
                                 opacity: '.2',
                                 width: '45%'
                             }} />}
-                    {order.rejectedIs &&
+                    {order?.rejectedIs &&
                         <img src='https://res.cloudinary.com/x-gwkjs-8zn7m-3/image/upload/v1661766788/reject_chofzx.png'
                             style={{
                                 position: 'absolute',
@@ -107,13 +107,13 @@ const OrderDetail = ({ orderDetail, state, dispatch }) => {
                             </div>
                             <div className="justify-content-between">
                                 {
-                                    order.delivered
+                                    order?.delivered
                                         ?
-                                        <span style={{ color: 'green' }}>[Delivered on {moment(order.updatedAt).format('MMMM Do YYYY, h:mm:ss')}]&nbsp;</span>
+                                        <span style={{ color: 'green' }}>[Delivered on {moment(order?.updatedAt).format('MMMM Do YYYY, h:mm:ss')}]&nbsp;</span>
                                         : <span style={{ color: 'red' }}>[Not Delivered]&nbsp;</span>
                                 }
                                 {
-                                    user && user.role === 'root' && !order.delivered && !order.rejectedIs &&
+                                    user && user.role === 'root' && !order?.delivered && !order?.rejectedIs &&
                                     <button className="btn btn-sm btn-success text-uppercase"
                                         onClick={() => handleDelivered(order)}>
                                         <i className="fas fa-truck"></i>&nbsp; &nbsp; Mark as delivered
@@ -125,7 +125,7 @@ const OrderDetail = ({ orderDetail, state, dispatch }) => {
                         <div className='row mb-3'>
                             <div className='col-md-12'>
                                 <div className="alert alert-primary" style={{ opacity: '.5' }}>
-                                    <h6 className="text-break">Order##{order._id}</h6>
+                                    <h6 className="text-break">Order##{order?._id}</h6>
                                 </div>
                                 <div className='container'>
                                     <div className='row'>
@@ -134,15 +134,15 @@ const OrderDetail = ({ orderDetail, state, dispatch }) => {
                                                 <tbody>
                                                     <tr>
                                                         <td >Method</td>
-                                                        <td>&nbsp; &nbsp;: &nbsp; &nbsp; {order.method === 'cod' ? 'Cash On Delivery' : order.method}</td>
+                                                        <td>&nbsp; &nbsp;: &nbsp; &nbsp; {order?.method === 'cod' ? 'Cash On Delivery' : order?.method}</td>
                                                     </tr>
                                                     <tr>
                                                         <td >Payment Id</td>
-                                                        <td>&nbsp; &nbsp;: &nbsp; &nbsp; {order.paymentId}</td>
+                                                        <td>&nbsp; &nbsp;: &nbsp; &nbsp; {order?.paymentId}</td>
                                                     </tr>
                                                     <tr>
                                                         <td>Paid</td>
-                                                        <td>&nbsp; &nbsp;: &nbsp; &nbsp; {order.paid ? <i className="fas fa-check-circle text-success"></i>
+                                                        <td>&nbsp; &nbsp;: &nbsp; &nbsp; {order?.paid ? <i className="fas fa-check-circle text-success"></i>
                                                             : <i className="fas fa-times-circle text-danger"></i>}</td>
                                                     </tr>
                                                 </tbody>
@@ -155,17 +155,17 @@ const OrderDetail = ({ orderDetail, state, dispatch }) => {
                                                 <tbody>
                                                     <tr>
                                                         <td  >PromoCode Redeem</td>
-                                                        <td>&nbsp; &nbsp;: &nbsp; &nbsp; {order.promoCodeRedeem ? <i className="fas fa-check-circle text-success"></i>
+                                                        <td>&nbsp; &nbsp;: &nbsp; &nbsp; {order?.promoCodeRedeem ? <i className="fas fa-check-circle text-success"></i>
                                                             : <i className="fas fa-times-circle text-danger"></i>}</td>
                                                     </tr>
                                                     <tr>
                                                         <td>Amount Redeem</td>
-                                                        <td>&nbsp; &nbsp;: &nbsp; &nbsp; $ {order.amountRedeem}</td>
+                                                        <td>&nbsp; &nbsp;: &nbsp; &nbsp; $ {order?.amountRedeem}</td>
                                                     </tr>
 
                                                     <tr>
                                                         <td>Delivered</td>
-                                                        <td>&nbsp; &nbsp;: &nbsp; &nbsp; {order.delivered
+                                                        <td>&nbsp; &nbsp;: &nbsp; &nbsp; {order?.delivered
                                                             ? <i className="fas fa-check-circle text-success"></i>
                                                             : <i className="fas fa-times-circle text-danger"></i>}</td>
                                                     </tr>
@@ -187,27 +187,27 @@ const OrderDetail = ({ orderDetail, state, dispatch }) => {
                                         <tbody>
                                             <tr >
                                                 <td   >FirstName</td>
-                                                <td>&nbsp; &nbsp;: &nbsp;&nbsp;{order.user.firstName}</td>
+                                                <td>&nbsp; &nbsp;: &nbsp;&nbsp;{order?.user.firstName}</td>
                                             </tr>
                                             <tr>
                                                 <td   >LastName</td>
-                                                <td>&nbsp; &nbsp;: &nbsp; &nbsp;{order.user.lastName}</td>
+                                                <td>&nbsp; &nbsp;: &nbsp; &nbsp;{order?.user.lastName}</td>
                                             </tr>
                                             <tr>
                                                 <td   >Username</td>
-                                                <td>&nbsp; &nbsp;: &nbsp; &nbsp;{order.user.username}</td>
+                                                <td>&nbsp; &nbsp;: &nbsp; &nbsp;{order?.user.username}</td>
                                             </tr>
                                             <tr>
                                                 <td   >Email</td>
-                                                <td>&nbsp; &nbsp;: &nbsp; &nbsp;{order.user.email}</td>
+                                                <td>&nbsp; &nbsp;: &nbsp; &nbsp;{order?.user.email}</td>
                                             </tr>
                                             <tr>
                                                 <td   >Phone</td>
-                                                <td>&nbsp; &nbsp;: &nbsp; &nbsp;{order.user.phone}</td>
+                                                <td>&nbsp; &nbsp;: &nbsp; &nbsp;{order?.user.phone}</td>
                                             </tr>
                                             <tr>
                                                 <td   >Address</td>
-                                                <td>&nbsp; &nbsp;: &nbsp; &nbsp;{order.user.address}</td>
+                                                <td>&nbsp; &nbsp;: &nbsp; &nbsp;{order?.user.address}</td>
                                             </tr>
 
                                         </tbody>
@@ -223,23 +223,23 @@ const OrderDetail = ({ orderDetail, state, dispatch }) => {
                                         <tbody>
                                             <tr >
                                                 <td   >FirstName</td>
-                                                <td>&nbsp; &nbsp;: &nbsp;&nbsp;{order.firstName}</td>
+                                                <td>&nbsp; &nbsp;: &nbsp;&nbsp;{order?.firstName}</td>
                                             </tr>
                                             <tr>
                                                 <td   >LastName</td>
-                                                <td>&nbsp; &nbsp;: &nbsp; &nbsp;{order.lastName}</td>
+                                                <td>&nbsp; &nbsp;: &nbsp; &nbsp;{order?.lastName}</td>
                                             </tr>
                                             <tr>
                                                 <td   >Email</td>
-                                                <td>&nbsp; &nbsp;: &nbsp; &nbsp;{order.email}</td>
+                                                <td>&nbsp; &nbsp;: &nbsp; &nbsp;{order?.email}</td>
                                             </tr>
                                             <tr>
                                                 <td   >Phone</td>
-                                                <td>&nbsp; &nbsp;: &nbsp; &nbsp;{order.phone}</td>
+                                                <td>&nbsp; &nbsp;: &nbsp; &nbsp;{order?.phone}</td>
                                             </tr>
                                             <tr>
                                                 <td   >Address</td>
-                                                <td>&nbsp; &nbsp;: &nbsp; &nbsp;{order.address}</td>
+                                                <td>&nbsp; &nbsp;: &nbsp; &nbsp;{order?.address}</td>
                                             </tr>
 
                                         </tbody>
@@ -278,10 +278,10 @@ const OrderDetail = ({ orderDetail, state, dispatch }) => {
                                         ))}
                                         <tr >
                                             <td className='text-end' colSpan={6}>
-                                                <span>Subtotal&nbsp;&nbsp;: <b style={{ paddingLeft: '50px' }}>$ {order.total}</b></span><br />
+                                                <span>Subtotal&nbsp;&nbsp;: <b style={{ paddingLeft: '50px' }}>$ {order?.total}</b></span><br />
                                                 <span>Shipping&nbsp; &nbsp;: <b style={{ paddingLeft: '50px' }}>Free</b></span><br />
-                                                <span>PromoCode Redeem&nbsp; &nbsp;: <b style={{ paddingLeft: '50px' }}>{order.promoCodeRedeem ? order.amountRedeem : 0}</b></span><br />
-                                                <span>Total&nbsp; &nbsp;: <b style={{ paddingLeft: '50px' }}>$ {order.total}</b></span><br />
+                                                <span>PromoCode Redeem&nbsp; &nbsp;: <b style={{ paddingLeft: '50px' }}>{order?.promoCodeRedeem ? order?.amountRedeem : 0}</b></span><br />
+                                                <span>Total&nbsp; &nbsp;: <b style={{ paddingLeft: '50px' }}>$ {order?.total}</b></span><br />
                                             </td>
                                         </tr>
                                     </tbody>

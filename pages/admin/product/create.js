@@ -118,12 +118,12 @@ const ProductCreate = () => {
 
 
         let media = []
-        const imagesNewURL = images.filter(img => !img.url)
-        const imagesOldURL = images.filter(img => img.url)
+        const imagesNewURL = images.filter(img => !img?.url)
+        const imagesOldURL = images.filter(img => img?.url)
 
 
-        const imageNewURL = image.filter(img => !img.url)
-        const imageOldURL = image.filter(img => img.url)
+        const imageNewURL = image.filter(img => !img?.url)
+        const imageOldURL = image.filter(img => img?.url)
         let mediaImages = [];
         let mediaImage = [];
         if (imagesNewURL.length > 0) { mediaImages = await imageUpload(imagesNewURL) }
@@ -251,7 +251,7 @@ const ProductCreate = () => {
                         {
                             images.length > 0 && images.map((img, index) => (
                                 <div key={index} className="file_img my-1">
-                                    <img src={img.url ? img.url : URL.createObjectURL(img)}
+                                    <img src={img?.url ? img?.url : URL.createObjectURL(img)}
                                         alt="" className="img-thumbnail rounded" />
 
                                     <span onClick={() => deleteMultipleImage(index)}>X</span>
@@ -273,7 +273,7 @@ const ProductCreate = () => {
                         {
                             image.map((img, index) => (
                                 <div key={index} className="file_img my-1">
-                                    <img src={img.url ? img.url : URL.createObjectURL(img)}
+                                    <img src={img?.url ? img?.url : URL.createObjectURL(img)}
                                         alt="" className="img-thumbnail rounded" />
 
                                     <span onClick={() => deleteSingleImage(index)}>X</span>

@@ -58,7 +58,7 @@ function UserRoles() {
         } else {
             setIsLoading(false)
             const updatedUsers = users.map(user => {
-                if ((user.role != res2.data.role) && (user.email == res2.data.email)) {
+                if ((user?.role != res2.data.role) && (user?.email == res2.data.email)) {
                     return res2.data
                 } else {
                     return user
@@ -92,7 +92,7 @@ function UserRoles() {
             successMsg(res2.message)
         }
         const updatedUsers = users.map(user => {
-            if (user.email == res2.data.email) {
+            if (user?.email == res2.data.email) {
                 return res2.data
             } else {
                 return user
@@ -149,41 +149,41 @@ function UserRoles() {
                 <tbody>
                     {currentRecords.map((item, index) => {
                         return (
-                            <tr key={item._id}>
+                            <tr key={item?._id}>
                                 <td>
                                     {index + 1}.
                                 </td>
                                 <td>
-                                    <img src={item.image} alt={item.username} width={'50px'} height={'auto'} />
+                                    <img src={item?.image ? item?.image : 'https://res.cloudinary.com/x-gwkjs-8zn7m-3/image/upload/v1660200423/no-image-available_bitpsk.png'} alt={item?.username} width={'50px'} height={'auto'} />
                                 </td>
                                 <td>
-                                    <Link href={'/admin/user/[id]'} as={`/admin/user/${item._id}`} >
-                                        <a style={{ textDecoration: 'none' }}>{item.username}</a>
+                                    <Link href={'/admin/user/[id]'} as={`/admin/user/${item?._id}`} >
+                                        <a style={{ textDecoration: 'none' }}>{item?.username}</a>
                                     </Link>
                                 </td>
-                                <td>{authUser.role === 'root' ? item.email : '**********************'}</td>
-                                <td> {moment(item.createdAt).format('MMMM Do YYYY, h:mm:ss')}</td>
+                                <td>{authuser?.role === 'root' ? item?.email : '**********************'}</td>
+                                <td> {moment(item?.createdAt).format('MMMM Do YYYY, h:mm:ss')}</td>
                                 {authUser?.role === 'root' &&
                                     <td>
-                                        {item.role === 'root' && <span className="badge text-bg-primary" style={{ color: 'white' }}><b>{item.role} [{item.isActive ? 'A' : 'D'}]</b></span>}
-                                        {item.role === 'admin' && <span className="badge text-bg-success" style={{ color: 'white' }}><b>{item.role} [{item.isActive ? 'A' : 'D'}]</b></span>}
-                                        {item.role === 'user' && <span className="badge  text-bg-secondary" style={{ color: 'white' }}><b>{item.role} [{item.isActive ? 'A' : 'D'}]</b></span>}
+                                        {item?.role === 'root' && <span className="badge text-bg-primary" style={{ color: 'white' }}><b>{item?.role} [{item?.isActive ? 'A' : 'D'}]</b></span>}
+                                        {item?.role === 'admin' && <span className="badge text-bg-success" style={{ color: 'white' }}><b>{item?.role} [{item?.isActive ? 'A' : 'D'}]</b></span>}
+                                        {item?.role === 'user' && <span className="badge  text-bg-secondary" style={{ color: 'white' }}><b>{item?.role} [{item?.isActive ? 'A' : 'D'}]</b></span>}
                                     </td>
                                 }
                                 {authUser?.role === 'root' &&
                                     <td>
                                         <div className="btn-group" role="group" aria-label="Basic example">
-                                            <button type="button" className="btn btn-info btn-sm" onClick={() => handleRole(item._id, item.role)}
+                                            <button type="button" className="btn btn-info btn-sm" onClick={() => handleRole(item?._id, item?.role)}
                                             >
                                                 <i className="fas fa-universal-access"></i>
                                             </button>
                                             {item?.isActive &&
-                                                <button className='btn btn-sm btn-danger' onClick={() => handleActivity(item._id, item.isActive)}>
+                                                <button className='btn btn-sm btn-danger' onClick={() => handleActivity(item?._id, item?.isActive)}>
                                                     <i className="far fa-times-circle"></i>
                                                 </button>
                                             }
                                             {!item?.isActive &&
-                                                <button className='btn btn-sm btn-success' onClick={() => handleActivity(item._id, item.isActive)}>
+                                                <button className='btn btn-sm btn-success' onClick={() => handleActivity(item?._id, item?.isActive)}>
                                                     <i className="far fa-check-circle"></i>
                                                 </button>
                                             }

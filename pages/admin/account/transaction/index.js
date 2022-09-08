@@ -20,17 +20,17 @@ function TransactionIndex() {
 
     const indexOfLastRecord = currentPage * recordsPerPage;
     const indexOfFirstRecord = indexOfLastRecord - recordsPerPage;
-    const currentRecords = onlinePay.slice(indexOfFirstRecord, indexOfLastRecord);
-    const nPages = Math.ceil(onlinePay.length / recordsPerPage)
+    const currentRecords = onlinepay?.slice(indexOfFirstRecord, indexOfLastRecord);
+    const nPages = Math.ceil(onlinepay?.length / recordsPerPage)
 
 
 
     return (
         <div>
-            {(!onlinePay.length || isLoading) && <Loading />}
+            {(!onlinepay?.length || isLoading) && <Loading />}
             <div className="alert alert-secondary justify-content-between">
                 <div className="text-uppercase">Transaction</div>
-                <div>Total : {onlinePay.length}</div>
+                <div>Total : {onlinepay?.length}</div>
             </div>
             <div className="my-3 table-responsive">
                 <table className="table table-bordered table-hover w-100 text-uppercase"
@@ -51,28 +51,28 @@ function TransactionIndex() {
                     <tbody>
                         {
                             currentRecords.map((pay, index) => (
-                                <tr key={pay._id} style={{ textAlign: 'center', verticalAlign: 'middle' }}>
+                                <tr key={pay?._id} style={{ textAlign: 'center', verticalAlign: 'middle' }}>
                                     <td>{index + 1}.</td>
-                                    <td>{pay.name}</td>
+                                    <td>{pay?.name}</td>
                                     <td className="p-2">
-                                        {pay.funding}
+                                        {pay?.funding}
                                     </td>
 
-                                    <td className="p-2">{pay.type}</td>
-                                    <td className="p-2">${pay.totalPrice}</td>
+                                    <td className="p-2">{pay?.type}</td>
+                                    <td className="p-2">${pay?.totalPrice}</td>
                                     <td className="p-2">
-                                        {new Date(pay.createdAt).toLocaleDateString()}
+                                        {new Date(pay?.createdAt).toLocaleDateString()}
                                     </td>
                                     <td className="p-2">
                                         {
-                                            pay.isDelivered
+                                            pay?.isDelivered
                                                 ? <img src='https://res.cloudinary.com/x-gwkjs-8zn7m-3/image/upload/v1661763694/delivered-stamp-delivered-rubber-stamp-illustration-isolated-white-background-124829036-removebg-preview_nnelrh.png' width="50px" />
                                                 : <img src='https://res.cloudinary.com/x-gwkjs-8zn7m-3/image/upload/v1661766343/depositphotos_34813181-stock-photo-in-progress-grunge-red-round-removebg-preview_nopk3d.png' width="50px" />
                                         }
 
                                     </td>
                                     {user && user !== 'admin' && <td className="p-2">
-                                        <Link href={`/admin/account/transaction/${pay._id}`}>
+                                        <Link href={`/admin/account/transaction/${pay?._id}`}>
                                             <a style={{ textDecoration: 'none', color: 'slateblue' }}>Details</a>
                                         </Link>
                                     </td>}
