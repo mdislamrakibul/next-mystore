@@ -314,7 +314,7 @@ function Checkout() {
 											</form>
 										</>
 										:
-										<div class="alert alert-secondary text-center" role="alert">
+										<div className="alert alert-secondary text-center" role="alert">
 											<h5>To make online payment you need to login first</h5>
 											<button className="btn btn-info btn-smp" onClick={() => {
 												router.push("/login")
@@ -344,7 +344,7 @@ function Checkout() {
 											<button className="btn btn-primary btn-small">Pay with Stripe</button>
 										</StripeCheckout>
 										:
-										<div class="alert alert-secondary text-center" role="alert">
+										<div className="alert alert-secondary text-center" role="alert">
 											<h5>To make online payment you need to login first</h5>
 											<button className="btn btn-info btn-smp" onClick={() => {
 												router.push("/login")

@@ -85,10 +85,6 @@ export async function getServerSideProps({ query }) {
 export default Home
 
 
-//TODO: ORDER :: total order- successful order - pending order- rejected order
-//TODO: online :: total - successful - pending - rejected
-//TODO: ORDER
-//TODO: ORDER
-//TODO: ORDER
-//TODO: ORDER
-//TODO: ORDER
+//TODO: USER DETAILS TOTAL ORDER (COD + ONLINE)
+//TODO: USER DETAILS TOTAL PAYMENT (COD + ONLINE)
+//TODO: SUCCESSFUL, PENDING, INPROGRESS , REJECTED

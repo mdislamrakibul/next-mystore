@@ -7,8 +7,7 @@ import baseUrl from '../../helpers/baseUrl'
 import { errorMsg } from '../../helpers/Toastify'
 import { addToCart } from '../../store/Actions'
 import { DataContext } from '../../store/GlobalState'
-const Product = ({ product }) =>
-{
+const Product = ({ product }) => {
   const [quantity, setQuantity] = useState(1)
   const [tab, setTab] = useState(0)
   const router = useRouter()
@@ -20,8 +19,7 @@ const Product = ({ product }) =>
 
 
   const user = cookie.user ? JSON.parse(cookie.user) : ""
-  const isActive = (index) =>
-  {
+  const isActive = (index) => {
     if (tab === index) return " active";
     return ""
   }
@@ -31,8 +29,7 @@ const Product = ({ product }) =>
       <h3>loading...</h3>
     )
   }
-  const addToCartHandleClick = (product, cart) =>
-  {
+  const addToCartHandleClick = (product, cart) => {
 
     if (product.inStock === 0) {
       errorMsg(`${product.title} is out of stock`)
@@ -121,9 +118,9 @@ const Product = ({ product }) =>
   )
 }
 
-export async function getServerSideProps({ params: { id } })
-{
+export async function getServerSideProps({ params: { id } }) {
   const res = await fetch(`${baseUrl}/api/products/${id}`)
+  console.log('🚀 ~ file: [id].js ~ line 123 ~ getServerSideProps ~ res', res);
   const data = await res.json()
   if (data.status) {
     return { props: { product: data.data } }

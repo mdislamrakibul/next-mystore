@@ -18,7 +18,7 @@ function Dashboard() {
                     return
                 }
                 setResponse(res.data)
-                console.log(response);
+                // console.log(response);
             })
     }, [])
 
@@ -37,7 +37,7 @@ function Dashboard() {
                                 <div className="col-lg-4 col-md-6 col-sm-6 col-12 mb-3">
                                     <div className="card card-statistic-1">
                                         <div className="card-icon" style={{ backgroundColor: '#e8103c' }}>
-                                            <i class="fas fa-users"></i>
+                                            <i className="fas fa-users"></i>
                                         </div>
                                         <div className="card-wrap">
                                             <div className="card-header">
@@ -52,7 +52,7 @@ function Dashboard() {
                                 <div className="col-lg-4 col-md-6 col-sm-6 col-12 mb-3">
                                     <div className="card card-statistic-1">
                                         <div className="card-icon" style={{ backgroundColor: '#cc10e8' }}>
-                                            <i class="fas fa-couch"></i>
+                                            <i className="fas fa-couch"></i>
                                         </div>
                                         <div className="card-wrap">
                                             <div className="card-header">
@@ -67,7 +67,7 @@ function Dashboard() {
                                 <div className="col-lg-4 col-md-6 col-sm-6 col-12 mb-3">
                                     <div className="card card-statistic-1">
                                         <div className="card-icon" style={{ backgroundColor: '#efff2e' }}>
-                                            <i class="fas fa-tape"></i>
+                                            <i className="fas fa-tape"></i>
                                         </div>
                                         <div className="card-wrap">
                                             <div className="card-header">
@@ -89,7 +89,7 @@ function Dashboard() {
                         <div className="col-lg-4 col-md-6 col-sm-6 col-12 mb-3">
                             <div className="card card-statistic-1">
                                 <div className="card-icon bg-primary">
-                                    <i class="fas fa-box-open"></i>
+                                    <i className="fas fa-box-open"></i>
                                 </div>
                                 <div className="card-wrap">
                                     <div className="card-header">
@@ -104,7 +104,7 @@ function Dashboard() {
                         <div className="col-lg-4 col-md-6 col-sm-6 col-12 mb-3">
                             <div className="card card-statistic-1">
                                 <div className="card-icon bg-success">
-                                    <i class="fas fa-check"></i>
+                                    <i className="fas fa-check"></i>
                                 </div>
                                 <div className="card-wrap">
                                     <div className="card-header">
@@ -119,7 +119,7 @@ function Dashboard() {
                         <div className="col-lg-4 col-md-6 col-sm-6 col-12 mb-3">
                             <div className="card card-statistic-1">
                                 <div className="card-icon" style={{ backgroundColor: '#ff8e2e' }}>
-                                    <i class="fas fa-question"></i>
+                                    <i className="fas fa-question"></i>
                                 </div>
                                 <div className="card-wrap">
                                     <div className="card-header">
@@ -135,7 +135,7 @@ function Dashboard() {
                         <div className="col-lg-4 col-md-6 col-sm-6 col-12 mb-3">
                             <div className="card card-statistic-1">
                                 <div className="card-icon bg-info">
-                                    <i class="fas fa-spinner"></i>
+                                    <i className="fas fa-spinner"></i>
                                 </div>
                                 <div className="card-wrap">
                                     <div className="card-header">
@@ -178,7 +178,7 @@ function Dashboard() {
                                         <h6>Total Online Payment</h6>
                                     </div>
                                     <div className="card-body">
-                                        {response?.onlinePay}
+                                        {response?.onlinePayCount}
                                     </div>
                                 </div>
                             </div>
@@ -186,7 +186,7 @@ function Dashboard() {
                         <div className="col-lg-4 col-md-6 col-sm-6 col-12 mb-3">
                             <div className="card card-statistic-1">
                                 <div className="card-icon bg-success">
-                                    <i class="fas fa-check"></i>
+                                    <i className="fas fa-check"></i>
                                 </div>
                                 <div className="card-wrap">
                                     <div className="card-header">
@@ -201,7 +201,7 @@ function Dashboard() {
                         <div className="col-lg-4 col-md-6 col-sm-6 col-12 mb-3">
                             <div className="card card-statistic-1">
                                 <div className="card-icon bg-warning">
-                                    <i class="fas fa-question"></i>
+                                    <i className="fas fa-question"></i>
                                 </div>
                                 <div className="card-wrap">
                                     <div className="card-header">
@@ -222,7 +222,7 @@ function Dashboard() {
                             <div className="col-lg-4 col-md-6 col-sm-6 col-12 mb-3">
                                 <div className="card card-statistic-1">
                                     <div className="card-icon bg-primary">
-                                        <i class="fas fa-money-check-alt"></i>
+                                        <i className="fas fa-money-check-alt"></i>
                                     </div>
                                     <div className="card-wrap">
                                         <div className="card-header">
@@ -238,7 +238,7 @@ function Dashboard() {
                         <div className="col-lg-4 col-md-6 col-sm-6 col-12 mb-3">
                             <div className="card card-statistic-1">
                                 <div className="card-icon bg-success">
-                                    <i class="fas fa-truck-loading"></i>
+                                    <i className="fas fa-truck-loading"></i>
                                 </div>
                                 <div className="card-wrap">
                                     <div className="card-header">
@@ -253,7 +253,7 @@ function Dashboard() {
                         <div className="col-lg-4 col-md-6 col-sm-6 col-12 mb-3">
                             <div className="card card-statistic-1">
                                 <div className="card-icon bg-success">
-                                    <i class="fas fa-globe"></i>
+                                    <i className="fas fa-globe"></i>
                                 </div>
                                 <div className="card-wrap">
                                     <div className="card-header">
@@ -269,7 +269,7 @@ function Dashboard() {
                         <div className="col-lg-4 col-md-6 col-sm-6 col-12 mb-3">
                             <div className="card card-statistic-1">
                                 <div className="card-icon bg-warning">
-                                    <i class="fas fa-globe"></i>
+                                    <i className="fas fa-question"></i>
                                 </div>
                                 <div className="card-wrap">
                                     <div className="card-header">
@@ -285,7 +285,7 @@ function Dashboard() {
                         <div className="col-lg-4 col-md-6 col-sm-6 col-12 mb-3">
                             <div className="card card-statistic-1">
                                 <div className="card-icon bg-info">
-                                    <i class="fas fa-globe"></i>
+                                    <i className="fas fa-spinner"></i>
                                 </div>
                                 <div className="card-wrap">
                                     <div className="card-header">

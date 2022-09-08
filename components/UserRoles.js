@@ -6,6 +6,7 @@ import baseUrl from '../helpers/baseUrl';
 import { errorMsg, successMsg } from '../helpers/Toastify';
 import Loading from './Loading';
 import Pagination from './Pagination';
+import Link from 'next/link';
 // import Pagination from '@material-ui/lab/Pagination';
 function UserRoles() {
     const [users, setUsers] = useState([])
@@ -155,7 +156,11 @@ function UserRoles() {
                                 <td>
                                     <img src={item.image} alt={item.username} width={'50px'} height={'auto'} />
                                 </td>
-                                <td>{item.username}</td>
+                                <td>
+                                    <Link href={'/admin/user/[id]'} as={`/admin/user/${item._id}`} >
+                                        <a style={{ textDecoration: 'none' }}>{item.username}</a>
+                                    </Link>
+                                </td>
                                 <td>{authUser.role === 'root' ? item.email : '**********************'}</td>
                                 <td> {moment(item.createdAt).format('MMMM Do YYYY, h:mm:ss')}</td>
                                 {authUser?.role === 'root' &&

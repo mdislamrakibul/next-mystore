@@ -67,7 +67,7 @@ const getData = async (req, res) => {
         user: userCount || 0,
         product: productCount || 0,
         category: categoryCount || 0,
-        onlinePay: onlinePayCount,
+        onlinePayCount: onlinePayCount,
         successOnlinePay: successPayCount || 0,
         pendingOnlinePay: pendingPayCount || 0,
         totalIncome: (totalOrderAmount + totalOnlineAmount) || 0,
