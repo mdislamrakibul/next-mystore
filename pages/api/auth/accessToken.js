@@ -1,7 +1,6 @@
 import jwt from 'jsonwebtoken'
 import Users from '../../../models/User'
 import initDB from '../../../helpers/initDB'
-import { createAccessToken } from '../../../helpers/createAccessToken'
 import { createAccessToken } from '../../../helpers/generateToken';
 
 initDB()

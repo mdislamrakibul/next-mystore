@@ -7,6 +7,7 @@ import Cookie from 'js-cookie';
 const ProductItem = ({ product }) => {
     const { state, dispatch } = useContext(DataContext)
     const { cart } = state
+    let image
     // const user = Cookie.get('user') ? JSON.parse(Cookie.get(user)) : {}
     const addToCartHandleClick = (product, cart) => {
 
