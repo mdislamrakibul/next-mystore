@@ -7,7 +7,6 @@ import { errorMsg, successMsg } from '../../../../helpers/Toastify';
 import moment from 'moment';
 
 function TransactionDetails({ transactionDetail, state, dispatch }) {
-    const { onlinePay } = state
     const { token } = parseCookies()
     const user = Cookies.get('user') && JSON.parse(Cookies.get('user'))
     const [isLoading, setIsLoading] = useState(false)
