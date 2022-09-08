@@ -1,12 +1,12 @@
 import jwt from 'jsonwebtoken'
-import Users from '../../../models/userModel'
-import connectDB from '../../../utils/connectDB'
-import { createAccessToken } from '../../../utils/generateToken'
+import Users from '../../../models/User'
+import initDB from '../../../helpers/initDB'
+import { createAccessToken } from '../../../helpers/createAccessToken'
+import { createAccessToken } from '../../../helpers/generateToken';
 
-connectDB()
+initDB()
 
-export default async (req, res) =>
-{
+export default async (req, res) => {
     try {
         const rf_token = req.cookies.refreshToken;
         if (!rf_token) return res.status(200).json({
