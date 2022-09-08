@@ -15,7 +15,6 @@ export default async (req, res) => {
 const deliveredOrder = async (req, res) => {
     try {
         const result = await auth(req, res)
-        console.log("🚀 ~ file: [id].js ~ line 20 ~ result", result.data.role)
 
         if (result?.data?.role === 'user') {
             return res.status(200).json({
@@ -26,7 +25,6 @@ const deliveredOrder = async (req, res) => {
         }
 
         const { id } = req.query
-        console.log("🚀 ~ file: [id].js ~ line 27 ~ id", id)
 
 
         const order = await Order.findOne({ _id: id })

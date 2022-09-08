@@ -102,8 +102,6 @@ const ProductCreate = () => {
 
 
     const handleSubmit = async (e) => {
-        console.log('images = ' + images);
-        console.log('image = ' + image);
         e.preventDefault()
         if (user.role !== 'root') {
             errorMsg('You are not authorized to perform this action')

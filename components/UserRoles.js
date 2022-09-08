@@ -101,8 +101,8 @@ function UserRoles() {
         setUsers(updatedUsers)
     }
     const handlePageChange = (event, value) => {
-        console.log(event, value);
-        console.log(users);
+        // console.log(event, value);
+        // console.log(users);
         setPage(value);
     }
 

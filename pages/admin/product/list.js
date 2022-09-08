@@ -37,12 +37,9 @@ function ProductList({ products, result }) {
         request.open("GET", url, true);
         request.send();
         request.onload = function () {
-            console.log(request);
             if (request.status == 200) {
-                console.log("image exists");
                 return true
             } else {
-                console.log("image doesn't exist");
                 return false
             }
         }
@@ -77,7 +74,7 @@ function ProductList({ products, result }) {
             <table className='table table-responsive table-hover table-bordered'>
                 <thead>
                     <tr>
-                        <th></th>
+                        {/* <th></th> */}
                         <th>#Id</th>
                         <th>Title</th>
                         {/* <th>Category</th> */}
@@ -89,10 +86,10 @@ function ProductList({ products, result }) {
                 <tbody>
                     {products.map(product => (
                         <tr key={product._id}>
-                            <td>
+                            {/* <td>
                                 <input type="checkbox" onChange={() => handleCheckALL(product)}
                                     style={{ width: '15px', height: '15px', transform: 'translateY(8px)' }} />
-                            </td>
+                            </td> */}
                             <td>{product._id}</td>
                             <td>{product.title}</td>
                             {/* <td>{categories.length > 0 ? categories.find(cat => String(cat._id) === String(product.category)).name : 'No Category Found'}</td> */}

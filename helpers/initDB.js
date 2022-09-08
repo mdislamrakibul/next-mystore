@@ -1,9 +1,7 @@
 import mongoose from 'mongoose'
 
-function initDB()
-{
+function initDB() {
     if (mongoose.connections[0].readyState) {
-        console.log("already connected")
         return
     }
     mongoose.connect(process.env.MONGO_URL, {
@@ -11,13 +9,11 @@ function initDB()
         useUnifiedTopology: true,
         useCreateIndex: true
     })
-    mongoose.connection.on('connected', () =>
-    {
-        console.log("connected to mongo")
+    mongoose.connection.on('connected', () => {
+        // console.log("connected to mongo")
     })
-    mongoose.connection.on('error', (err) =>
-    {
-        console.log("error connecting", err)
+    mongoose.connection.on('error', (err) => {
+        // console.log("error connecting", err)
     })
 }
 

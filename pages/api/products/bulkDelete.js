@@ -2,8 +2,7 @@ import auth from '../../../helpers/auth';
 import initDB from '../../../helpers/initDB';
 
 initDB()
-export default async (req, res) =>
-{
+export default async (req, res) => {
     switch (req.method) {
         case "POST":
             await bulkDeleteProduct(req, res)
@@ -12,8 +11,7 @@ export default async (req, res) =>
 }
 
 
-const bulkDeleteProduct = async (req, res) =>
-{
+const bulkDeleteProduct = async (req, res) => {
     try {
         const result = await auth(req, res)
         if (result.data.role !== 'root') {
@@ -23,10 +21,7 @@ const bulkDeleteProduct = async (req, res) =>
                 data: {}
             })
         }
-        req.body.length > 1 && req.body.forEach(x =>
-        {
-            console.log(x._id);
-            console.log(x.isActive);
+        req.body.length > 1 && req.body.forEach(x => {
             // const updated = await Product.findOneAndUpdate({ _id: x._id }, {
             //     isActive: false
             // })

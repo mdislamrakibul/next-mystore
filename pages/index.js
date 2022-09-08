@@ -23,7 +23,7 @@ const Home = ({ products, result }) => {
   return (
     <div>
       <Head>
-        <title>My Store</title>
+        <title>Mid Store</title>
       </Head>
 
       <Filter state={state} />
@@ -84,7 +84,3 @@ export async function getServerSideProps({ query }) {
 
 export default Home
 
-
-//TODO: USER DETAILS TOTAL ORDER (COD + ONLINE)
-//TODO: USER DETAILS TOTAL PAYMENT (COD + ONLINE)
-//TODO: SUCCESSFUL, PENDING, INPROGRESS , REJECTED

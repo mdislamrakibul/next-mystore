@@ -1,9 +1,7 @@
 import jwt from 'jsonwebtoken'
 
-function Authenticated(icomponent)
-{
-    return (req, res) =>
-    {
+function Authenticated(icomponent) {
+    return (req, res) => {
         const { authorization } = req.headers
         if (!authorization) {
             return res.status(200).json({
@@ -16,7 +14,6 @@ function Authenticated(icomponent)
             req.userId = userId
             return icomponent(req, res)
         } catch (err) {
-            console.log(err)
             return res.status(200).json({
                 message: "You are not authenticated",
                 status: false

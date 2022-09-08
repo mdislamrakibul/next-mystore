@@ -1,14 +1,12 @@
 import { parseCookies } from 'nookies'
 import { useState } from 'react'
 import baseUrl from '../helpers/baseUrl'
-const Create = () =>
-{
+const Create = () => {
   const [name, setName] = useState("")
   const [price, setPrice] = useState("")
   const [media, setMedia] = useState("")
   const [description, setDescription] = useState("")
-  const handleSubmit = async (e) =>
-  {
+  const handleSubmit = async (e) => {
     e.preventDefault()
     try {
       const mediaUrl = await imageUpload()
@@ -31,12 +29,11 @@ const Create = () =>
         // M.toast({html: "Product saved",classes:"green"})
       }
     } catch (err) {
-      console.log(err)
+      // console.log(err)
     }
 
   }
-  const imageUpload = async () =>
-  {
+  const imageUpload = async () => {
     const data = new FormData()
     data.append('file', media)
     data.append('upload_preset', "mystore")
@@ -85,8 +82,7 @@ const Create = () =>
 
 
 
-export async function getServerSideProps(ctx)
-{
+export async function getServerSideProps(ctx) {
   const cookie = parseCookies(ctx)
   const user = cookie.user ? JSON.parse(cookie.user) : ""
   if (user.role == 'user' || user.role == '') {

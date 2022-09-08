@@ -45,7 +45,6 @@ export const putData = async (url, post, token) => {
 }
 
 export const patchData = async (url, post, token) => {
-    console.log(url);
     const res = await fetch(`${baseUrl}/api/${url}`, {
         method: 'PATCH',
         headers: {

@@ -44,7 +44,7 @@ function NavBar() {
   return (
     <nav className="navbar navbar-expand-lg " aria-label="Offcanvas navbar large">
       <div className="container-fluid">
-        <Link href="/"><a className="navbar-brand">MY STORE</a></Link>
+        <Link href="/"><a className="navbar-brand">MID STORE</a></Link>
         <button className="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar2" aria-controls="offcanvasNavbar2">
           <span className="navbar-toggler-icon"></span>
         </button>

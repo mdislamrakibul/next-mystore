@@ -65,7 +65,6 @@ function Checkout() {
 			setTotal(promoCode === 'X7e9D43' ? total - 10 : total)
 		}
 		if (countPromoCode === 1) {
-			console.log("countPromoCode", countPromoCode);
 			errorMsg('You can redeem only once')
 			return
 		}
@@ -144,7 +143,6 @@ function Checkout() {
 
 
 	const handleStripeCeckout = async (paymentInfo) => {
-		console.log(paymentInfo)
 		postData('payment', {
 			paymentInfo: paymentInfo,
 			cart: cart
