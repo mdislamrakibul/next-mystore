@@ -161,7 +161,7 @@ function UserRoles() {
                                         <a style={{ textDecoration: 'none' }}>{item?.username}</a>
                                     </Link>
                                 </td>
-                                <td>{authuser?.role === 'root' ? item?.email : '**********************'}</td>
+                                <td>{authUser?.role === 'root' ? item?.email : '**********************'}</td>
                                 <td> {moment(item?.createdAt).format('MMMM Do YYYY, h:mm:ss')}</td>
                                 {authUser?.role === 'root' &&
                                     <td>
